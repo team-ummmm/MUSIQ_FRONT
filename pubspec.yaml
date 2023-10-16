@@ -85,6 +85,27 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
+  fonts:
+    - family: SF Pro Rounded
+      fonts:
+        - asset: fonts/SF-Pro-Rounded-Black.otf
+          weight: 900
+        - asset: fonts/SF-Pro-Rounded-Bold.otf
+          weight: 700
+        - asset: fonts/SF-Pro-Rounded-Heavy.otf
+          weight: 800
+        - asset: fonts/SF-Pro-Rounded-Light.otf
+          weight: 300
+        - asset: fonts/SF-Pro-Rounded-Medium.otf
+          weight: 600
+        - asset: fonts/SF-Pro-Rounded-Regular.otf
+          weight: 400
+        - asset: fonts/SF-Pro-Rounded-Semibold.otf
+          weight: 500
+        - asset: fonts/SF-Pro-Rounded-Thin.otf
+          weight: 200
+        - asset: fonts/SF-Pro-Rounded-Ultralight.otf
+          weight: 100
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
