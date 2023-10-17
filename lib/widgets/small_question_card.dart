@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:musiq_front/style.dart';
 
-class MainQuestionCard extends StatelessWidget {
-  const MainQuestionCard({
+class SmallQuestionCard extends StatelessWidget {
+  const SmallQuestionCard({
     super.key,
   });
 
@@ -11,30 +11,30 @@ class MainQuestionCard extends StatelessWidget {
     return Stack(children: [
       Column(children: [
         const SizedBox(
-          height: 50,
+          height: 25,
         ),
         Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10), color: AppColor.color1),
-          height: 240,
-          width: 340,
+          height: 120,
+          width: 170,
           child: const Row(
             children: [
-              SizedBox(width: 20),
+              SizedBox(width: 10),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "죽기 전에 마지막으로",
-                    style: TextStyle(fontSize: 28, color: Colors.white),
+                    style: TextStyle(fontSize: 13, color: Colors.white),
                     textAlign: TextAlign.left,
                   ),
                   Text(
                     "듣고 싶은 곡은 무엇인가요?",
-                    style: TextStyle(fontSize: 28, color: Colors.white),
+                    style: TextStyle(fontSize: 13, color: Colors.white),
                     textAlign: TextAlign.left,
-                  ),
+                  )
                 ],
               ),
             ],
@@ -42,49 +42,31 @@ class MainQuestionCard extends StatelessWidget {
         ),
       ]),
       Positioned(
-        top: 10,
-        left: 20,
+        top: 5,
+        left: 10,
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100), color: AppColor.color1),
-          height: 100,
-          width: 100,
+          height: 50,
+          width: 50,
         ),
       ),
       Positioned(
-          top: 15,
-          left: 25,
+          top: 7.5,
+          left: 12.5,
           child: Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100), color: Colors.white),
-            height: 90,
-            width: 90,
+            height: 45,
+            width: 45,
             child: const Center(
               child: Text(
                 "👋",
-                style: TextStyle(fontSize: 40),
+                style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),
-          )),
-      Positioned(
-        bottom: 30,
-        left: 20,
-        child: Container(
-          width: 300,
-          height: 30,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white.withOpacity(0.8)),
-          child: const TextField(
-            decoration: InputDecoration(
-              icon: Icon(Icons.search),
-              hintText: "어떤 곡으로 대답하실 건가요?",
-            ),
-            style: TextStyle(fontSize: 15, height: 1.0),
-          ),
-        ),
-      )
+          ))
     ]);
   }
 }

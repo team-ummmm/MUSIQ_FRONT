@@ -1,6 +1,9 @@
+// '대답할게요' 탭
+
 import 'package:flutter/material.dart';
 import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/main_question_card.dart';
+import 'package:musiq_front/widgets/small_question_card.dart';
 
 class AnswerPage extends StatelessWidget {
   const AnswerPage({super.key});
@@ -26,6 +29,13 @@ class AnswerPage extends StatelessWidget {
               ],
             ),
             MainQuestionCard(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SmallQuestionCard(),
+                SmallQuestionCard(),
+              ],
+            ),
           ],
         ));
   }
