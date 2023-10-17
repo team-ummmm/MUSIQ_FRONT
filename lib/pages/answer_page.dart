@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:musiq_front/widgets/empty_appBar.dart';
+import 'package:musiq_front/style.dart';
 
 class AnswerPage extends StatelessWidget {
   const AnswerPage({super.key});
@@ -9,26 +10,27 @@ class AnswerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const EmptyAppBar(),
-        // appBar: AppBar(
-        //   flexibleSpace: const Column(children: [
-        //     SizedBox(height: 50),
-        //     Row(
-        //       children: [
-        //         Text(
-        //           "오늘, 대답할게요",
-        //           style: TextStyle(fontFamily: "SF-Pro-Rounded", fontSize: 30),
-        //         )
-        //       ],
-        //     )
-        //   ]),
-        // ),
+        backgroundColor: AppColor.backgroudColor,
+        appBar: AppBar(
+          backgroundColor: AppColor.backgroudColor,
+        ),
         body: Column(
           children: [
-            const Text("hi"),
+            const Row(
+              children: [
+                SizedBox(
+                  width: 30,
+                ),
+                Text(
+                  "대답할게요",
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 34),
+                ),
+              ],
+            ),
             Container(
-              color: Colors.blue,
+              color: AppColor.color1,
               height: 30,
+              width: 30,
               child: const SizedBox(height: 20),
             ),
           ],

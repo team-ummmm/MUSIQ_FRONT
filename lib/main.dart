@@ -14,6 +14,7 @@ class MUSIQ extends StatelessWidget {
       title: 'MUSIQ',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        fontFamily: "SF-Pro-Rounded",
         useMaterial3: true,
       ),
       home: const AnswerPage(),
