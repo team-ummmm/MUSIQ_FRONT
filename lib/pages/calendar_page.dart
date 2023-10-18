@@ -39,10 +39,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   ),
                   Text(
                     "돌아보아요",
-                    style: TextStyle(
-                        fontFamily: 'SF-Pro-Rounded-Black',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 40),
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 40),
                   ),
                 ],
               ),

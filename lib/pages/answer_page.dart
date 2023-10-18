@@ -20,8 +20,11 @@ class AnswerPage extends StatelessWidget {
               width: 30,
             ),
             Text(
-              "대답할게요",
-              style: TextStyle(fontWeight: FontWeight.w300, fontSize: 35),
+              "대답했어요",
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 35,
+              ),
             ),
           ],
         ),
