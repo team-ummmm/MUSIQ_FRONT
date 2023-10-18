@@ -4,7 +4,6 @@
 ///
 
 import 'package:flutter/material.dart';
-import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/main_question_card.dart';
 import 'package:musiq_front/widgets/small_question_card.dart';
 
@@ -13,33 +12,28 @@ class AnswerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: AppColor.backgroudColor,
-        appBar: AppBar(
-          backgroundColor: AppColor.backgroudColor,
-        ),
-        body: const Column(
+    return const Column(
+      children: [
+        Row(
           children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: 30,
-                ),
-                Text(
-                  "대답할게요",
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 39),
-                ),
-              ],
+            SizedBox(
+              width: 30,
             ),
-            MainQuestionCard(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SmallQuestionCard(),
-                SmallQuestionCard(),
-              ],
+            Text(
+              "대답할게요",
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 39),
             ),
           ],
-        ));
+        ),
+        MainQuestionCard(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            SmallQuestionCard(),
+            SmallQuestionCard(),
+          ],
+        ),
+      ],
+    );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musiq_front/screens/search_screen.dart';
 import 'package:musiq_front/style.dart';
 
 class MainQuestionCard extends StatelessWidget {
@@ -13,31 +14,42 @@ class MainQuestionCard extends StatelessWidget {
         const SizedBox(
           height: 50,
         ),
-        Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10), color: AppColor.color1),
-          height: 240,
-          width: 340,
-          child: const Row(
-            children: [
-              SizedBox(width: 20),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "죽기 전에 마지막으로",
-                    style: TextStyle(fontSize: 28, color: Colors.white),
-                    textAlign: TextAlign.left,
-                  ),
-                  Text(
-                    "듣고 싶은 곡은 무엇인가요?",
-                    style: TextStyle(fontSize: 28, color: Colors.white),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SearchScreen(),
               ),
-            ],
+            );
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: AppColor.color1),
+            height: 240,
+            width: 340,
+            child: const Row(
+              children: [
+                SizedBox(width: 20),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "죽기 전에 마지막으로",
+                      style: TextStyle(fontSize: 28, color: Colors.white),
+                      textAlign: TextAlign.left,
+                    ),
+                    Text(
+                      "듣고 싶은 곡은 무엇인가요?",
+                      style: TextStyle(fontSize: 28, color: Colors.white),
+                      textAlign: TextAlign.left,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ]),
