@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+
+import 'package:musiq_front/pages/calendar_page.dart';
+import 'package:musiq_front/pages/root_page.dart';
+import 'package:musiq_front/screens/search_screen.dart';
+import 'package:musiq_front/style.dart';
 import 'pages/answer_page.dart';
 import 'pages/calendar_page.dart';
 import 'style.dart';
@@ -15,6 +20,8 @@ class MUSIQ extends StatelessWidget {
     return MaterialApp(
       title: 'MUSIQ',
       theme: ThemeData(
+        appBarTheme: const AppBarTheme(color: AppColor.backgroudColor),
+        scaffoldBackgroundColor: AppColor.backgroudColor,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         fontFamily: 'SF-Pro-Rounded',
         scaffoldBackgroundColor: AppColor.backgroudColor,
@@ -22,7 +29,12 @@ class MUSIQ extends StatelessWidget {
             const AppBarTheme(backgroundColor: AppColor.backgroudColor),
         useMaterial3: true,
       ),
-      home: const CalendarPage(),
+      home: const RootPage(),
+      routes: {
+        '/answer': (context) => const AnswerPage(),
+        '/answer/search': (context) => const SearchScreen(),
+        '/calendar': (context) => const CalendarPage(),
+      },
     );
   }
 }
