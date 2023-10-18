@@ -13,6 +13,10 @@ class RootPage extends StatefulWidget {
 
 class _MyRootPageState extends State<RootPage> {
   int _selectedIndex = 0;
+
+  /// bottom navigation tab 하나당 고유 키 필요
+  /// initState에 초기화
+  /// main에서 route 지정해주기
   late List<GlobalKey<NavigatorState>> _navigatorKeyList;
 
   final _pages = const [
@@ -57,7 +61,8 @@ class _MyRootPageState extends State<RootPage> {
         top: false,
         bottom: false,
         child: Scaffold(
-          appBar: AppBar(),
+          appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(40.0), child: AppBar()),
           body: IndexedStack(
             index: _selectedIndex,
             children: _pages.map((page) {

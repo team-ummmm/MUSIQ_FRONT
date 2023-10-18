@@ -11,8 +11,10 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(30.0), child: AppBar()),
       body: Container(
+        color: Colors.amber,
         child: const Center(child: Text('hi')),
       ),
     );

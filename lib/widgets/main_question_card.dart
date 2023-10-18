@@ -41,7 +41,10 @@ class MainQuestionCard extends StatelessWidget {
                   children: [
                     Text(
                       "죽기 전에 마지막으로",
-                      style: TextStyle(fontSize: 28, color: Colors.white),
+                      style: TextStyle(
+                          fontSize: 28,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600),
                       textAlign: TextAlign.left,
                     ),
                     Text(
