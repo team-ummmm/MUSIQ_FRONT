@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:musiq_front/screens/search_screen.dart';
 import 'package:musiq_front/style.dart';
 
