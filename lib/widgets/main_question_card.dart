@@ -28,7 +28,7 @@ class MainQuestionCard extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: AppColor.color1),
+                color: AppColor.defaultColor),
             height: 240,
             width: 340,
             child: const Row(

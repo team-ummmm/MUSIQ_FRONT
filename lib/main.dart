@@ -24,9 +24,6 @@ class MUSIQ extends StatelessWidget {
         scaffoldBackgroundColor: AppColor.backgroudColor,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         fontFamily: 'SF-Pro-Rounded',
-        scaffoldBackgroundColor: AppColor.backgroudColor,
-        appBarTheme:
-            const AppBarTheme(backgroundColor: AppColor.backgroudColor),
         useMaterial3: true,
       ),
       home: const RootPage(),
