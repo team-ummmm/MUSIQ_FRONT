@@ -1,10 +1,12 @@
 // 돌아보아요 페이지
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
+    show CalendarCarousel;
 import 'package:flutter_calendar_carousel/classes/event.dart';
-
-import 'package:intl/intl.dart' show DateFormat;
+// import 'package:flutter_calendar_carousel/classes/event_list.dart';
+import 'package:intl/intl.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
@@ -14,7 +16,7 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  DateTime _currentDate = DateTime(2019, 2, 3);
+  DateTime _currentDate = DateTime.now();
 
   @override
   void initState() {
@@ -73,7 +75,7 @@ class _CalendarPageState extends State<CalendarPage> {
               padding: const EdgeInsets.all(10.0),
               child: SizedBox(
                 width: 330,
-                height: 350,
+                height: 400,
                 child: CalendarCarousel<Event>(
                   onDayPressed: (DateTime date, List<Event> events) {
                     setState(() => _currentDate = date);
@@ -96,13 +98,47 @@ class _CalendarPageState extends State<CalendarPage> {
                   ) {
                     return null;
                   },
+                  showWeekDays: true,
+                  showHeader: true,
                   weekFormat: false,
-                  height: 360.0,
+                  height: 400.0,
                   todayButtonColor: Colors.black54,
-                  // selectedDateTime: _currentDate,
-                  // markedDateShowIcon: true,
+                  selectedDateTime: _currentDate,
+                  markedDateShowIcon: true,
                   // markedDateIconMaxShown: 1,
-                  daysHaveCircularBorder: false,
+                  daysHaveCircularBorder: true,
+                  onCalendarChanged: (DateTime date) {
+                    setState(() {
+                      _currentDate = date;
+                    });
+                  },
+                  staticSixWeekFormat: true,
+                  headerText:
+                      DateFormat('yyy년 MM월').format(_currentDate).toString(),
+                  headerTextStyle:
+                      const TextStyle(color: Colors.black, fontSize: 23),
+                  leftButtonIcon: const Icon(CupertinoIcons.left_chevron),
+                  rightButtonIcon: const Icon(CupertinoIcons.right_chevron),
+                  customWeekDayBuilder: (weekday, weekdayName) {
+                    final koreanDaysOfWeek = [
+                      '일',
+                      '월',
+                      '화',
+                      '수',
+                      '목',
+                      '금',
+                      '토'
+                    ];
+                    return Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 16.6),
+                      child: Text(
+                        koreanDaysOfWeek[weekday],
+                        style: const TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
