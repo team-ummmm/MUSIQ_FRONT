@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:musiq_front/style.dart';
 
+// TODO: 파라미터로 색깔, 검생창 유무, 질문, 이모지 받기
+
 class MainQuestionCard extends StatelessWidget {
   const MainQuestionCard({
     super.key,
@@ -15,7 +17,8 @@ class MainQuestionCard extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10), color: AppColor.color1),
+              borderRadius: BorderRadius.circular(10),
+              color: AppColor.defaultColor),
           height: 240,
           width: 340,
           child: const Row(
@@ -46,7 +49,8 @@ class MainQuestionCard extends StatelessWidget {
         left: 20,
         child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100), color: AppColor.color1),
+              borderRadius: BorderRadius.circular(100),
+              color: AppColor.defaultColor),
           height: 100,
           width: 100,
         ),

@@ -15,5 +15,5 @@ class AppColor extends Color {
   static const color8 = Color(0xFF432323);
   static const color9 = Color(0xFFFDCB5C);
   static const color10 = Color(0xFFED858E);
-
+  static const defaultColor = Color(0xFFD8CDD0);
 }

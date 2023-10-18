@@ -1,7 +1,6 @@
 // '대답할게요' 탭
 
 import 'package:flutter/material.dart';
-import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/main_question_card.dart';
 import 'package:musiq_front/widgets/small_question_card.dart';
 
@@ -11,10 +10,7 @@ class AnswerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColor.backgroudColor,
-        appBar: AppBar(
-          backgroundColor: AppColor.backgroudColor,
-        ),
+        appBar: AppBar(),
         body: const Column(
           children: [
             Row(
@@ -24,7 +20,10 @@ class AnswerPage extends StatelessWidget {
                 ),
                 Text(
                   "대답할게요",
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 39),
+                  style: TextStyle(
+                      fontFamily: 'SF-Pro-Rounded-Black',
+                      // fontWeight: FontWeight.w700,
+                      fontSize: 40),
                 ),
               ],
             ),

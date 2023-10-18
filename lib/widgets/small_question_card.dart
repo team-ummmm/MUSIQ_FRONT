@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:musiq_front/style.dart';
 
+// TODO: 파라미터로 색깔, 검생창 유무, 질문 받기
+
 class SmallQuestionCard extends StatelessWidget {
   const SmallQuestionCard({
     super.key,
@@ -15,7 +17,8 @@ class SmallQuestionCard extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10), color: AppColor.color1),
+              borderRadius: BorderRadius.circular(10),
+              color: AppColor.defaultColor),
           height: 120,
           width: 170,
           child: const Row(
@@ -27,12 +30,12 @@ class SmallQuestionCard extends StatelessWidget {
                 children: [
                   Text(
                     "죽기 전에 마지막으로",
-                    style: TextStyle(fontSize: 13, color: Colors.white),
+                    style: TextStyle(fontSize: 14, color: Colors.white),
                     textAlign: TextAlign.left,
                   ),
                   Text(
                     "듣고 싶은 곡은 무엇인가요?",
-                    style: TextStyle(fontSize: 13, color: Colors.white),
+                    style: TextStyle(fontSize: 14, color: Colors.white),
                     textAlign: TextAlign.left,
                   )
                 ],
@@ -46,7 +49,8 @@ class SmallQuestionCard extends StatelessWidget {
         left: 10,
         child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100), color: AppColor.color1),
+              borderRadius: BorderRadius.circular(100),
+              color: AppColor.defaultColor),
           height: 50,
           width: 50,
         ),
