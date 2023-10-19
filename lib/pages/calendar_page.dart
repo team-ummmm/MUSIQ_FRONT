@@ -1,5 +1,13 @@
 // 돌아보아요 페이지
 
+// TODO: 선택된 날짜(_currentDate)에 추가된 곡 정보를 색상 별로 띄우기
+// CalendarCarousel 안의 onDayPressed()를 활용하거나
+// _currentDate 값의 변화를 감지할 수 있다면 될 듯
+
+// TODO: 날짜별 색상 이벤트 추가
+// initState() 안에 각 날짜별 색상 이벤트 추가하는 함수?
+// 날짜와 해당일의 색상이 담긴 Map 있으면 편할 듯
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
@@ -28,7 +36,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
   @override
   Widget build(BuildContext context) {
-    // example events
+    // example events(manually added)
     _markdeDateMap.add(
         DateTime(2023, 10, 20),
         Event(
