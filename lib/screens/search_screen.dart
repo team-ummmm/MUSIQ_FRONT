@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musiq_front/widgets/main_question_card.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -13,9 +14,13 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(30.0), child: AppBar()),
-      body: Container(
-        color: Colors.amber,
-        child: const Center(child: Text('hi')),
+      body: const Center(
+        child: Column(
+          children: [
+            // TODO: Hero 추가하기
+            MainQuestionCard(),
+          ],
+        ),
       ),
     );
   }

@@ -55,7 +55,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         child: Text(
                       "🎨X7",
                       // TODO: streak_count 변수로 변경
-                      style: TextStyle(fontSize: 30),
+                      style: TextStyle(fontSize: 25),
                     )),
                   ),
                   const SizedBox(width: 30),

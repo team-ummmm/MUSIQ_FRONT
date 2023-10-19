@@ -4,6 +4,7 @@
 ///
 
 import 'package:flutter/material.dart';
+import 'package:musiq_front/screens/search_screen.dart';
 import 'package:musiq_front/widgets/main_question_card.dart';
 import 'package:musiq_front/widgets/small_question_card.dart';
 
@@ -12,9 +13,9 @@ class AnswerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        Row(
+        const Row(
           children: [
             SizedBox(
               width: 30,
@@ -28,8 +29,17 @@ class AnswerPage extends StatelessWidget {
             ),
           ],
         ),
-        MainQuestionCard(),
-        Row(
+        GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SearchScreen(),
+                ),
+              );
+            },
+            child: const MainQuestionCard()),
+        const Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SmallQuestionCard(),
