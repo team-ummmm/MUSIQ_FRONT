@@ -21,31 +21,23 @@ class MainQuestionCard extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: AppColor.defaultColor),
-          height: 240,
+          height: 180,
           width: 340,
-          child: const Row(
-            children: [
-              SizedBox(width: 20),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "죽기 전에 마지막으로",
-                    style: TextStyle(
-                        fontSize: 28,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500),
-                    textAlign: TextAlign.left,
-                  ),
-                  Text(
-                    "듣고 싶은 곡은 무엇인가요?",
-                    style: TextStyle(fontSize: 28, color: Colors.white),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
+          child: const Padding(
+            padding: EdgeInsets.only(top: 20.0),
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Center(
+                child: Text(
+                  "죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?",
+                  style: TextStyle(
+                      fontSize: 28,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                ),
               ),
-            ],
+            ),
           ),
         ),
       ]),
@@ -76,24 +68,24 @@ class MainQuestionCard extends StatelessWidget {
               ),
             ),
           )),
-      Positioned(
-        bottom: 30,
-        left: 20,
-        child: Container(
-          width: 300,
-          height: 30,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white.withOpacity(0.8)),
-          child: const TextField(
-            decoration: InputDecoration(
-              icon: Icon(Icons.search),
-              hintText: "어떤 곡으로 대답하실 건가요?",
-            ),
-            style: TextStyle(fontSize: 15, height: 1.0),
-          ),
-        ),
-      )
+      // Positioned(
+      //   bottom: 30,
+      //   left: 20,
+      //   child: Container(
+      //     width: 300,
+      //     height: 30,
+      //     decoration: BoxDecoration(
+      //         borderRadius: BorderRadius.circular(10),
+      //         color: Colors.white.withOpacity(0.8)),
+      //     child: const TextField(
+      //       decoration: InputDecoration(
+      //         icon: Icon(Icons.search),
+      //         hintText: "어떤 곡으로 대답하실 건가요?",
+      //       ),
+      //       style: TextStyle(fontSize: 15, height: 1.0),
+      //     ),
+      //   ),
+      // )
     ]);
   }
 }

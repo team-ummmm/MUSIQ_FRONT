@@ -23,6 +23,7 @@ class AnswerPage extends StatelessWidget {
             Text(
               "대답했어요",
               style: TextStyle(
+                fontFamily: 'AppleSDGothicNeo',
                 fontWeight: FontWeight.w500,
                 fontSize: 35,
               ),

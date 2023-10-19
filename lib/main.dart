@@ -24,7 +24,7 @@ class MUSIQ extends StatelessWidget {
         appBarTheme: const AppBarTheme(color: AppColor.backgroudColor),
         scaffoldBackgroundColor: AppColor.backgroudColor,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        fontFamily: 'AppleSDGothicNeo',
+        // fontFamily: 'AppleSDGothicNeo',
         useMaterial3: true,
       ),
       home: const RootPage(),

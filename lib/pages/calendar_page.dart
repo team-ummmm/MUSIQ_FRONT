@@ -39,7 +39,10 @@ class _CalendarPageState extends State<CalendarPage> {
                   ),
                   Text(
                     "돌아보아요",
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 40),
+                    style: TextStyle(
+                        fontFamily: 'AppleSDGothicNeo',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 35),
                   ),
                 ],
               ),
@@ -99,11 +102,17 @@ class _CalendarPageState extends State<CalendarPage> {
                   showHeader: true,
                   weekFormat: false,
                   height: 400.0,
-                  todayButtonColor: Colors.black54,
+                  todayButtonColor: Colors.grey.shade300,
+                  todayTextStyle: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
                   selectedDateTime: _currentDate,
+                  // selectedDayButtonColor: ,
+                  selectedDayBorderColor: Colors.red,
                   markedDateShowIcon: true,
                   // markedDateIconMaxShown: 1,
-                  daysHaveCircularBorder: true,
+                  // daysHaveCircularBorder: true,
                   onCalendarChanged: (DateTime date) {
                     setState(() {
                       _currentDate = date;
