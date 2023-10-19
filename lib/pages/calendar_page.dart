@@ -1,8 +1,7 @@
 // 돌아보아요 페이지
 
 // TODO: 선택된 날짜(_currentDate)에 추가된 곡 정보를 색상 별로 띄우기
-// CalendarCarousel 안의 onDayPressed()를 활용하거나
-// _currentDate 값의 변화를 감지할 수 있다면 될 듯
+// valueNotifier 사용해도 OK
 
 // TODO: 날짜별 색상 이벤트 추가
 // initState() 안에 각 날짜별 색상 이벤트 추가하는 함수?
@@ -26,6 +25,7 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
   DateTime _currentDate = DateTime.now();
+  bool dateChanged = false;
   EventList<Event> _markdeDateMap = EventList<Event>(events: {});
 
   @override
@@ -109,6 +109,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 child: CalendarCarousel<Event>(
                   onDayPressed: (DateTime date, List<Event> events) {
                     setState(() => _currentDate = date);
+                    dateChanged = true;
                   },
                   weekendTextStyle: const TextStyle(
                     color: Colors.red,
@@ -190,6 +191,7 @@ class _CalendarPageState extends State<CalendarPage> {
               ),
             ),
           ),
+          dateChanged ? Text(_currentDate.toString()) : Container()
         ],
       ),
     );
