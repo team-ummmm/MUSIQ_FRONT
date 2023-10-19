@@ -19,9 +19,8 @@ class MainQuestionCard extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: AppColor.defaultColor),
-          height: 240,
+              borderRadius: BorderRadius.circular(10), color: AppColor.color2),
+          height: 200,
           width: 340,
           child: const Row(
             children: [
@@ -35,12 +34,15 @@ class MainQuestionCard extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 28,
                         color: Colors.white,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                     textAlign: TextAlign.left,
                   ),
                   Text(
                     "듣고 싶은 곡은 무엇인가요?",
-                    style: TextStyle(fontSize: 28, color: Colors.white),
+                    style: TextStyle(
+                        fontSize: 28,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600),
                     textAlign: TextAlign.left,
                   ),
                 ],
@@ -54,8 +56,7 @@ class MainQuestionCard extends StatelessWidget {
         left: 20,
         child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              color: AppColor.defaultColor),
+              borderRadius: BorderRadius.circular(100), color: AppColor.color2),
           height: 100,
           width: 100,
         ),
@@ -76,24 +77,24 @@ class MainQuestionCard extends StatelessWidget {
               ),
             ),
           )),
-      Positioned(
-        bottom: 30,
-        left: 20,
-        child: Container(
-          width: 300,
-          height: 30,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white.withOpacity(0.8)),
-          child: const TextField(
-            decoration: InputDecoration(
-              icon: Icon(Icons.search),
-              hintText: "어떤 곡으로 대답하실 건가요?",
-            ),
-            style: TextStyle(fontSize: 15, height: 1.0),
-          ),
-        ),
-      )
+      // Positioned(
+      //   bottom: 30,
+      //   left: 20,
+      //   child: Container(
+      //     width: 300,
+      //     height: 30,
+      //     decoration: BoxDecoration(
+      //         borderRadius: BorderRadius.circular(10),
+      //         color: Colors.white.withOpacity(0.8)),
+      //     child: const TextField(
+      //       decoration: InputDecoration(
+      //         icon: Icon(Icons.search),
+      //         hintText: "어떤 곡으로 대답하실 건가요?",
+      //       ),
+      //       style: TextStyle(fontSize: 15, height: 1.0),
+      //     ),
+      //   ),
+      // )
     ]);
   }
 }

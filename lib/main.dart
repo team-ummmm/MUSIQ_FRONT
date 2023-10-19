@@ -23,10 +23,9 @@ class MUSIQ extends StatelessWidget {
       theme: ThemeData(
         appBarTheme: const AppBarTheme(color: AppColor.backgroudColor),
         scaffoldBackgroundColor: AppColor.backgroudColor,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        fontFamily: 'AppleSDGothicNeo',
         useMaterial3: true,
       ),
+      // TODO: 링크 타고 온 경우 라우트 추가
       home: const RootPage(),
       routes: {
         '/answer': (context) => const AnswerPage(),

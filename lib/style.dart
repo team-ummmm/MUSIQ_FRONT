@@ -4,7 +4,7 @@ class AppColor extends Color {
   AppColor(super.value);
 
   static const backgroudColor = Color(0xFFF2F2F2);
-  static const navigationBarColor = Color(0xE5DED7D2);
+  static const navigationBarColor = Color.fromRGBO(34, 22, 13, 0.898);
   static const color1 = Color(0xFFC92A5A);
   static const color2 = Color(0xFFB425A9);
   static const color3 = Color(0xFF7637F4);
