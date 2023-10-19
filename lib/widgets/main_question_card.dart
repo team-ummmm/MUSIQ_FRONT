@@ -19,35 +19,25 @@ class MainQuestionCard extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10), color: AppColor.color2),
-          height: 200,
+              borderRadius: BorderRadius.circular(10),
+              color: AppColor.defaultColor),
+          height: 180,
           width: 340,
-          child: const Row(
-            children: [
-              SizedBox(width: 20),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "죽기 전에 마지막으로",
-                    style: TextStyle(
-                        fontSize: 28,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600),
-                    textAlign: TextAlign.left,
-                  ),
-                  Text(
-                    "듣고 싶은 곡은 무엇인가요?",
-                    style: TextStyle(
-                        fontSize: 28,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
+          child: const Padding(
+            padding: EdgeInsets.only(top: 20.0),
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Center(
+                child: Text(
+                  "죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?",
+                  style: TextStyle(
+                      fontSize: 28,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                ),
               ),
-            ],
+            ),
           ),
         ),
       ]),
