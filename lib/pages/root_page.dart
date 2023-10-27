@@ -22,7 +22,6 @@ class _MyRootPageState extends State<RootPage> {
   final _pages = const [
     AnswerPage(),
     AnswerPage(),
-    AnswerPage(),
     CalendarPage(),
     AnswerPage(),
   ];
@@ -34,11 +33,9 @@ class _MyRootPageState extends State<RootPage> {
     BottomNavigationBarItem(
         icon: Icon(CupertinoIcons.person_fill), label: 'Tab 2'),
     BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.person_3_fill), label: 'Tab 3'),
+        icon: Icon(CupertinoIcons.calendar), label: 'Tab 3'),
     BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.calendar), label: 'Tab 4'),
-    BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.settings), label: 'Tab 5'),
+        icon: Icon(CupertinoIcons.settings), label: 'Tab 4'),
   ];
 
   @override
