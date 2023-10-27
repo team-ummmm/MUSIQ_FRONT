@@ -46,7 +46,8 @@ class MainQuestionCard extends StatelessWidget {
         left: 20,
         child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100), color: AppColor.color2),
+              borderRadius: BorderRadius.circular(100),
+              color: AppColor.defaultColor),
           height: 100,
           width: 100,
         ),
