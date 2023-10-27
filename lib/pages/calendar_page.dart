@@ -81,7 +81,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Colors.grey.shade400),
+                        color: Colors.grey.shade400.withOpacity(0.8)),
                     width: 120,
                     height: 50,
                     child: const Center(
@@ -100,7 +100,7 @@ class _CalendarPageState extends State<CalendarPage> {
           Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.grey.shade300),
+                color: Colors.grey.shade400.withOpacity(0.8)),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: SizedBox(
@@ -112,8 +112,9 @@ class _CalendarPageState extends State<CalendarPage> {
                     dateChanged = true;
                   },
                   weekendTextStyle: const TextStyle(
-                    color: Colors.red,
+                    color: Colors.white,
                   ),
+                  daysTextStyle: const TextStyle(color: Colors.white),
                   thisMonthDayBorderColor: Colors.grey,
                   customDayBuilder: (
                     /// you can provide your own build function to make custom day containers
@@ -133,9 +134,9 @@ class _CalendarPageState extends State<CalendarPage> {
                   showHeader: true,
                   weekFormat: false,
                   height: 400.0,
-                  todayButtonColor: Colors.grey.shade300,
+                  todayButtonColor: Colors.grey.shade400.withOpacity(0.8),
                   todayTextStyle: const TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.bold),
                   selectedDateTime: _currentDate,
@@ -151,7 +152,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   markedDateIconBuilder: (event) {
                     return event.icon;
                   },
-                  // showIconBehindDayText: true,
+                  showIconBehindDayText: true,
                   // daysHaveCircularBorder: true,
                   onCalendarChanged: (DateTime date) {
                     setState(() {
@@ -204,16 +205,16 @@ class _CalendarPageState extends State<CalendarPage> {
         color: AppColor.colorList[color],
         borderRadius: BorderRadius.circular(100),
       ),
-      child: Center(
-        child: Text(
-          day,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-          ),
-        ),
-      ),
+      // child: Center(
+      //   child: Text(
+      //     day,
+      //     style: const TextStyle(
+      //       color: Colors.white,
+      //       fontWeight: FontWeight.bold,
+      //       fontSize: 15,
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
