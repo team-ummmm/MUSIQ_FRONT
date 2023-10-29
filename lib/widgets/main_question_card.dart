@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
-import 'package:musiq_front/screens/search_screen.dart';
-import 'package:musiq_front/style.dart';
 
 // TODO: 파라미터로 색깔, 검생창 유무, 질문, 이모지 받기
 
 class MainQuestionCard extends StatelessWidget {
+  final String emoji;
+  final String question;
+  final Color color;
+  final bool main;
+
   const MainQuestionCard({
+    required this.emoji,
+    required this.question,
+    required this.color,
+    required this.main,
     super.key,
   });
 
@@ -19,19 +25,18 @@ class MainQuestionCard extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: AppColor.defaultColor),
-          height: 180,
+              borderRadius: BorderRadius.circular(10), color: color),
+          height: main ? 180 : 100,
           width: 340,
-          child: const Padding(
-            padding: EdgeInsets.only(top: 20.0),
+          child: Padding(
+            padding: EdgeInsets.only(top: main ? 25.0 : 15.0),
             child: Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Center(
                 child: Text(
-                  "죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?",
+                  question,
                   style: TextStyle(
-                      fontSize: 28,
+                      fontSize: main ? 28 : 18,
                       color: Colors.white,
                       fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
@@ -42,32 +47,32 @@ class MainQuestionCard extends StatelessWidget {
         ),
       ]),
       Positioned(
-        top: 10,
+        top: main ? 10 : 20,
         left: 20,
         child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              color: AppColor.defaultColor),
-          height: 100,
-          width: 100,
+              borderRadius: BorderRadius.circular(100), color: color),
+          height: main ? 100 : 60,
+          width: main ? 100 : 60,
         ),
       ),
       Positioned(
-          top: 15,
-          left: 25,
+          top: main ? 15 : 23,
+          left: main ? 25 : 22.7,
           child: Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100), color: Colors.white),
-            height: 90,
-            width: 90,
-            child: const Center(
+            height: main ? 90 : 55,
+            width: main ? 90 : 55,
+            child: Center(
               child: Text(
-                "👋",
-                style: TextStyle(fontSize: 40),
+                emoji,
+                style: TextStyle(fontSize: main ? 40 : 25),
                 textAlign: TextAlign.center,
               ),
             ),
           )),
+      // 검색창 필드
       // Positioned(
       //   bottom: 30,
       //   left: 20,

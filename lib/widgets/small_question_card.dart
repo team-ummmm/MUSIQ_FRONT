@@ -4,7 +4,14 @@ import 'package:musiq_front/style.dart';
 // TODO: 파라미터로 색깔, 검생창 유무, 질문 받기
 
 class SmallQuestionCard extends StatelessWidget {
+  final String emoji;
+  final String question;
+  final Color color;
+
   const SmallQuestionCard({
+    required this.emoji,
+    required this.question,
+    required this.color,
     super.key,
   });
 
@@ -17,27 +24,27 @@ class SmallQuestionCard extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: AppColor.defaultColor),
+              borderRadius: BorderRadius.circular(10), color: color),
           height: 120,
           width: 170,
-          child: const Row(
+          child: Row(
             children: [
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "죽기 전에 마지막으로",
-                    style: TextStyle(fontSize: 14, color: Colors.white),
-                    textAlign: TextAlign.left,
+                  SizedBox(
+                    width: 150,
+                    child: Text(
+                      question,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: Colors.white),
+                      textAlign: TextAlign.left,
+                    ),
                   ),
-                  Text(
-                    "듣고 싶은 곡은 무엇인가요?",
-                    style: TextStyle(fontSize: 14, color: Colors.white),
-                    textAlign: TextAlign.left,
-                  )
                 ],
               ),
             ],
@@ -49,8 +56,7 @@ class SmallQuestionCard extends StatelessWidget {
         left: 10,
         child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              color: AppColor.defaultColor),
+              borderRadius: BorderRadius.circular(100), color: color),
           height: 50,
           width: 50,
         ),
@@ -63,10 +69,10 @@ class SmallQuestionCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100), color: Colors.white),
             height: 45,
             width: 45,
-            child: const Center(
+            child: Center(
               child: Text(
-                "👋",
-                style: TextStyle(fontSize: 20),
+                emoji,
+                style: const TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),

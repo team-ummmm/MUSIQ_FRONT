@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:musiq_front/screens/search_screen.dart';
+import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/main_question_card.dart';
 import 'package:musiq_front/widgets/small_question_card.dart';
 
@@ -21,7 +22,7 @@ class AnswerPage extends StatelessWidget {
               width: 30,
             ),
             Text(
-              "대답했어요",
+              "대답할게요",
               style: TextStyle(
                 fontFamily: 'AppleSDGothicNeo',
                 fontWeight: FontWeight.w500,
@@ -39,12 +40,38 @@ class AnswerPage extends StatelessWidget {
                 ),
               );
             },
-            child: const MainQuestionCard()),
+            child: const MainQuestionCard(
+              emoji: '💍',
+              question: '결혼식에서 틀고 싶은 노래가 뭐예요?',
+              color: AppColor.defaultColor,
+              main: true,
+            )),
+        GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SearchScreen(),
+                ),
+              );
+            },
+            child: const MainQuestionCard(
+              emoji: '🍂',
+              question: '죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?',
+              color: AppColor.defaultColor,
+              main: false,
+            )),
         const Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SmallQuestionCard(),
-            SmallQuestionCard(),
+            SmallQuestionCard(
+                emoji: '🍂',
+                question: '죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?',
+                color: AppColor.defaultColor),
+            SmallQuestionCard(
+                emoji: '🍂',
+                question: '죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?',
+                color: AppColor.defaultColor),
           ],
         ),
       ],
