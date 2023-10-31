@@ -1,11 +1,9 @@
 // 돌아보아요 페이지
 
-// TODO: 선택된 날짜(_currentDate)에 추가된 곡 정보를 색상 별로 띄우기
-// valueNotifier 사용해도 OK
-
 // TODO: 날짜별 색상 이벤트 추가
 // initState() 안에 각 날짜별 색상 이벤트 추가하는 함수?
-// 날짜와 해당일의 색상이 담긴 Map 있으면 편할 듯
+
+// 답변들 한 번에 받아오면 일별 색상정보? 스트릭 정보? 답변들 리스트?
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +13,7 @@ import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:intl/intl.dart';
 import 'package:musiq_front/style.dart';
+import 'package:musiq_front/widgets/daily_music_list.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
@@ -32,6 +31,53 @@ class _CalendarPageState extends State<CalendarPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  // icon builder
+  static Widget _colorWidget(String day, int color) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColor.colorList[color],
+        borderRadius: BorderRadius.circular(100),
+      ),
+      // child: Center(
+      //   child: Text(
+      //     day,
+      //     style: const TextStyle(
+      //       color: Colors.white,
+      //       fontWeight: FontWeight.bold,
+      //       fontSize: 15,
+      //     ),
+      //   ),
+      // ),
+    );
+  }
+
+  // 선택된 날짜 및 해당 음악들 리턴 함수
+  Widget _showDailyMusicList(DateTime selectedDate) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Text(
+            DateFormat('yyy년 MM월 d일').format(selectedDate).toString(),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
+        DailyMusicList(
+          color: AppColor.color1,
+          date: selectedDate.toString(),
+        ),
+        DailyMusicList(
+          color: AppColor.color2,
+          date: selectedDate.toString(),
+        ),
+        DailyMusicList(
+          color: AppColor.color3,
+          date: selectedDate.toString(),
+        ),
+      ],
+    );
   }
 
   @override
@@ -192,29 +238,9 @@ class _CalendarPageState extends State<CalendarPage> {
               ),
             ),
           ),
-          dateChanged ? Text(_currentDate.toString()) : Container()
+          _showDailyMusicList(_currentDate),
         ],
       ),
-    );
-  }
-
-// icon builder
-  static Widget _colorWidget(String day, int color) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColor.colorList[color],
-        borderRadius: BorderRadius.circular(100),
-      ),
-      // child: Center(
-      //   child: Text(
-      //     day,
-      //     style: const TextStyle(
-      //       color: Colors.white,
-      //       fontWeight: FontWeight.bold,
-      //       fontSize: 15,
-      //     ),
-      //   ),
-      // ),
     );
   }
 }
