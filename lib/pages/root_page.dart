@@ -60,7 +60,10 @@ class _MyRootPageState extends State<RootPage> {
         bottom: false,
         child: Scaffold(
           appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(40.0), child: AppBar()),
+              preferredSize: const Size.fromHeight(40.0),
+              child: AppBar(
+                backgroundColor: AppColor.backgroudColor,
+              )),
           body: IndexedStack(
             index: _selectedIndex,
             children: _pages.map((page) {
