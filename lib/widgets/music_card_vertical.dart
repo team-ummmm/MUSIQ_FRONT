@@ -20,17 +20,18 @@ class MusicCardVertical extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10), color: Colors.blue),
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.blue.withOpacity(0.2)),
             width: 90,
             height: 90,
           ),
           Text(
             title.length > 8 ? title.substring(0, 8) : title,
-            style: const TextStyle(fontSize: 10),
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
           ),
           Text(
             artist.length > 15 ? artist.substring(0, 8) : artist,
-            style: const TextStyle(fontSize: 10),
+            style: TextStyle(fontSize: 10, color: Colors.grey.shade700),
           ),
         ],
       ),

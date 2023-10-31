@@ -64,9 +64,12 @@ class QuestionScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(15.0),
-              child: SizedBox(
+              child: Container(
                 height: 15,
                 width: 300,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
                 child: Row(
                   children: [
                     Expanded(
@@ -112,104 +115,134 @@ class QuestionScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 180,
-                    color: AppColor.color1.withOpacity(0.2),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            const SizedBox(
-                              width: 35,
-                              child: Text(
-                                '10월',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 15),
-                              ),
-                            ),
-                            Container(
-                              width: 10,
-                              height: 10,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: AppColor.color1.withOpacity(0.8)),
-                            ),
-                            const SizedBox(
-                              width: 35,
-                              child: Text(
-                                '2일',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 15),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            const SizedBox(width: 38),
-                            Container(
-                              height: 140,
-                              width: 3,
-                              color: AppColor.color1.withOpacity(0.8),
-                            ),
-                            const Expanded(
-                              child: SizedBox(
-                                height: 140,
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.all(10.0),
-                                        child: MusicCardVertical(
-                                          cover: 'cover',
-                                          title: '좋은밤 좋은꿈',
-                                          artist: 'NerdConnection',
-                                          color: 'color1',
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.all(10.0),
-                                        child: MusicCardVertical(
-                                          cover: 'cover',
-                                          title: '좋은밤 좋은꿈',
-                                          artist: 'Nerd Connection',
-                                          color: 'color1',
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.all(10.0),
-                                        child: MusicCardVertical(
-                                          cover: 'cover',
-                                          title: '좋은밤 좋은꿈',
-                                          artist: 'Nerd Connection',
-                                          color: 'color1',
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.all(10.0),
-                                        child: MusicCardVertical(
-                                          cover: 'cover',
-                                          title: '좋은밤 좋은꿈',
-                                          artist: 'Nerd Connection',
-                                          color: 'color1',
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
+                  TempList(todayColor: AppColor.colorList[0]),
+                  TempList(todayColor: AppColor.colorList[3]),
+                  TempList(todayColor: AppColor.colorList[2]),
+                  const SizedBox(height: 40),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(15, 10, 10, 0),
+                    child: Text(
+                      '2022',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: 'SF-Pro-Rounded',
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
+                  TempList(todayColor: AppColor.colorList[0]),
+                  TempList(todayColor: AppColor.colorList[3]),
+                  TempList(todayColor: AppColor.colorList[2]),
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TempList extends StatelessWidget {
+  final Color todayColor;
+  const TempList({super.key, required this.todayColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 180,
+      color: todayColor.withOpacity(0.3),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 0.0),
+            child: Row(
+              children: [
+                const SizedBox(
+                  width: 45,
+                  child: Text(
+                    '10월',
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+                  ),
+                ),
+                const SizedBox(width: 3),
+                Container(
+                  width: 12,
+                  height: 12,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: todayColor.withOpacity(0.8)),
+                ),
+                const SizedBox(width: 7),
+                const SizedBox(
+                  width: 35,
+                  child: Text(
+                    '31일',
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            children: [
+              const SizedBox(width: 63),
+              Container(
+                height: 140,
+                width: 2,
+                color: todayColor,
+              ),
+              const Expanded(
+                child: SizedBox(
+                  height: 140,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: MusicCardVertical(
+                            cover: 'cover',
+                            title: '좋은밤 좋은꿈',
+                            artist: 'Nerd Connection',
+                            color: 'color1',
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: MusicCardVertical(
+                            cover: 'cover',
+                            title: '좋은밤 좋은꿈',
+                            artist: 'Nerd Connection',
+                            color: 'color1',
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: MusicCardVertical(
+                            cover: 'cover',
+                            title: '좋은밤 좋은꿈',
+                            artist: 'Nerd Connection',
+                            color: 'color1',
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: MusicCardVertical(
+                            cover: 'cover',
+                            title: '좋은밤 좋은꿈',
+                            artist: 'Nerd Connection',
+                            color: 'color1',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }
