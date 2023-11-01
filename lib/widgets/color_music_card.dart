@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:musiq_front/style.dart';
 
-class DailyMusicCard extends StatelessWidget {
+class ColorMusicCard extends StatelessWidget {
   final String cover, title, artist, color;
-  const DailyMusicCard(
+  const ColorMusicCard(
       {super.key,
       required this.cover,
       required this.title,

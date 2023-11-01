@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:musiq_front/style.dart';
-import 'package:musiq_front/widgets/daily_music_card.dart';
+import 'package:musiq_front/widgets/color_music_card.dart';
 
-class DailyMusicList extends StatelessWidget {
+class ColorMusicList extends StatelessWidget {
   final Color color;
   final String date;
-  DailyMusicList({required this.color, required this.date, super.key});
+  ColorMusicList({required this.color, required this.date, super.key});
 
   // 예시 입력
-  final List<DailyMusicCard> musicInstances = [
-    const DailyMusicCard(
+  final List<ColorMusicCard> musicInstances = [
+    const ColorMusicCard(
         cover: "austin", title: 'Mouring', artist: 'Post Malone', color: 'red'),
-    const DailyMusicCard(
+    const ColorMusicCard(
         cover: "austin",
         title: 'Overdive',
         artist: 'Post Malone',
         color: 'red'),
-    const DailyMusicCard(
+    const ColorMusicCard(
         cover: "austin",
         title: '좋은밤 좋은꿈',
         artist: 'Nerd Connection',
         color: 'red'),
-    const DailyMusicCard(
+    const ColorMusicCard(
         cover: "austin",
         title: '좋은밤 좋은꿈',
         artist: 'Nerd Connection',

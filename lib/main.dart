@@ -37,6 +37,7 @@ class MUSIQ extends StatelessWidget {
       ),
       // TODO: 링크 타고 온 경우 라우트 추가
       home: const RootPage(),
+      // home: const PlayerScreen(),
       routes: {
         '/answer': (context) => const AnswerPage(),
         '/answer/search': (context) => const SearchScreen(),

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:musiq_front/pages/answer_page.dart';
 import 'package:musiq_front/pages/calendar_page.dart';
 import 'package:musiq_front/pages/questions_page.dart';
+import 'package:musiq_front/screens/player_screen.dart';
 import 'package:musiq_front/style.dart';
 
 class RootPage extends StatefulWidget {
@@ -24,7 +25,7 @@ class _MyRootPageState extends State<RootPage> {
     AnswerPage(),
     QuestionsPage(),
     CalendarPage(),
-    AnswerPage(),
+    PlayerScreen(),
   ];
 
   final List<BottomNavigationBarItem> bottomItems = const [
