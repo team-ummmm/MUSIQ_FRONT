@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:musiq_front/style.dart';
 
 // TODO: 파라미터로 색깔, 검생창 유무, 질문, 이모지 받기
 
-class MainQuestionCard extends StatelessWidget {
+class MainQuestionCard extends StatefulWidget {
   final String emoji;
   final String question;
   final Color color;
@@ -17,11 +19,41 @@ class MainQuestionCard extends StatelessWidget {
   });
 
   @override
+  State<MainQuestionCard> createState() => _MainQuestionCardState();
+}
+
+class _MainQuestionCardState extends State<MainQuestionCard> {
+  String emoji = '';
+  String question = '';
+  Color color = AppColor.defaultColor;
+  bool main = false;
+
+  @override
+  void initState() {
+    emoji = widget.emoji;
+    question = widget.question;
+    color = widget.color;
+    main = widget.main;
+    super.initState();
+  }
+
+  // TODO: 새로고침 동작 구현
+  void refreshCard() {
+    setState(() {
+      emoji = 'hi';
+      question = 'testing';
+      color = AppColor.colorList[3];
+      main = true;
+    });
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(children: [
       Column(children: [
-        const SizedBox(
-          height: 50,
+        SizedBox(
+          height: main ? 50 : 48,
         ),
         Container(
           decoration: BoxDecoration(
@@ -72,6 +104,18 @@ class MainQuestionCard extends StatelessWidget {
               ),
             ),
           )),
+      Positioned(
+        top: main ? 43 : 40,
+        left: 298,
+        child: IconButton(
+          icon: const Icon(CupertinoIcons.refresh_thick),
+          onPressed: () {
+            refreshCard();
+          },
+          color: Colors.black,
+          iconSize: 16,
+        ),
+      )
       // 검색창 필드
       // Positioned(
       //   bottom: 30,
