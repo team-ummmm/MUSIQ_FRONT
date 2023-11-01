@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:musiq_front/pages/calendar_page.dart';
 import 'package:musiq_front/pages/root_page.dart';
+import 'package:musiq_front/screens/player_screen.dart';
 import 'package:musiq_front/screens/search_screen.dart';
 import 'package:musiq_front/style.dart';
 
@@ -28,6 +29,7 @@ class MUSIQ extends StatelessWidget {
       ),
       // TODO: 링크 타고 온 경우 라우트 추가
       home: const RootPage(),
+      // home: const PlayerScreen(),
       routes: {
         '/answer': (context) => const AnswerPage(),
         '/answer/search': (context) => const SearchScreen(),
