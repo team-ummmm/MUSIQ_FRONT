@@ -9,8 +9,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:musiq_front/style.dart';
-import 'package:musiq_front/widgets/music_card_vertical.dart';
-import 'package:musiq_front/widgets/temp_list.dart';
+import 'package:musiq_front/widgets/daily_music_card.dart';
+import 'package:musiq_front/widgets/daily_music_list.dart';
 
 class QuestionScreen extends StatelessWidget {
   final String questionTitle;
@@ -116,9 +116,9 @@ class QuestionScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  TempList(todayColor: AppColor.colorList[0]),
-                  TempList(todayColor: AppColor.colorList[3]),
-                  TempList(todayColor: AppColor.colorList[2]),
+                  DailyMusicList(todayColor: AppColor.colorList[0]),
+                  DailyMusicList(todayColor: AppColor.colorList[3]),
+                  DailyMusicList(todayColor: AppColor.colorList[2]),
                   const SizedBox(height: 40),
                   const Padding(
                     padding: EdgeInsets.fromLTRB(15, 10, 10, 0),
@@ -131,9 +131,9 @@ class QuestionScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  TempList(todayColor: AppColor.colorList[0]),
-                  TempList(todayColor: AppColor.colorList[3]),
-                  TempList(todayColor: AppColor.colorList[2]),
+                  DailyMusicList(todayColor: AppColor.colorList[0]),
+                  DailyMusicList(todayColor: AppColor.colorList[3]),
+                  DailyMusicList(todayColor: AppColor.colorList[2]),
                 ],
               ),
             ),

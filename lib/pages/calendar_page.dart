@@ -13,7 +13,7 @@ import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:intl/intl.dart';
 import 'package:musiq_front/style.dart';
-import 'package:musiq_front/widgets/daily_music_list.dart';
+import 'package:musiq_front/widgets/color_music_list.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
@@ -25,7 +25,7 @@ class CalendarPage extends StatefulWidget {
 class _CalendarPageState extends State<CalendarPage> {
   DateTime _currentDate = DateTime.now();
   bool dateChanged = false;
-  EventList<Event> _markdeDateMap = EventList<Event>(events: {});
+  final EventList<Event> _markdeDateMap = EventList<Event>(events: {});
 
   @override
   void initState() {
@@ -64,15 +64,15 @@ class _CalendarPageState extends State<CalendarPage> {
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
         ),
-        DailyMusicList(
+        ColorMusicList(
           color: AppColor.color1,
           date: selectedDate.toString(),
         ),
-        DailyMusicList(
+        ColorMusicList(
           color: AppColor.color2,
           date: selectedDate.toString(),
         ),
-        DailyMusicList(
+        ColorMusicList(
           color: AppColor.color3,
           date: selectedDate.toString(),
         ),
