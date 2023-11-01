@@ -31,7 +31,10 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(35.0), child: AppBar()),
+          preferredSize: const Size.fromHeight(35.0),
+          child: AppBar(
+            backgroundColor: AppColor.backgroudColor,
+          )),
       body: Center(
         child: Column(
           children: [

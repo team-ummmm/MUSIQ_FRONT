@@ -91,26 +91,26 @@ flutter:
   #         weight: 700
 
   fonts:
-    # - family: SF-Pro-Rounded
-    #   fonts:
-    #     - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Black.otf
-    #       weight: 900
-    #     - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Heavy.otf
-    #       weight: 800
-    #     - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Bold.otf
-    #       weight: 700
-    #     - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Semibold.otf
-    #       weight: 600
-    #     - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Medium.otf
-    #       weight: 500
-    #     - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Regular.otf
-    #       weight: 400
-    #     - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Light.otf
-    #       weight: 300
-    #     - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Thin.otf
-    #       weight: 200
-    #     - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Ultralight.otf
-    #       weight: 100
+    - family: SF-Pro-Rounded
+      fonts:
+        - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Black.otf
+          weight: 900
+        - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Heavy.otf
+          weight: 800
+        - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Bold.otf
+          weight: 700
+        - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Semibold.otf
+          weight: 600
+        - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Medium.otf
+          weight: 500
+        - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Regular.otf
+          weight: 400
+        - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Light.otf
+          weight: 300
+        - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Thin.otf
+          weight: 200
+        - asset: fonts/SF-Pro-Rounded/SF-Pro-Rounded-Ultralight.otf
+          weight: 100
     - family: AppleSDGothicNeo
       fonts:
         - asset: fonts/AppleSDGothicNeo/AppleSDGothicNeoH00.ttf

@@ -3,6 +3,7 @@
 // TODO: 답변한 질문들 리스트 받아서 띄우기 && 답변곡들 페이지로 연결
 
 import 'package:flutter/material.dart';
+import 'package:musiq_front/screens/question_screen.dart';
 import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/small_question_card.dart';
 
@@ -38,11 +39,23 @@ class QuestionsPage extends StatelessWidget {
             padding: const EdgeInsets.all(11.0),
             children: List.generate(
               10,
-              (index) => const Center(
-                child: SmallQuestionCard(
-                  emoji: '🍂',
-                  question: '죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?',
-                  color: AppColor.defaultColor,
+              (index) => GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const QuestionScreen(
+                        questionTitle: '죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?',
+                      ),
+                    ),
+                  );
+                },
+                child: const Center(
+                  child: SmallQuestionCard(
+                    emoji: '🍂',
+                    question: '죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?',
+                    color: AppColor.defaultColor,
+                  ),
                 ),
               ),
             ),
