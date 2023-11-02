@@ -24,7 +24,7 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
   DateTime _currentDate = DateTime.now();
-  bool dateChanged = false;
+  // bool dateChanged = false;
   EventList<Event> _markdeDateMap = EventList<Event>(events: {});
 
   @override
@@ -58,22 +58,19 @@ class _CalendarPageState extends State<CalendarPage> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: Text(
-            DateFormat('yyy년 MM월 d일').format(selectedDate).toString(),
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          padding: const EdgeInsets.only(top: 10.0),
+          child: Row(
+            children: [
+              const SizedBox(width: 30),
+              Text(
+                DateFormat('yyy년 MM월 d일').format(selectedDate).toString(),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            ],
           ),
         ),
         ColorMusicList(
-          color: AppColor.color1,
-          date: selectedDate.toString(),
-        ),
-        ColorMusicList(
-          color: AppColor.color2,
-          date: selectedDate.toString(),
-        ),
-        ColorMusicList(
-          color: AppColor.color3,
           date: selectedDate.toString(),
         ),
       ],
@@ -162,7 +159,7 @@ class _CalendarPageState extends State<CalendarPage> {
                       child: CalendarCarousel<Event>(
                         onDayPressed: (DateTime date, List<Event> events) {
                           setState(() => _currentDate = date);
-                          dateChanged = true;
+                          // dateChanged = true;
                         },
                         weekendTextStyle: const TextStyle(
                           color: Colors.white,
@@ -207,11 +204,11 @@ class _CalendarPageState extends State<CalendarPage> {
                         },
                         showIconBehindDayText: true,
                         // daysHaveCircularBorder: true,
-                        onCalendarChanged: (DateTime date) {
-                          setState(() {
-                            _currentDate = date;
-                          });
-                        },
+                        // onCalendarChanged: (DateTime date) {
+                        //   setState(() {
+                        //     _currentDate = date;
+                        //   });
+                        // },
                         staticSixWeekFormat: true,
                         headerText: DateFormat('yyy년 MM월')
                             .format(_currentDate)
