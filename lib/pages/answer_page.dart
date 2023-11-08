@@ -3,6 +3,7 @@
 ///      상시 질문 가능하고, 상시 변경되는 다른 질문도 뜸.
 ///
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:musiq_front/screens/search_screen.dart';
 import 'package:musiq_front/style.dart';
@@ -31,6 +32,21 @@ class AnswerPage extends StatelessWidget {
             ),
           ],
         ),
+        Row(
+          children: [
+            const SizedBox(
+              width: 30,
+            ),
+            Text(
+              '천천히 고민해봐요!',
+              style: TextStyle(
+                  color: Colors.grey.shade500,
+                  fontSize: 18,
+                  fontFamily: 'AppleSDGothicNeo',
+                  fontWeight: FontWeight.w100),
+            ),
+          ],
+        ),
         GestureDetector(
             onTap: () {
               Navigator.push(
@@ -46,34 +62,64 @@ class AnswerPage extends StatelessWidget {
               color: AppColor.defaultColor,
               main: true,
             )),
-        GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SearchScreen(),
+        Stack(children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: Row(
+              children: [
+                const SizedBox(width: 30),
+                Text(
+                  '이 질문들은 어때요?',
+                  style: TextStyle(
+                      color: Colors.grey.shade500,
+                      fontSize: 18,
+                      fontFamily: 'AppleSDGothicNeo',
+                      fontWeight: FontWeight.w100),
                 ),
-              );
-            },
-            child: const MainQuestionCard(
-              emoji: '🍂',
-              question: '죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?',
-              color: AppColor.defaultColor,
-              main: false,
-            )),
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SmallQuestionCard(
-                emoji: '🍂',
-                question: '죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?',
-                color: AppColor.defaultColor),
-            SmallQuestionCard(
-                emoji: '🍂',
-                question: '죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?',
-                color: AppColor.defaultColor),
-          ],
-        ),
+              ],
+            ),
+          ),
+          Center(
+            child: Container(
+              padding: const EdgeInsets.only(top: 30.0),
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SearchScreen(),
+                      ),
+                    );
+                  },
+                  child: const MainQuestionCard(
+                    emoji: '🍂',
+                    question: '죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?',
+                    color: AppColor.defaultColor,
+                    main: false,
+                  )),
+            ),
+          ),
+          Center(
+            child: Container(
+              padding: const EdgeInsets.only(top: 170),
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SearchScreen(),
+                      ),
+                    );
+                  },
+                  child: const MainQuestionCard(
+                    emoji: '🍂',
+                    question: '죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?',
+                    color: AppColor.defaultColor,
+                    main: false,
+                  )),
+            ),
+          ),
+        ]),
       ],
     );
   }

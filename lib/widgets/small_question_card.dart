@@ -1,7 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:musiq_front/style.dart';
-
-// TODO: 파라미터로 색깔, 검생창 유무, 질문 받기
 
 class SmallQuestionCard extends StatelessWidget {
   final String emoji;
@@ -76,7 +75,7 @@ class SmallQuestionCard extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-          ))
+          )),
     ]);
   }
 }

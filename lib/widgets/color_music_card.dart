@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:musiq_front/style.dart';
 
 class ColorMusicCard extends StatelessWidget {
-  final String cover, title, artist, color;
+  final String cover, title, artist;
   const ColorMusicCard(
       {super.key,
       required this.cover,
       required this.title,
-      required this.artist,
-      required this.color});
+      required this.artist});
 
   @override
   Widget build(BuildContext context) {
