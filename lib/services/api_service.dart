@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'dart:html';
 
 import 'package:http/http.dart' as http;
 import 'package:musiq_front/models/question_model.dart';
 import 'package:musiq_front/models/search_music_model.dart';
 
 class ApiService {
-  // TODO: 수정 예정
   static const String baseUrl =
       'http://musiq-api.ap-northeast-2.elasticbeanstalk.com/';
   static const String searchSong = 'search?search_text=';
@@ -38,6 +36,7 @@ class ApiService {
 
     if (response.statusCode == 200) {
       final List<dynamic> searchMusics = jsonDecode(response.body);
+      print(searchMusics);
       for (var searchMusic in searchMusics) {
         searchMusicInstances.add(SearchMusicModel.fromJson(searchMusic));
       }

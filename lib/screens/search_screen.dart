@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:musiq_front/models/search_music_model.dart';
+import 'package:musiq_front/services/api_service.dart';
 import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/main_question_card.dart';
 import 'package:musiq_front/widgets/music_card.dart';
@@ -12,20 +16,46 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final List<MusicCard> musicInstances = [
-    const MusicCard(
-        cover: "austin", title: 'Mouring', artist: 'Post Malone', color: 'red'),
-    const MusicCard(
-        cover: "austin",
-        title: 'Overdive',
-        artist: 'Post Malone',
-        color: 'red'),
-    const MusicCard(
-        cover: "austin",
-        title: '좋은밤 좋은꿈',
-        artist: 'Nerd Connection',
-        color: 'red')
-  ];
+  TextEditingController textEditingController = TextEditingController();
+  // String searchText = '';
+  Timer? _debounce;
+  Future<List<SearchMusicModel>>? searchResults;
+
+  _onSearchChanged(String searchText) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      setState(
+        () {
+          searchResults = ApiService.getSearchMusics(searchText);
+        },
+      );
+    });
+  }
+
+  double _calculateHeight(int count) {
+    if (count == 1) {
+      return 110;
+    } else if (count == 2) {
+      return 175;
+    } else if (count == 3) {
+      return 260;
+    }
+    return 270;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    textEditingController.addListener(() {
+      _onSearchChanged(textEditingController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +71,7 @@ class _SearchScreenState extends State<SearchScreen> {
             // TODO: Hero 추가하기
             const MainQuestionCard(
               emoji: '👋',
-              question: '죽기 전에 마지막으로 듣고 싶은 곡?',
+              question: '죽기 전에 마지막으로 듣고 싶은 곡은?',
               color: AppColor.defaultColor,
               main: true,
             ),
@@ -55,57 +85,70 @@ class _SearchScreenState extends State<SearchScreen> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.grey.shade300),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                controller: textEditingController,
+                onChanged: _onSearchChanged,
+                decoration: const InputDecoration(
                   border: InputBorder.none,
                   icon: Icon(Icons.search),
                   hintText: "어떤 곡으로 대답하실 건가요?",
                 ),
-                style: TextStyle(fontSize: 15, height: 1.0),
+                style: const TextStyle(fontSize: 15, height: 1.0),
               ),
             ),
             const SizedBox(height: 10),
-            Padding(
+            FutureBuilder(
               // 하단의 검색 결과 창
-              // TODO: 텍스트 필드와 연결
-              // TODO: 크기 3으로 고정 시켜두고 안에서 스크롤 돌릴지, 아니면 검색 결과만큼 하단에 스크롤뷰로 뿌려줄지 고민
-              padding: const EdgeInsets.all(15.0),
-              child: Stack(children: [
-                Container(
-                  height: 240,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.grey.shade300,
-                  ),
-                  child: ListView.separated(
-                    padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
-                    itemCount: musicInstances.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return musicInstances[index];
-                    },
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const Divider(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 20,
-                  child: Container(
-                    height: 30,
-                    width: 320,
-                    color: Colors.grey.shade300,
-                    child: Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        '검색 결과',
-                        style: TextStyle(
-                            fontSize: 13, color: Colors.grey.shade700),
+              future: searchResults,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Stack(children: [
+                      Container(
+                        height: _calculateHeight(snapshot.data!.length),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.grey.shade300,
+                        ),
+                        child: ListView.separated(
+                          padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            var music = snapshot.data![index];
+                            return MusicCard(
+                                id: music.music_id,
+                                cover: music.cover_url,
+                                title: music.music_name,
+                                artist: music.artist_name);
+                          },
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const Divider(
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-              ]),
+                      Positioned(
+                        left: 20,
+                        child: Container(
+                          height: 30,
+                          width: 320,
+                          color: Colors.grey.shade300,
+                          child: Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Text(
+                              '검색 결과',
+                              style: TextStyle(
+                                  fontSize: 13, color: Colors.grey.shade700),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]),
+                  );
+                }
+                return const SizedBox();
+              },
             ),
           ],
         ),

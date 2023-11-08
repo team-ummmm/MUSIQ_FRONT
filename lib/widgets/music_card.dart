@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:musiq_front/style.dart';
 
 class MusicCard extends StatelessWidget {
-  final String cover, title, artist, color;
+  final String id, cover, title, artist;
   const MusicCard(
       {super.key,
+      required this.id,
       required this.cover,
       required this.title,
-      required this.artist,
-      required this.color});
+      required this.artist});
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +26,22 @@ class MusicCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title,
+                  SizedBox(
+                    width: 190,
+                    child: Text(
+                      title,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 190,
+                    child: Text(
+                      artist,
+                      overflow: TextOverflow.ellipsis,
                       style:
-                          const TextStyle(fontSize: 16, color: Colors.black)),
-                  Text(
-                    artist,
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
+                          TextStyle(fontSize: 14, color: Colors.grey.shade700),
+                    ),
                   )
                 ],
               ),
