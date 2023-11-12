@@ -10,6 +10,7 @@ class ApiService {
       'http://musiq-api.ap-northeast-2.elasticbeanstalk.com/';
   static const String searchSong = 'search?search_text=';
   static const String questionListQuestions = 'question-list/questions';
+  static const String questionListAnswers = 'question-list/answers';
 
   /// Tab 2; 사용자 질문들 리스트 받기. 각 질문의 대답들은 따로 받음.
   /// 200: 대답했던 질문들 리스트로 바로 옴,
