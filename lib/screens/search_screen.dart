@@ -6,7 +6,6 @@ import 'package:musiq_front/services/api_service.dart';
 import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/main_question_card.dart';
 import 'package:musiq_front/widgets/music_card.dart';
-import 'package:musiq_front/widgets/search_result_list.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});

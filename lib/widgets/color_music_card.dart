@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:musiq_front/style.dart';
 
 class ColorMusicCard extends StatelessWidget {
   final String cover, title, artist;

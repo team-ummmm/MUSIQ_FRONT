@@ -6,10 +6,10 @@
 /// 일별로 대표색 띄움.
 ///
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:musiq_front/style.dart';
-import 'package:musiq_front/widgets/daily_music_card.dart';
+
 import 'package:musiq_front/widgets/daily_music_list.dart';
 
 class QuestionScreen extends StatelessWidget {

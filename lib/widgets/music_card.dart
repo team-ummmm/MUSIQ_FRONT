@@ -20,7 +20,17 @@ class MusicCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(width: 50, height: 50, color: Colors.blue),
+              SizedBox(
+                height: 50,
+                width: 50,
+                child: Image.network(
+                  cover,
+                  headers: const {
+                    "User-Agent":
+                        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+                  },
+                ),
+              ),
               const SizedBox(width: 10),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
