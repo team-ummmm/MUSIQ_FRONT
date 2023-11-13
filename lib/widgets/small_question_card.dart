@@ -8,7 +8,7 @@ class SmallQuestionCard extends StatelessWidget {
   final int id;
   final String emoji;
   final String question;
-  final String color;
+  final int color;
 
   const SmallQuestionCard({
     super.key,
@@ -26,7 +26,7 @@ class SmallQuestionCard extends StatelessWidget {
           height: 25,
         ),
         Container(
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColor.defaultColor),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColor.colorList[color]),
           height: 120,
           width: 170,
           child: Row(
@@ -54,7 +54,7 @@ class SmallQuestionCard extends StatelessWidget {
         top: 5,
         left: 10,
         child: Container(
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: AppColor.defaultColor),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: AppColor.colorList[color]),
           height: 50,
           width: 50,
         ),

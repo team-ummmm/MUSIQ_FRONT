@@ -1,8 +1,8 @@
 import 'dart:ffi';
 
 class QuestionModel {
-  final int question_id;
-  final String question_message, emoji, main_color;
+  final int question_id, main_color;
+  final String question_message, emoji;
 
   QuestionModel.fromJson(Map<String, dynamic> json)
       : question_id = json['question_id'],

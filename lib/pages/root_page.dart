@@ -36,7 +36,9 @@ class _MyRootPageState extends State<RootPage> {
       const AnswerPage(),
       QuestionsPage(key: questionsPageKey),
       const CalendarPage(),
-      const PlayerScreen(),
+      const PlayerScreen(
+        question: 'hi',
+      ),
     ];
   }
 

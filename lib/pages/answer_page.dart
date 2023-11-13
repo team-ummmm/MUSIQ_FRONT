@@ -3,16 +3,19 @@
 ///      상시 질문 가능하고, 상시 변경되는 다른 질문도 뜸.
 ///
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:musiq_front/screens/search_screen.dart';
 import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/main_question_card.dart';
-import 'package:musiq_front/widgets/small_question_card.dart';
 
-class AnswerPage extends StatelessWidget {
+class AnswerPage extends StatefulWidget {
   const AnswerPage({super.key});
 
+  @override
+  State<AnswerPage> createState() => _AnswerPageState();
+}
+
+class _AnswerPageState extends State<AnswerPage> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,11 +42,7 @@ class AnswerPage extends StatelessWidget {
             ),
             Text(
               '천천히 고민해봐요!',
-              style: TextStyle(
-                  color: Colors.grey.shade500,
-                  fontSize: 18,
-                  fontFamily: 'AppleSDGothicNeo',
-                  fontWeight: FontWeight.w100),
+              style: TextStyle(color: Colors.grey.shade500, fontSize: 18, fontFamily: 'AppleSDGothicNeo', fontWeight: FontWeight.w100),
             ),
           ],
         ),
@@ -71,11 +70,7 @@ class AnswerPage extends StatelessWidget {
                 const SizedBox(width: 30),
                 Text(
                   '이 질문들은 어때요?',
-                  style: TextStyle(
-                      color: Colors.grey.shade500,
-                      fontSize: 18,
-                      fontFamily: 'AppleSDGothicNeo',
-                      fontWeight: FontWeight.w100),
+                  style: TextStyle(color: Colors.grey.shade500, fontSize: 18, fontFamily: 'AppleSDGothicNeo', fontWeight: FontWeight.w100),
                 ),
               ],
             ),

@@ -23,11 +23,9 @@ class AppColor extends Color {
     Color(0xFF7637F4),
     Color(0xFF63CB24),
     Color(0xFF3897F0),
-    // Color(0xFF996438),
     Color(0xFFED772F),
-    // Color(0xFF432323),
     Color(0xFFFDCB5C),
     Color(0xFFED858E),
-    Color(0xFFD8CDD0),
+    Color(0xFFD8CDD0), // default color; 8
   ];
 }
