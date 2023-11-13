@@ -17,44 +17,34 @@ class _MyRootPageState extends State<RootPage> {
   int _selectedIndex = 0;
 
   /// bottom navigation tab 하나당 고유 키 필요
-  /// initState에 초기화
-  /// main에서 route 지정해주기
-  late List<GlobalKey<NavigatorState>> _navigatorKeyList;
-
-  final _pages = const [
-    AnswerPage(),
-    QuestionsPage(),
-    CalendarPage(),
-    PlayerScreen(question: "여행하면서 가장 기억에 남는 곡이 뭐예요?"),
-  ];
+  late final GlobalKey<QuestionsPageState> questionsPageKey = GlobalKey();
+  List<Widget>? _pages;
 
   final List<BottomNavigationBarItem> bottomItems = const [
-    BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.bubble_left_bubble_right_fill),
-        label: 'Tab 1'),
-    BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.person_fill), label: 'Tab 2'),
-    BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.calendar), label: 'Tab 3'),
-    BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.settings), label: 'Tab 4'),
+    BottomNavigationBarItem(icon: Icon(CupertinoIcons.bubble_left_bubble_right_fill), label: 'Tab 1'),
+    BottomNavigationBarItem(icon: Icon(CupertinoIcons.person_fill), label: 'Tab 2'),
+    BottomNavigationBarItem(icon: Icon(CupertinoIcons.calendar), label: 'Tab 3'),
+    BottomNavigationBarItem(icon: Icon(CupertinoIcons.settings), label: 'Tab 4'),
   ];
 
+  final List<GlobalKey<NavigatorState>> _navigatorKeyList = List.generate(4, (index) => GlobalKey<NavigatorState>());
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _navigatorKeyList =
-        List.generate(_pages.length, (index) => GlobalKey<NavigatorState>());
+    // Initialize _pages here
+    _pages = [
+      const AnswerPage(),
+      QuestionsPage(key: questionsPageKey),
+      const CalendarPage(),
+      const PlayerScreen(),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return !(await _navigatorKeyList[_selectedIndex]
-            .currentState!
-            .maybePop());
+        return !(await _navigatorKeyList[_selectedIndex].currentState!.maybePop());
       },
       child: SafeArea(
         top: false,
@@ -65,18 +55,20 @@ class _MyRootPageState extends State<RootPage> {
               child: AppBar(
                 backgroundColor: AppColor.backgroudColor,
               )),
-          body: IndexedStack(
-            index: _selectedIndex,
-            children: _pages.map((page) {
-              int index = _pages.indexOf(page);
-              return Navigator(
-                key: _navigatorKeyList[index],
-                onGenerateRoute: (_) {
-                  return MaterialPageRoute(builder: (context) => page);
-                },
-              );
-            }).toList(),
-          ),
+          body: _pages != null
+              ? IndexedStack(
+                  index: _selectedIndex,
+                  children: _pages!.map((page) {
+                    int index = _pages!.indexOf(page);
+                    return Navigator(
+                      key: _navigatorKeyList[index],
+                      onGenerateRoute: (_) {
+                        return MaterialPageRoute(builder: (context) => page);
+                      },
+                    );
+                  }).toList(),
+                )
+              : const Center(child: CircularProgressIndicator()),
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             backgroundColor: Colors.grey.shade300,
@@ -87,6 +79,10 @@ class _MyRootPageState extends State<RootPage> {
             showUnselectedLabels: false,
             onTap: (index) {
               setState(() {
+                if (index == 1) {
+                  print('hello');
+                  questionsPageKey.currentState?.updateQuestions();
+                }
                 _selectedIndex = index;
               });
             },
