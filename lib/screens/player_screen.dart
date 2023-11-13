@@ -15,7 +15,6 @@ class PlayerScreen extends StatefulWidget {
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
-  double _sliderValue = 0;
   String question = "";
   bool isCaptioned = false;
   String caption = "";
@@ -24,6 +23,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
   bool isPlaying = false;
   bool hasPlayed = false;
   Duration currentPosition = Duration.zero;
+  Duration currentDuration = Duration.zero;
 
   @override
   void initState() {
@@ -35,6 +35,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
       } else {
         setState(() => isPlaying = false);
       }
+    });
+    audioPlayer.onDurationChanged.listen((duration) {
+      setState(() => currentDuration = duration);
+    });
+    audioPlayer.onPositionChanged.listen((position) {
+      setState(() => currentPosition = position);
     });
   }
 
@@ -51,6 +57,18 @@ class _PlayerScreenState extends State<PlayerScreen> {
   void _pauseAudio() async {
     await audioPlayer.pause();
     currentPosition = await audioPlayer.getCurrentPosition() ?? Duration.zero;
+  }
+
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = twoDigits(duration.inHours);
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    return [
+      if (duration.inHours > 0) hours,
+      minutes,
+      seconds,
+    ].join(':');
   }
 
   @override
@@ -109,7 +127,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                           child:
                               // TODO: 커버 이미지로 변경
                               Opacity(
-                            opacity: showCaption && isCaptioned ? 0.5 : 1,
+                            opacity: showCaption ? 0.5 : 1,
                             child: Container(
                               decoration: BoxDecoration(
                                   color: Colors.blue.shade300,
@@ -122,31 +140,56 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       ],
                     ),
                   ),
-                  showCaption && isCaptioned
-                      ? SizedBox(
-                          width: 300,
-                          child: Center(
-                            child: Text(
-                              caption,
-                              style: TextStyle(
-                                  fontSize: 25, color: Colors.grey.shade700),
-                            ),
-                          ),
-                        )
-                      : Container(),
+                  // showCaption && isCaptioned
+                  //     ? SizedBox(
+                  //         width: 300,
+                  //         child: Center(
+                  //           child: Text(
+                  //             caption,
+                  //             style: TextStyle(
+                  //                 fontSize: 25, color: Colors.grey.shade700),
+                  //           ),
+                  //         ),
+                  //       )
+                  //     : Container(),
+                  showCaption
+                      ? (isCaptioned
+                          ? SizedBox(
+                              width: 300,
+                              child: Center(
+                                child: Text(
+                                  caption,
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      color: Colors.grey.shade700),
+                                ),
+                              ),
+                            )
+                          : SizedBox(
+                              width: 300,
+                              child: Center(
+                                child: Text(
+                                  "남기고 싶은 말을 적어주세요!",
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      color: Colors.grey.shade700),
+                                ),
+                              ),
+                            ))
+                      : Container()
                 ],
               ),
             ),
             // TODO: 제목, 가수 변경
             Column(children: [
               Text(
-                "Post Malone",
+                "BIGBANG",
                 style: TextStyle(
-                    color: Colors.grey.shade500,
+                    color: Colors.grey.shade700,
                     fontSize: 12,
                     decoration: TextDecoration.none),
               ),
-              const Text("Overdrive",
+              const Text("Bad Boy",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -156,14 +199,14 @@ class _PlayerScreenState extends State<PlayerScreen> {
             Column(
               children: [
                 Slider(
-                  value: _sliderValue,
+                  value: currentPosition.inSeconds.toDouble(),
                   onChanged: (value) {
                     setState(() {
-                      _sliderValue = value;
+                      audioPlayer.seek(Duration(seconds: value.toInt()));
                     });
                   },
                   min: 0,
-                  max: 100,
+                  max: currentDuration.inSeconds.toDouble(),
                   activeColor: Colors.white,
                   inactiveColor: Colors.white,
                 ),
@@ -173,8 +216,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(_sliderValue.toString()),
-                      const Text('100')
+                      Text(formatDuration(currentPosition)),
+                      Text(formatDuration(currentDuration))
                     ],
                   ),
                 )
