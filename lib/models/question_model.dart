@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class QuestionModel {
   final int question_id, main_color;
   final String question_message, emoji;

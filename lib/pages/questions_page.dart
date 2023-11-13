@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:musiq_front/models/question_model.dart';
 import 'package:musiq_front/screens/question_screen.dart';
 import 'package:musiq_front/services/api_service.dart';
-import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/small_question_card.dart';
 
 class QuestionsPage extends StatefulWidget {
@@ -25,7 +24,6 @@ class QuestionsPageState extends State<QuestionsPage> {
   Future<List<QuestionModel>> questions = ApiService.getQuestionsListQuestions('2');
 
   updateQuestions() {
-    print('hi');
     setState(() {
       questions = ApiService.getQuestionsListQuestions('2');
     });
@@ -58,11 +56,7 @@ class QuestionsPageState extends State<QuestionsPage> {
                 Expanded(
                   child: GridView.builder(
                     shrinkWrap: true,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // 한 개의 행에 보여줄 item 개수
-                      mainAxisSpacing: 11, //수평 Padding
-                      crossAxisSpacing: 11, //수직 Padding
-                    ),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       var question = snapshot.data![index];

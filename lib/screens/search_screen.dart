@@ -69,9 +69,10 @@ class _SearchScreenState extends State<SearchScreen> {
           children: [
             // TODO: Hero 추가하기
             const MainQuestionCard(
+              id: 2,
               emoji: '👋',
               question: '죽기 전에 마지막으로 듣고 싶은 곡은?',
-              color: AppColor.defaultColor,
+              color: 3,
               isMain: true,
               isSearching: true,
             ),
@@ -82,9 +83,7 @@ class _SearchScreenState extends State<SearchScreen> {
               // 중단의 텍스트 필드
               width: 350,
               height: 50,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.grey.shade300),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.grey.shade300),
               child: TextField(
                 controller: textEditingController,
                 onChanged: _onSearchChanged,
@@ -116,14 +115,9 @@ class _SearchScreenState extends State<SearchScreen> {
                           itemCount: snapshot.data!.length,
                           itemBuilder: (BuildContext context, int index) {
                             var music = snapshot.data![index];
-                            return MusicCard(
-                                id: music.music_id,
-                                cover: music.cover_url,
-                                title: music.music_name,
-                                artist: music.artist_name);
+                            return MusicCard(id: music.music_id, cover: music.cover_url, title: music.music_name, artist: music.artist_name);
                           },
-                          separatorBuilder: (BuildContext context, int index) =>
-                              const Divider(
+                          separatorBuilder: (BuildContext context, int index) => const Divider(
                             color: Colors.white,
                           ),
                         ),
@@ -138,8 +132,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             alignment: Alignment.bottomLeft,
                             child: Text(
                               '검색 결과',
-                              style: TextStyle(
-                                  fontSize: 13, color: Colors.grey.shade700),
+                              style: TextStyle(fontSize: 13, color: Colors.grey.shade700),
                             ),
                           ),
                         ),
