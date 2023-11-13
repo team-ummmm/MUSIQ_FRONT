@@ -25,7 +25,7 @@ class _MyRootPageState extends State<RootPage> {
     AnswerPage(),
     QuestionsPage(),
     CalendarPage(),
-    PlayerScreen(),
+    PlayerScreen(question: "여행하면서 가장 기억에 남는 곡이 뭐예요?"),
   ];
 
   final List<BottomNavigationBarItem> bottomItems = const [

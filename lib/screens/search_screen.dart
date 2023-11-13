@@ -43,7 +43,8 @@ class _SearchScreenState extends State<SearchScreen> {
               emoji: '👋',
               question: '죽기 전에 마지막으로 듣고 싶은 곡?',
               color: AppColor.defaultColor,
-              main: true,
+              isMain: true,
+              isSearching: true,
             ),
             const SizedBox(
               height: 20,
