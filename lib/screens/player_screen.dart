@@ -96,9 +96,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     ),
                   ),
                   showCaption && isCaptioned
-                      ? Center(
-                          child: SizedBox(
-                            width: 300,
+                      ? SizedBox(
+                          width: 300,
+                          child: Center(
                             child: Text(
                               caption,
                               style: const TextStyle(fontSize: 25),
