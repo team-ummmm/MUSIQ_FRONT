@@ -97,9 +97,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   ),
                   showCaption && isCaptioned
                       ? Center(
-                          child: Text(
-                            caption,
-                            style: const TextStyle(fontSize: 25),
+                          child: SizedBox(
+                            width: 300,
+                            child: Text(
+                              caption,
+                              style: const TextStyle(fontSize: 25),
+                            ),
                           ),
                         )
                       : Container(),
@@ -111,7 +114,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
               Text(
                 "Post Malone",
                 style: TextStyle(
-                    color: Colors.grey.shade300,
+                    color: Colors.grey.shade500,
                     fontSize: 12,
                     decoration: TextDecoration.none),
               ),
