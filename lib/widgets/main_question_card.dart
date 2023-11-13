@@ -63,18 +63,23 @@ class _MainQuestionCardState extends State<MainQuestionCard> {
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColor.colorList[color]),
           height: isMain ? 180 : 100,
           width: 340,
-          child: Padding(
-            padding: EdgeInsets.only(top: isMain ? 25.0 : 15.0),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
                 child: Text(
                   question,
                   style: TextStyle(fontSize: isMain ? 28 : 18, color: Colors.white, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
               ),
-            ),
+              Container(),
+            ],
           ),
         ),
       ]),
