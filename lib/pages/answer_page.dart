@@ -61,17 +61,10 @@ class _AnswerPageState extends State<AnswerPage> {
                   ),
                 ],
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SearchScreen(),
-                    ),
-                  );
-                },
+              Hero(
+                tag: mainQuestion.question_id,
                 child: MainQuestionCard(
-                  id: mainQuestion.question_id,
+                  question_id: mainQuestion.question_id,
                   question: mainQuestion.question_message,
                   emoji: mainQuestion.emoji,
                   color: mainQuestion.main_color,
@@ -95,46 +88,26 @@ class _AnswerPageState extends State<AnswerPage> {
                 Center(
                   child: Container(
                     padding: const EdgeInsets.only(top: 30.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SearchScreen(),
-                          ),
-                        );
-                      },
-                      child: MainQuestionCard(
-                        id: answeredQuestion1.question_id,
-                        question: answeredQuestion1.question_message,
-                        emoji: answeredQuestion1.emoji,
-                        color: answeredQuestion1.main_color,
-                        isMain: false,
-                        isSearching: false,
-                      ),
+                    child: MainQuestionCard(
+                      question_id: answeredQuestion1.question_id,
+                      question: answeredQuestion1.question_message,
+                      emoji: answeredQuestion1.emoji,
+                      color: answeredQuestion1.main_color,
+                      isMain: false,
+                      isSearching: false,
                     ),
                   ),
                 ),
                 Center(
                   child: Container(
                     padding: const EdgeInsets.only(top: 170),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SearchScreen(),
-                          ),
-                        );
-                      },
-                      child: MainQuestionCard(
-                        id: answeredQuestion2.question_id,
-                        question: answeredQuestion2.question_message,
-                        emoji: answeredQuestion2.emoji,
-                        color: answeredQuestion2.main_color,
-                        isMain: false,
-                        isSearching: false,
-                      ),
+                    child: MainQuestionCard(
+                      question_id: answeredQuestion2.question_id,
+                      question: answeredQuestion2.question_message,
+                      emoji: answeredQuestion2.emoji,
+                      color: answeredQuestion2.main_color,
+                      isMain: false,
+                      isSearching: false,
                     ),
                   ),
                 ),

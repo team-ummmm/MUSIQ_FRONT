@@ -13,18 +13,18 @@ class ApiService {
   static const String questionMain = 'question/main';
   static const String questionAnswered = 'question/answered';
 
-  static const String requestUserId = '?user_id=';
-  static const String requestRefresh = '?refresh=';
-  static const String requestSearchText = '?search_text=';
-  static const String requestQuestionId = '?question_id=';
-  static const String requestMusicId = '?music_id=';
+  static const String requestUserId = 'user_id=';
+  static const String requestRefresh = 'refresh=';
+  static const String requestSearchText = 'search_text=';
+  static const String requestQuestionId = 'question_id=';
+  static const String requestMusicId = 'music_id=';
 
   /// Tab 1; questionMain 1개. 한 번 호출
   /// 200: 대답 안 한 질문 하나 받기.
   /// 400: 에러
   static Future<QuestionModel> getQuestionsMain(String userId, bool refresh) async {
     QuestionModel question;
-    final url = Uri.parse("$baseUrl/$questionMain$requestUserId$userId&$requestRefresh$refresh");
+    final url = Uri.parse("$baseUrl/$questionMain?$requestUserId$userId&$requestRefresh$refresh");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -40,7 +40,7 @@ class ApiService {
   /// 400: 에러
   static Future<QuestionModel> getQuestionsAnswered(String userId, bool refresh) async {
     QuestionModel question;
-    final url = Uri.parse("$baseUrl/$questionAnswered$requestUserId$userId&$requestRefresh$refresh");
+    final url = Uri.parse("$baseUrl/$questionAnswered?$requestUserId$userId&$requestRefresh$refresh");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -56,7 +56,7 @@ class ApiService {
   /// 400: 에러
   static Future<List<QuestionModel>> getQuestionsListQuestions(String userId) async {
     List<QuestionModel> questionInstances = [];
-    final url = Uri.parse("$baseUrl/$questionListQuestions$requestUserId$userId");
+    final url = Uri.parse("$baseUrl/$questionListQuestions?$requestUserId$userId");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -75,7 +75,7 @@ class ApiService {
   /// 400: 에러
   static Future<List<SearchMusicModel>> getSearchMusics(String searchText) async {
     List<SearchMusicModel> searchMusicInstances = [];
-    final url = Uri.parse("$baseUrl/$search$requestSearchText$searchText");
+    final url = Uri.parse("$baseUrl/$search?$requestSearchText$searchText");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -91,12 +91,13 @@ class ApiService {
 
   // Search_Screen; 곡을 추가하면, 질문 대표 색을 받음.
   static Future<int> postSearchMusic(int questionId, String musicId) async {
-    final url = Uri.parse("$baseUrl/$search$requestQuestionId$questionId&$requestMusicId$musicId");
-    final response = await http.get(url);
+    final url = Uri.parse("$baseUrl/$search?$requestQuestionId$questionId&$requestMusicId$musicId");
+    final response = await http.post(url);
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData = jsonDecode(response.body);
       int color = responseData['main_color'];
+      print(color);
       return color;
     }
     throw Error();

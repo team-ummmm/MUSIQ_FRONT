@@ -18,6 +18,7 @@ class AppColor extends Color {
   static const defaultColor = Color(0xFFD8CDD0);
 
   static const List<Color> colorList = [
+    Color(0xFFD8CDD0), // default color;
     Color(0xFFF13E69),
     Color(0xFFB638F2),
     Color(0xFF7637F4),
@@ -26,6 +27,5 @@ class AppColor extends Color {
     Color(0xFFED772F),
     Color(0xFFFDCB5C),
     Color(0xFFED858E),
-    Color(0xFFD8CDD0), // default color; 8
   ];
 }

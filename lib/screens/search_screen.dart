@@ -8,7 +8,14 @@ import 'package:musiq_front/widgets/main_question_card.dart';
 import 'package:musiq_front/widgets/music_card.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+  final int question_id; // Question_id
+  final String emoji;
+  final String question;
+  final int initialColor;
+  final bool isMain;
+  final bool isSearching;
+
+  const SearchScreen({super.key, required this.question_id, required this.emoji, required this.question, required this.initialColor, required this.isMain, required this.isSearching});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -19,6 +26,8 @@ class _SearchScreenState extends State<SearchScreen> {
   // String searchText = '';
   Timer? _debounce;
   Future<List<SearchMusicModel>>? searchResults;
+
+  late int color = widget.initialColor;
 
   _onSearchChanged(String searchText) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
@@ -40,6 +49,12 @@ class _SearchScreenState extends State<SearchScreen> {
       return 260;
     }
     return 270;
+  }
+
+  void onColorChanged(int newColor) {
+    setState(() {
+      color = newColor;
+    });
   }
 
   @override
@@ -67,14 +82,17 @@ class _SearchScreenState extends State<SearchScreen> {
       body: Center(
         child: Column(
           children: [
-            // TODO: Hero 추가하기
-            const MainQuestionCard(
-              id: 2,
-              emoji: '👋',
-              question: '죽기 전에 마지막으로 듣고 싶은 곡은?',
-              color: 3,
-              isMain: true,
-              isSearching: true,
+            Hero(
+              tag: widget.question_id,
+              child: MainQuestionCard(
+                key: ValueKey(color),
+                question_id: widget.question_id,
+                question: widget.question,
+                emoji: widget.emoji,
+                color: color,
+                isMain: true,
+                isSearching: true,
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -115,7 +133,16 @@ class _SearchScreenState extends State<SearchScreen> {
                           itemCount: snapshot.data!.length,
                           itemBuilder: (BuildContext context, int index) {
                             var music = snapshot.data![index];
-                            return MusicCard(id: music.music_id, cover: music.cover_url, title: music.music_name, artist: music.artist_name);
+                            return MusicCard(
+                              key: ValueKey(color),
+                              question_id: widget.question_id,
+                              music_id: music.music_id,
+                              cover: music.cover_url,
+                              title: music.music_name,
+                              artist: music.artist_name,
+                              initial_color: color,
+                              onColorChanged: onColorChanged,
+                            );
                           },
                           separatorBuilder: (BuildContext context, int index) => const Divider(
                             color: Colors.white,

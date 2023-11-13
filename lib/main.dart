@@ -35,7 +35,7 @@ class MUSIQ extends StatelessWidget {
       // home: const PlayerScreen(),
       routes: {
         '/answer': (context) => const AnswerPage(),
-        '/answer/search': (context) => const SearchScreen(),
+        // '/answer/search': (context) => const SearchScreen(),
         // '/questions': (context) => QuestionsPage(),
         '/calendar': (context) => const CalendarPage(),
       },
