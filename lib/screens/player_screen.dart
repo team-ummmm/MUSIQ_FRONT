@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/caption_dialog.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class PlayerScreen extends StatefulWidget {
   final String question;
@@ -14,16 +15,60 @@ class PlayerScreen extends StatefulWidget {
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
-  double _sliderValue = 0;
   String question = "";
   bool isCaptioned = false;
   String caption = "";
   bool showCaption = false;
+  final AudioPlayer audioPlayer = AudioPlayer();
+  bool isPlaying = false;
+  bool hasPlayed = false;
+  Duration currentPosition = Duration.zero;
+  Duration currentDuration = Duration.zero;
 
   @override
   void initState() {
-    question = widget.question;
     super.initState();
+    question = widget.question;
+    audioPlayer.onPlayerStateChanged.listen((state) {
+      if (state == PlayerState.playing) {
+        setState(() => isPlaying = true);
+      } else {
+        setState(() => isPlaying = false);
+      }
+    });
+    audioPlayer.onDurationChanged.listen((duration) {
+      setState(() => currentDuration = duration);
+    });
+    audioPlayer.onPositionChanged.listen((position) {
+      setState(() => currentPosition = position);
+    });
+  }
+
+  void _playAudio() async {
+    if (!hasPlayed) {
+      await audioPlayer.play(UrlSource(
+          'https://p.scdn.co/mp3-preview/98a02e9cf5357e0dc0404547c66b24d479c89ac9?cid=8f5d90cfdb934386993813b06425a958'));
+    } else {
+      await audioPlayer.seek(currentPosition);
+      await audioPlayer.resume();
+    }
+  }
+
+  void _pauseAudio() async {
+    await audioPlayer.pause();
+    currentPosition = await audioPlayer.getCurrentPosition() ?? Duration.zero;
+  }
+
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = twoDigits(duration.inHours);
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    return [
+      if (duration.inHours > 0) hours,
+      minutes,
+      seconds,
+    ].join(':');
   }
 
   @override
@@ -82,7 +127,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                           child:
                               // TODO: 커버 이미지로 변경
                               Opacity(
-                            opacity: showCaption && isCaptioned ? 0.5 : 1,
+                            opacity: showCaption ? 0.5 : 1,
                             child: Container(
                               decoration: BoxDecoration(
                                   color: Colors.blue.shade300,
@@ -95,30 +140,56 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       ],
                     ),
                   ),
-                  showCaption && isCaptioned
-                      ? Center(
-                          child: SizedBox(
-                            width: 300,
-                            child: Text(
-                              caption,
-                              style: const TextStyle(fontSize: 25),
-                            ),
-                          ),
-                        )
-                      : Container(),
+                  // showCaption && isCaptioned
+                  //     ? SizedBox(
+                  //         width: 300,
+                  //         child: Center(
+                  //           child: Text(
+                  //             caption,
+                  //             style: TextStyle(
+                  //                 fontSize: 25, color: Colors.grey.shade700),
+                  //           ),
+                  //         ),
+                  //       )
+                  //     : Container(),
+                  showCaption
+                      ? (isCaptioned
+                          ? SizedBox(
+                              width: 300,
+                              child: Center(
+                                child: Text(
+                                  caption,
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      color: Colors.grey.shade700),
+                                ),
+                              ),
+                            )
+                          : SizedBox(
+                              width: 300,
+                              child: Center(
+                                child: Text(
+                                  "남기고 싶은 말을 적어주세요!",
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      color: Colors.grey.shade700),
+                                ),
+                              ),
+                            ))
+                      : Container()
                 ],
               ),
             ),
             // TODO: 제목, 가수 변경
             Column(children: [
               Text(
-                "Post Malone",
+                "BIGBANG",
                 style: TextStyle(
-                    color: Colors.grey.shade500,
+                    color: Colors.grey.shade700,
                     fontSize: 12,
                     decoration: TextDecoration.none),
               ),
-              const Text("Overdrive",
+              const Text("Bad Boy",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -128,14 +199,14 @@ class _PlayerScreenState extends State<PlayerScreen> {
             Column(
               children: [
                 Slider(
-                  value: _sliderValue,
+                  value: currentPosition.inSeconds.toDouble(),
                   onChanged: (value) {
                     setState(() {
-                      _sliderValue = value;
+                      audioPlayer.seek(Duration(seconds: value.toInt()));
                     });
                   },
                   min: 0,
-                  max: 100,
+                  max: currentDuration.inSeconds.toDouble(),
                   activeColor: Colors.white,
                   inactiveColor: Colors.white,
                 ),
@@ -145,8 +216,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(_sliderValue.toString()),
-                      const Text('100')
+                      Text(formatDuration(currentPosition)),
+                      Text(formatDuration(currentDuration))
                     ],
                   ),
                 )
@@ -176,11 +247,21 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     borderRadius: BorderRadius.circular(50),
                     color: Colors.white,
                   ),
-                  child: IconButton(
-                      icon: const Icon(CupertinoIcons.play_arrow_solid),
-                      color: AppColor.colorList[3],
-                      iconSize: 50,
-                      onPressed: () {}),
+                  child: isPlaying
+                      ? IconButton(
+                          icon: const Icon(CupertinoIcons.pause_fill),
+                          color: AppColor.colorList[3],
+                          iconSize: 50,
+                          onPressed: () {
+                            _pauseAudio();
+                          })
+                      : IconButton(
+                          icon: const Icon(CupertinoIcons.play_arrow_solid),
+                          color: AppColor.colorList[3],
+                          iconSize: 50,
+                          onPressed: () {
+                            _playAudio();
+                          }),
                 ),
                 Container(
                   margin: const EdgeInsets.all(8.0),
