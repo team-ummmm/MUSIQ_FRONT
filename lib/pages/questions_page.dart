@@ -3,65 +3,96 @@
 // TODO: 답변한 질문들 리스트 받아서 띄우기 && 답변곡들 페이지로 연결
 
 import 'package:flutter/material.dart';
+import 'package:musiq_front/models/question_model.dart';
 import 'package:musiq_front/screens/question_screen.dart';
+import 'package:musiq_front/services/api_service.dart';
 import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/small_question_card.dart';
 
-class QuestionsPage extends StatelessWidget {
-  const QuestionsPage({super.key});
+class QuestionsPage extends StatefulWidget {
+  const QuestionsPage({required this.key}) : super(key: key);
+
+  @override
+  final GlobalKey<QuestionsPageState> key;
+
+  @override
+  State<QuestionsPage> createState() => QuestionsPageState();
+}
+
+class QuestionsPageState extends State<QuestionsPage> {
+  final String userId = '2';
+
+  Future<List<QuestionModel>> questions = ApiService.getQuestionsListQuestions('2');
+
+  updateQuestions() {
+    print('hi');
+    setState(() {
+      questions = ApiService.getQuestionsListQuestions('2');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Row(
-          children: [
-            SizedBox(
-              width: 30,
-            ),
-            Text(
-              "대답했어요",
-              style: TextStyle(
-                fontFamily: 'AppleSDGothicNeo',
-                fontWeight: FontWeight.w500,
-                fontSize: 35,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Expanded(
-          child: GridView.count(
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            padding: const EdgeInsets.all(11.0),
-            children: List.generate(
-              10,
-              (index) => GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const QuestionScreen(
-                        questionTitle: '죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?',
+    return FutureBuilder(
+        future: questions,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Column(
+              children: [
+                const Row(
+                  children: [
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Text(
+                      "대답했어요",
+                      style: TextStyle(
+                        fontFamily: 'AppleSDGothicNeo',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 35,
                       ),
                     ),
-                  );
-                },
-                child: const Center(
-                  child: SmallQuestionCard(
-                    emoji: '🍂',
-                    question: '죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?',
-                    color: AppColor.defaultColor,
-                  ),
+                  ],
                 ),
-              ),
-            ),
-          ),
-        )
-      ],
-    );
+                const SizedBox(height: 20),
+                Expanded(
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // 한 개의 행에 보여줄 item 개수
+                      mainAxisSpacing: 11, //수평 Padding
+                      crossAxisSpacing: 11, //수직 Padding
+                    ),
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      var question = snapshot.data![index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => QuestionScreen(
+                                questionTitle: question.question_message,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Center(
+                          child: SmallQuestionCard(
+                            id: question.question_id,
+                            emoji: question.emoji,
+                            question: question.question_message,
+                            color: question.main_color,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              ],
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        });
   }
 }

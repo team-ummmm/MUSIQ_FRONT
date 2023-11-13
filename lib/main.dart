@@ -28,12 +28,7 @@ class MUSIQ extends StatelessWidget {
         useMaterial3: true,
       ),
       scrollBehavior: const MaterialScrollBehavior().copyWith(
-        dragDevices: {
-          PointerDeviceKind.mouse,
-          PointerDeviceKind.touch,
-          PointerDeviceKind.stylus,
-          PointerDeviceKind.unknown
-        },
+        dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch, PointerDeviceKind.stylus, PointerDeviceKind.unknown},
       ),
       // TODO: 링크 타고 온 경우 라우트 추가
       home: const RootPage(),
@@ -41,7 +36,7 @@ class MUSIQ extends StatelessWidget {
       routes: {
         '/answer': (context) => const AnswerPage(),
         '/answer/search': (context) => const SearchScreen(),
-        '/questions': (context) => const QuestionsPage(),
+        // '/questions': (context) => QuestionsPage(),
         '/calendar': (context) => const CalendarPage(),
       },
     );
