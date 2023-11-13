@@ -21,13 +21,19 @@ class _MyRootPageState extends State<RootPage> {
   List<Widget>? _pages;
 
   final List<BottomNavigationBarItem> bottomItems = const [
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.bubble_left_bubble_right_fill), label: 'Tab 1'),
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.person_fill), label: 'Tab 2'),
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.calendar), label: 'Tab 3'),
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.settings), label: 'Tab 4'),
+    BottomNavigationBarItem(
+        icon: Icon(CupertinoIcons.bubble_left_bubble_right_fill),
+        label: 'Tab 1'),
+    BottomNavigationBarItem(
+        icon: Icon(CupertinoIcons.person_fill), label: 'Tab 2'),
+    BottomNavigationBarItem(
+        icon: Icon(CupertinoIcons.calendar), label: 'Tab 3'),
+    BottomNavigationBarItem(
+        icon: Icon(CupertinoIcons.settings), label: 'Tab 4'),
   ];
 
-  final List<GlobalKey<NavigatorState>> _navigatorKeyList = List.generate(4, (index) => GlobalKey<NavigatorState>());
+  final List<GlobalKey<NavigatorState>> _navigatorKeyList =
+      List.generate(4, (index) => GlobalKey<NavigatorState>());
   @override
   void initState() {
     super.initState();
@@ -36,7 +42,9 @@ class _MyRootPageState extends State<RootPage> {
       const AnswerPage(),
       QuestionsPage(key: questionsPageKey),
       const CalendarPage(),
-      const PlayerScreen(),
+      const PlayerScreen(
+        question: "여행하면서 가장 기억에 남는 곡이 뭐예요?",
+      ),
     ];
   }
 
@@ -44,7 +52,9 @@ class _MyRootPageState extends State<RootPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return !(await _navigatorKeyList[_selectedIndex].currentState!.maybePop());
+        return !(await _navigatorKeyList[_selectedIndex]
+            .currentState!
+            .maybePop());
       },
       child: SafeArea(
         top: false,

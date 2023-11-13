@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/caption_dialog.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class PlayerScreen extends StatefulWidget {
   final String question;
@@ -19,11 +20,37 @@ class _PlayerScreenState extends State<PlayerScreen> {
   bool isCaptioned = false;
   String caption = "";
   bool showCaption = false;
+  final AudioPlayer audioPlayer = AudioPlayer();
+  bool isPlaying = false;
+  bool hasPlayed = false;
+  Duration currentPosition = Duration.zero;
 
   @override
   void initState() {
-    question = widget.question;
     super.initState();
+    question = widget.question;
+    audioPlayer.onPlayerStateChanged.listen((state) {
+      if (state == PlayerState.playing) {
+        setState(() => isPlaying = true);
+      } else {
+        setState(() => isPlaying = false);
+      }
+    });
+  }
+
+  void _playAudio() async {
+    if (!hasPlayed) {
+      await audioPlayer.play(UrlSource(
+          'https://p.scdn.co/mp3-preview/98a02e9cf5357e0dc0404547c66b24d479c89ac9?cid=8f5d90cfdb934386993813b06425a958'));
+    } else {
+      await audioPlayer.seek(currentPosition);
+      await audioPlayer.resume();
+    }
+  }
+
+  void _pauseAudio() async {
+    await audioPlayer.pause();
+    currentPosition = await audioPlayer.getCurrentPosition() ?? Duration.zero;
   }
 
   @override
@@ -101,7 +128,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
                           child: Center(
                             child: Text(
                               caption,
-                              style: const TextStyle(fontSize: 25),
+                              style: TextStyle(
+                                  fontSize: 25, color: Colors.grey.shade700),
                             ),
                           ),
                         )
@@ -176,11 +204,21 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     borderRadius: BorderRadius.circular(50),
                     color: Colors.white,
                   ),
-                  child: IconButton(
-                      icon: const Icon(CupertinoIcons.play_arrow_solid),
-                      color: AppColor.colorList[3],
-                      iconSize: 50,
-                      onPressed: () {}),
+                  child: isPlaying
+                      ? IconButton(
+                          icon: const Icon(CupertinoIcons.pause_fill),
+                          color: AppColor.colorList[3],
+                          iconSize: 50,
+                          onPressed: () {
+                            _pauseAudio();
+                          })
+                      : IconButton(
+                          icon: const Icon(CupertinoIcons.play_arrow_solid),
+                          color: AppColor.colorList[3],
+                          iconSize: 50,
+                          onPressed: () {
+                            _playAudio();
+                          }),
                 ),
                 Container(
                   margin: const EdgeInsets.all(8.0),
