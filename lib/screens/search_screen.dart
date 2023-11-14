@@ -15,7 +15,7 @@ class SearchScreen extends StatefulWidget {
   final int initialColor;
   final bool isMain;
   final bool isSearching;
-  final Function(Future<List<QuestionModel>>) onQuestionChanged;
+  final Function(List<Future<QuestionModel>>) onQuestionChanged;
 
   const SearchScreen(
       {super.key,
@@ -90,11 +90,12 @@ class _SearchScreenState extends State<SearchScreen> {
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                Future<List<QuestionModel>> nextQuestions = Future.wait([
+                List<Future<QuestionModel>> nextQuestions = [
                   ApiService.getQuestionsMain('2', false),
                   ApiService.getQuestionsAnswered('2', false),
                   ApiService.getQuestionsAnswered('2', false),
-                ]);
+                ];
+
                 widget.onQuestionChanged(nextQuestions);
                 Navigator.pop(context);
               },

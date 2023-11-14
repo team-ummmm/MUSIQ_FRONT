@@ -52,6 +52,8 @@ class _MainQuestionCardState extends State<MainQuestionCard> {
     });
   }
 
+  // TODO: isSearching 지우기
+  // TODO: Refresh 버튼 지우기
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -116,7 +118,7 @@ class _MainQuestionCardState extends State<MainQuestionCard> {
                 child: IconButton(
                   icon: const Icon(CupertinoIcons.refresh_thick),
                   onPressed: () {
-                    refreshCard();
+                    // refreshCard();
                   },
                   color: Colors.black,
                   iconSize: 16,
