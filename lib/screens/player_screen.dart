@@ -148,9 +148,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
                               child: Center(
                                 child: Text(
                                   caption,
-                                  style: TextStyle(
-                                      fontSize: 25,
-                                      color: Colors.grey.shade700),
+                                  style: const TextStyle(
+                                      fontSize: 25, color: Colors.white),
                                 ),
                               ),
                             )
@@ -170,15 +169,15 @@ class _PlayerScreenState extends State<PlayerScreen> {
               ),
             ),
             // TODO: 제목, 가수 변경
-            Column(children: [
+            const Column(children: [
               Text(
                 "BIGBANG",
                 style: TextStyle(
-                    color: Colors.grey.shade700,
+                    color: Colors.white,
                     fontSize: 12,
                     decoration: TextDecoration.none),
               ),
-              const Text("Bad Boy",
+              Text("Bad Boy",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -286,7 +285,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
     if (!isCaptioned) {
       return IconButton(
         icon: const Icon(CupertinoIcons.add_circled),
-        color: Colors.grey.shade600,
+        color: Colors.grey.shade400,
         onPressed: () {
           showDialog(
               context: context,
@@ -299,7 +298,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
     } else {
       return IconButton(
         icon: const Icon(CupertinoIcons.check_mark_circled),
-        color: Colors.grey.shade600,
+        color: Colors.grey.shade400,
         onPressed: () {
           showDialog(
               context: context,

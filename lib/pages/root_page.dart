@@ -43,7 +43,7 @@ class _MyRootPageState extends State<RootPage> {
       QuestionsPage(key: questionsPageKey),
       const CalendarPage(),
       const PlayerScreen(
-        question: "여행하면서 가장 기억에 남는 곡이 뭐예요?",
+        question: 'hi',
       ),
     ];
   }
