@@ -1,4 +1,5 @@
-// TODO: 질문->생성자, (캡션유무, 캡션, 커버, 아티스트, 제목, 재생 길이, 곡 색상)->state
+// 답변ID 던지면
+// 질문, 캡션유무, 뮤직객체(아티스트, 곡제목, 색깔, 커버URL, 노래URL) 받아옴
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -140,18 +141,6 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       ],
                     ),
                   ),
-                  // showCaption && isCaptioned
-                  //     ? SizedBox(
-                  //         width: 300,
-                  //         child: Center(
-                  //           child: Text(
-                  //             caption,
-                  //             style: TextStyle(
-                  //                 fontSize: 25, color: Colors.grey.shade700),
-                  //           ),
-                  //         ),
-                  //       )
-                  //     : Container(),
                   showCaption
                       ? (isCaptioned
                           ? SizedBox(
@@ -210,7 +199,6 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   activeColor: Colors.white,
                   inactiveColor: Colors.white,
                 ),
-                // TODO: min:sec 형식으로 변환 필요 -> 메소드 만들면 될 듯
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: Row(
@@ -236,9 +224,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   ),
                   child: IconButton(
                       icon: const Icon(CupertinoIcons.backward_fill),
+                      // TODO: 다음 곡 이전 곡 재생 구현 => question_screen에서 답변 리스트를 만들고 인덱스를 더하고 빼주는 함수를 인자로 player_screen을 생성하면 될 듯
                       onPressed: () {}),
                 ),
-                // TODO: 재생 중일 경우 pause 버튼, 아닐 경우 play 버튼
                 Container(
                   margin: const EdgeInsets.all(8.0),
                   height: 90,

@@ -57,9 +57,10 @@ class AnswerPage extends StatelessWidget {
               );
             },
             child: const MainQuestionCard(
+              id: 2,
               emoji: '💍',
-              question: '결혼식에서 틀고 싶은 노래가 뭐예요?',
-              color: AppColor.defaultColor,
+              question: '짧은 질문',
+              color: 8,
               isMain: true,
               isSearching: false,
             )),
@@ -93,9 +94,10 @@ class AnswerPage extends StatelessWidget {
                     );
                   },
                   child: const MainQuestionCard(
+                    id: 2,
                     emoji: '🍂',
-                    question: '죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?',
-                    color: AppColor.defaultColor,
+                    question: '짧은 질문',
+                    color: 8,
                     isMain: false,
                     isSearching: false,
                   )),
@@ -114,9 +116,10 @@ class AnswerPage extends StatelessWidget {
                     );
                   },
                   child: const MainQuestionCard(
+                    id: 2,
                     emoji: '🍂',
                     question: '죽기 전에 마지막으로 듣고 싶은 곡은 무엇인가요?',
-                    color: AppColor.defaultColor,
+                    color: 2,
                     isMain: false,
                     isSearching: false,
                   )),

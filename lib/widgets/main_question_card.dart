@@ -2,16 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:musiq_front/style.dart';
 
-// TODO: 파라미터로 색깔, 검생창 유무, 질문, 이모지 받기
-
 class MainQuestionCard extends StatefulWidget {
+  final int id;
   final String emoji;
   final String question;
-  final Color color;
+  final int color;
   final bool isMain;
   final bool isSearching;
 
   const MainQuestionCard({
+    required this.id,
     required this.emoji,
     required this.question,
     required this.color,
@@ -27,18 +27,19 @@ class MainQuestionCard extends StatefulWidget {
 class _MainQuestionCardState extends State<MainQuestionCard> {
   String emoji = '';
   String question = '';
-  Color color = AppColor.defaultColor;
-  bool isMain = false;
+  int color = 0;
+
+  bool isMain = true;
   bool isSearching = false;
 
   @override
   void initState() {
+    super.initState();
     emoji = widget.emoji;
     question = widget.question;
     color = widget.color;
     isMain = widget.isMain;
     isSearching = widget.isSearching;
-    super.initState();
   }
 
   // TODO: 새로고침 동작 구현
@@ -46,10 +47,9 @@ class _MainQuestionCardState extends State<MainQuestionCard> {
     setState(() {
       emoji = 'hi';
       question = 'testing';
-      color = AppColor.colorList[3];
+      // color = AppColor.colorList[3];
       isMain = true;
     });
-    setState(() {});
   }
 
   @override
@@ -61,14 +61,19 @@ class _MainQuestionCardState extends State<MainQuestionCard> {
         ),
         Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10), color: color),
+              borderRadius: BorderRadius.circular(10),
+              color: AppColor.colorList[color]),
           height: isMain ? 180 : 100,
           width: 340,
-          child: Padding(
-            padding: EdgeInsets.only(top: isMain ? 25.0 : 15.0),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
                 child: Text(
                   question,
                   style: TextStyle(
@@ -78,7 +83,8 @@ class _MainQuestionCardState extends State<MainQuestionCard> {
                   textAlign: TextAlign.left,
                 ),
               ),
-            ),
+              Container(),
+            ],
           ),
         ),
       ]),
@@ -87,7 +93,8 @@ class _MainQuestionCardState extends State<MainQuestionCard> {
         left: 20,
         child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100), color: color),
+              borderRadius: BorderRadius.circular(100),
+              color: AppColor.colorList[color]),
           height: isMain ? 100 : 60,
           width: isMain ? 100 : 60,
         ),

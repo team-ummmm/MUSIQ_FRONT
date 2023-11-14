@@ -69,9 +69,10 @@ class _SearchScreenState extends State<SearchScreen> {
           children: [
             // TODO: Hero 추가하기
             const MainQuestionCard(
+              id: 2,
               emoji: '👋',
               question: '죽기 전에 마지막으로 듣고 싶은 곡은?',
-              color: AppColor.defaultColor,
+              color: 8,
               isMain: true,
               isSearching: true,
             ),
