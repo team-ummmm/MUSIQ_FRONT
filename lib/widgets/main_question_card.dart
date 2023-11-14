@@ -80,7 +80,9 @@ class _MainQuestionCardState extends State<MainQuestionCard> {
               height: isMain ? 50 : 48,
             ),
             Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColor.colorList[color]),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: AppColor.colorList[color]),
               height: isMain ? 180 : 100,
               width: 340,
               child: Column(
@@ -91,10 +93,13 @@ class _MainQuestionCardState extends State<MainQuestionCard> {
                     height: 15,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(18.0),
                     child: Text(
                       question,
-                      style: TextStyle(fontSize: isMain ? 28 : 18, color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: isMain ? 28 : 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
                       textAlign: TextAlign.left,
                     ),
                   ),
@@ -107,7 +112,9 @@ class _MainQuestionCardState extends State<MainQuestionCard> {
             top: isMain ? 10 : 20,
             left: 20,
             child: Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: AppColor.colorList[color]),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: AppColor.colorList[color]),
               height: isMain ? 100 : 60,
               width: isMain ? 100 : 60,
             ),
@@ -116,7 +123,9 @@ class _MainQuestionCardState extends State<MainQuestionCard> {
               top: isMain ? 15 : 23,
               left: isMain ? 25 : 22.7,
               child: Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: Colors.white),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.white),
                 height: isMain ? 90 : 55,
                 width: isMain ? 90 : 55,
                 child: Center(
