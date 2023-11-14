@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:musiq_front/models/question_model.dart';
 import 'package:musiq_front/models/search_music_model.dart';
 import 'package:musiq_front/services/api_service.dart';
 import 'package:musiq_front/style.dart';
@@ -14,8 +15,17 @@ class SearchScreen extends StatefulWidget {
   final int initialColor;
   final bool isMain;
   final bool isSearching;
+  final Function(Future<List<QuestionModel>>) onQuestionChanged;
 
-  const SearchScreen({super.key, required this.question_id, required this.emoji, required this.question, required this.initialColor, required this.isMain, required this.isSearching});
+  const SearchScreen(
+      {super.key,
+      required this.question_id,
+      required this.emoji,
+      required this.question,
+      required this.initialColor,
+      required this.isMain,
+      required this.isSearching,
+      required this.onQuestionChanged});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -77,22 +87,31 @@ class _SearchScreenState extends State<SearchScreen> {
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(35.0),
           child: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Future<List<QuestionModel>> nextQuestions = Future.wait([
+                  ApiService.getQuestionsMain('2', false),
+                  ApiService.getQuestionsAnswered('2', false),
+                  ApiService.getQuestionsAnswered('2', false),
+                ]);
+                widget.onQuestionChanged(nextQuestions);
+                Navigator.pop(context);
+              },
+            ),
             backgroundColor: AppColor.backgroudColor,
           )),
       body: Center(
         child: Column(
           children: [
-            Hero(
-              tag: widget.question_id,
-              child: MainQuestionCard(
-                key: ValueKey(color),
-                question_id: widget.question_id,
-                question: widget.question,
-                emoji: widget.emoji,
-                color: color,
-                isMain: true,
-                isSearching: true,
-              ),
+            MainQuestionCard(
+              key: ValueKey(color),
+              question_id: widget.question_id,
+              question: widget.question,
+              emoji: widget.emoji,
+              color: color,
+              isMain: true,
+              isSearching: true,
             ),
             const SizedBox(
               height: 20,

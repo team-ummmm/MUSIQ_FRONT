@@ -23,6 +23,12 @@ class _AnswerPageState extends State<AnswerPage> {
 
   @override
   Widget build(BuildContext context) {
+    void onQuestionChanged(Future<List<QuestionModel>> nextQuestions) {
+      setState(() {
+        allQuestions = nextQuestions;
+      });
+    }
+
     return FutureBuilder(
       future: allQuestions,
       builder: (context, snapshot) {
@@ -61,8 +67,23 @@ class _AnswerPageState extends State<AnswerPage> {
                   ),
                 ],
               ),
-              Hero(
-                tag: mainQuestion.question_id,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SearchScreen(
+                        question_id: mainQuestion.question_id,
+                        question: mainQuestion.question_message,
+                        initialColor: mainQuestion.main_color,
+                        emoji: mainQuestion.emoji,
+                        isMain: true,
+                        isSearching: false,
+                        onQuestionChanged: onQuestionChanged,
+                      ),
+                    ),
+                  );
+                },
                 child: MainQuestionCard(
                   question_id: mainQuestion.question_id,
                   question: mainQuestion.question_message,
@@ -88,26 +109,62 @@ class _AnswerPageState extends State<AnswerPage> {
                 Center(
                   child: Container(
                     padding: const EdgeInsets.only(top: 30.0),
-                    child: MainQuestionCard(
-                      question_id: answeredQuestion1.question_id,
-                      question: answeredQuestion1.question_message,
-                      emoji: answeredQuestion1.emoji,
-                      color: answeredQuestion1.main_color,
-                      isMain: false,
-                      isSearching: false,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SearchScreen(
+                              question_id: answeredQuestion1.question_id,
+                              question: answeredQuestion1.question_message,
+                              initialColor: answeredQuestion1.main_color,
+                              emoji: answeredQuestion1.emoji,
+                              isMain: true,
+                              isSearching: false,
+                              onQuestionChanged: onQuestionChanged,
+                            ),
+                          ),
+                        );
+                      },
+                      child: MainQuestionCard(
+                        question_id: answeredQuestion1.question_id,
+                        question: answeredQuestion1.question_message,
+                        emoji: answeredQuestion1.emoji,
+                        color: answeredQuestion1.main_color,
+                        isMain: false,
+                        isSearching: false,
+                      ),
                     ),
                   ),
                 ),
                 Center(
-                  child: Container(
-                    padding: const EdgeInsets.only(top: 170),
-                    child: MainQuestionCard(
-                      question_id: answeredQuestion2.question_id,
-                      question: answeredQuestion2.question_message,
-                      emoji: answeredQuestion2.emoji,
-                      color: answeredQuestion2.main_color,
-                      isMain: false,
-                      isSearching: false,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SearchScreen(
+                            question_id: answeredQuestion2.question_id,
+                            question: answeredQuestion2.question_message,
+                            initialColor: answeredQuestion2.main_color,
+                            emoji: answeredQuestion2.emoji,
+                            isMain: true,
+                            isSearching: false,
+                            onQuestionChanged: onQuestionChanged,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 170),
+                      child: MainQuestionCard(
+                        question_id: answeredQuestion2.question_id,
+                        question: answeredQuestion2.question_message,
+                        emoji: answeredQuestion2.emoji,
+                        color: answeredQuestion2.main_color,
+                        isMain: false,
+                        isSearching: false,
+                      ),
                     ),
                   ),
                 ),
