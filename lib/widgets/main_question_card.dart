@@ -91,7 +91,7 @@ class _MainQuestionCardState extends State<MainQuestionCard> {
                     height: 15,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(15.0),
                     child: Text(
                       question,
                       style: TextStyle(fontSize: isMain ? 28 : 18, color: Colors.white, fontWeight: FontWeight.bold),
