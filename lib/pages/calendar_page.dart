@@ -1,10 +1,5 @@
 // 돌아보아요 페이지
 
-// TODO: 날짜별 색상 이벤트 추가
-// initState() 안에 각 날짜별 색상 이벤트 추가하는 함수?
-
-// 답변들 한 번에 받아오면 일별 색상정보? 스트릭 정보? 답변들 리스트?
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
@@ -12,25 +7,34 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:intl/intl.dart';
+import 'package:musiq_front/models/daily_color_model.dart';
 import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/color_music_list.dart';
+import 'package:musiq_front/services/api_service.dart';
+import 'package:musiq_front/models/daily_music_model.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
 
   @override
-  State<CalendarPage> createState() => _CalendarPageState();
+  State<CalendarPage> createState() => CalendarPageState();
 }
 
-class _CalendarPageState extends State<CalendarPage> {
+class CalendarPageState extends State<CalendarPage> {
   DateTime _currentDate = DateTime.now();
   // bool dateChanged = false;
   EventList<Event> _markdeDateMap = EventList<Event>(events: {});
+  int consecutive_dates = 0;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+  }
+
+  // 캘린더의 연속 답변 일수 및 날짜별 색상 업데이트
+  updateCalendar() {
+    _fetchConsecutiveDates();
+    _fetchDailyColors();
   }
 
   // icon builder
@@ -55,50 +59,69 @@ class _CalendarPageState extends State<CalendarPage> {
 
   // 선택된 날짜 및 해당 음악들 리턴 함수
   Widget _showDailyMusicList(DateTime selectedDate) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: Row(
-            children: [
-              const SizedBox(width: 30),
-              Text(
-                DateFormat('yyy년 MM월 d일').format(selectedDate).toString(),
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-            ],
-          ),
-        ),
-        ColorMusicList(
-          date: selectedDate.toString(),
-        ),
-      ],
-    );
+    Future<List<DailyMusicModel>> dailyMusics =
+        ApiService.getDailyMusics('2', selectedDate.toString().split(' ')[0]);
+
+    return FutureBuilder(
+        future: dailyMusics,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 30),
+                      Text(
+                        DateFormat('yyy년 MM월 d일')
+                            .format(selectedDate)
+                            .toString(),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                    ],
+                  ),
+                ),
+                ColorMusicList(
+                  musicList: snapshot.data!,
+                ),
+              ],
+            );
+          }
+          return const Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Center(child: CircularProgressIndicator()),
+          );
+        });
+  }
+
+  // 스트릭 정보 불러오기
+  Future<void> _fetchConsecutiveDates() async {
+    var dates = await ApiService.getConsecutiveDates('2');
+    setState(() {
+      consecutive_dates = dates;
+    });
+  }
+
+  // 날짜별 색상 정보 불러오기 및 그리기
+  Future<void> _fetchDailyColors() async {
+    var data = await ApiService.getDailyColor('2');
+    _markdeDateMap.clear();
+    for (var dailyColor in data) {
+      _markdeDateMap.add(
+          DateTime(dailyColor.formattedDate()[0], dailyColor.formattedDate()[1],
+              dailyColor.formattedDate()[2]),
+          Event(
+              date: DateTime(2023, 10, 20),
+              title: '',
+              icon: (_colorWidget(dailyColor.formattedDate()[2].toString(),
+                  dailyColor.color))));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // example events(manually added)
-    _markdeDateMap.add(
-        DateTime(2023, 10, 20),
-        Event(
-            date: DateTime(2023, 10, 20),
-            title: 'Testing',
-            icon: (_colorWidget('20', 1))));
-    _markdeDateMap.add(
-        DateTime(2023, 10, 27),
-        Event(
-            date: DateTime(2023, 10, 27),
-            title: 'Testing2',
-            icon: (_colorWidget('27', 2))));
-    _markdeDateMap.add(
-        DateTime(2023, 10, 21),
-        Event(
-            date: DateTime(2023, 10, 21),
-            title: 'Testing2',
-            icon: (_colorWidget('21', 3))));
-
     return Column(
       children: [
         Column(
@@ -128,11 +151,10 @@ class _CalendarPageState extends State<CalendarPage> {
                           color: Colors.grey.shade400.withOpacity(0.8)),
                       width: 120,
                       height: 50,
-                      child: const Center(
+                      child: Center(
                           child: Text(
-                        "🎨X7",
-                        // TODO: streak_count 변수로 변경
-                        style: TextStyle(fontSize: 25),
+                        "🎨X$consecutive_dates",
+                        style: const TextStyle(fontSize: 25),
                       )),
                     ),
                     const SizedBox(width: 30),

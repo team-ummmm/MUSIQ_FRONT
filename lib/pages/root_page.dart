@@ -18,6 +18,7 @@ class _MyRootPageState extends State<RootPage> {
 
   /// bottom navigation tab 하나당 고유 키 필요
   late final GlobalKey<QuestionsPageState> questionsPageKey = GlobalKey();
+  late final GlobalKey<CalendarPageState> calendarPageKey = GlobalKey();
   List<Widget>? _pages;
 
   final List<BottomNavigationBarItem> bottomItems = const [
@@ -41,7 +42,7 @@ class _MyRootPageState extends State<RootPage> {
     _pages = [
       const AnswerPage(),
       QuestionsPage(key: questionsPageKey),
-      const CalendarPage(),
+      CalendarPage(key: calendarPageKey),
       const PlayerScreen(
         question: 'hi',
       ),
@@ -92,6 +93,8 @@ class _MyRootPageState extends State<RootPage> {
                 if (index == 1) {
                   print('hello');
                   questionsPageKey.currentState?.updateQuestions();
+                } else if (index == 2) {
+                  calendarPageKey.currentState?.updateCalendar();
                 }
                 _selectedIndex = index;
               });

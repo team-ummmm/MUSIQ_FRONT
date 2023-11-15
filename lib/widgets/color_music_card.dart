@@ -19,20 +19,40 @@ class ColorMusicCard extends StatelessWidget {
           Row(
             children: [
               // cover img.
-              Container(width: 50, height: 50, color: Colors.blue),
+              SizedBox(
+                height: 50,
+                width: 50,
+                child: Image.network(
+                  cover,
+                  headers: const {
+                    "User-Agent":
+                        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+                  },
+                ),
+              ),
               const SizedBox(width: 10),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title,
+                  SizedBox(
+                    width: 240,
+                    child: Text(title,
+                        style: const TextStyle(
+                            fontSize: 16,
+                            overflow: TextOverflow.ellipsis,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                  SizedBox(
+                    width: 240,
+                    child: Text(
+                      artist,
                       style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold)),
-                  Text(
-                    artist,
-                    style: const TextStyle(fontSize: 14, color: Colors.white),
+                          fontSize: 14,
+                          overflow: TextOverflow.ellipsis,
+                          color: Colors.white),
+                    ),
                   )
                 ],
               ),
