@@ -3,6 +3,7 @@
 // TODO: 답변한 질문들 리스트 받아서 띄우기 && 답변곡들 페이지로 연결
 
 import 'package:flutter/material.dart';
+import 'package:musiq_front/main.dart';
 import 'package:musiq_front/models/question_model.dart';
 import 'package:musiq_front/screens/question_screen.dart';
 import 'package:musiq_front/services/api_service.dart';
@@ -22,11 +23,11 @@ class QuestionsPageState extends State<QuestionsPage> {
   final String userId = '2';
 
   Future<List<QuestionModel>> questions =
-      ApiService.getQuestionsListQuestions('2');
+      ApiService.getQuestionsListQuestions(MUSIQ.masterUserId);
 
   updateQuestions() {
     setState(() {
-      questions = ApiService.getQuestionsListQuestions('2');
+      questions = ApiService.getQuestionsListQuestions(MUSIQ.masterUserId);
     });
   }
 

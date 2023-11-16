@@ -42,7 +42,7 @@ class ApiService {
     if (response.statusCode == 200) {
       question = QuestionModel.fromJson(jsonDecode(response.body));
       print(question);
-      return question;
+      return question ?? QuestionModel(-1, -1, '', '');
     }
     throw Error();
   }
@@ -60,7 +60,7 @@ class ApiService {
     if (response.statusCode == 200) {
       question = QuestionModel.fromJson(jsonDecode(response.body));
       print(question);
-      return question;
+      return question ?? QuestionModel(-1, -1, '', '');
     }
     throw Error();
   }
@@ -98,7 +98,7 @@ class ApiService {
       final Map<String, dynamic> data = jsonDecode(response.body);
       print("controller");
       AnswerListModel answers = AnswerListModel.fromJson(data);
-      
+
       return answers;
     }
     throw Error();
