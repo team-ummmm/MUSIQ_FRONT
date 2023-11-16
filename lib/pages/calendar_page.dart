@@ -6,6 +6,7 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart' show C
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:intl/intl.dart';
+import 'package:musiq_front/main.dart';
 import 'package:musiq_front/models/daily_color_model.dart';
 import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/color_music_list.dart';
@@ -58,7 +59,8 @@ class CalendarPageState extends State<CalendarPage> {
 
   // 선택된 날짜 및 해당 음악들 리턴 함수
   Widget _showDailyMusicList(DateTime selectedDate) {
-    Future<List<DailyMusicModel>> dailyMusics = ApiService.getDailyMusics('2', selectedDate.toString().split(' ')[0]);
+    Future<List<DailyMusicModel>> dailyMusics = ApiService.getDailyMusics(
+        MUSIQ.masterUserId, selectedDate.toString().split(' ')[0]);
 
     return FutureBuilder(
         future: dailyMusics,
@@ -93,7 +95,7 @@ class CalendarPageState extends State<CalendarPage> {
 
   // 스트릭 정보 불러오기
   Future<void> _fetchConsecutiveDates() async {
-    var dates = await ApiService.getConsecutiveDates('2');
+    var dates = await ApiService.getConsecutiveDates(MUSIQ.masterUserId);
     setState(() {
       consecutive_dates = dates;
     });
@@ -101,7 +103,7 @@ class CalendarPageState extends State<CalendarPage> {
 
   // 날짜별 색상 정보 불러오기 및 그리기
   Future<void> _fetchDailyColors() async {
-    var data = await ApiService.getDailyColor('2');
+    var data = await ApiService.getDailyColor(MUSIQ.masterUserId);
     _markdeDateMap.clear();
     for (var dailyColor in data) {
       _markdeDateMap.add(DateTime(dailyColor.formattedDate()[0], dailyColor.formattedDate()[1], dailyColor.formattedDate()[2]),

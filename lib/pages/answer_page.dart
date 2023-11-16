@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:musiq_front/main.dart';
 import 'package:musiq_front/models/question_model.dart';
 import 'package:musiq_front/screens/search_screen.dart';
 import 'package:musiq_front/services/api_service.dart';
@@ -16,25 +17,30 @@ class AnswerPage extends StatefulWidget {
 }
 
 class _AnswerPageState extends State<AnswerPage> {
-  Future<QuestionModel> mainQuestion = ApiService.getQuestionsMain('2', false);
-  Future<QuestionModel> answeredQuestion1 = ApiService.getQuestionsAnswered('2', false);
-  Future<QuestionModel> answeredQuestion2 = ApiService.getQuestionsAnswered('2', false);
+  Future<QuestionModel> mainQuestion =
+      ApiService.getQuestionsMain(MUSIQ.masterUserId, false);
+  Future<QuestionModel> answeredQuestion1 =
+      ApiService.getQuestionsAnswered(MUSIQ.masterUserId, false);
+  Future<QuestionModel> answeredQuestion2 =
+      ApiService.getQuestionsAnswered(MUSIQ.masterUserId, false);
 
   void updateMainQuestion() {
     setState(() {
-      mainQuestion = ApiService.getQuestionsMain('2', true);
+      mainQuestion = ApiService.getQuestionsMain(MUSIQ.masterUserId, true);
     });
   }
 
   void updateAnsweredQuestion1() {
     setState(() {
-      answeredQuestion1 = ApiService.getQuestionsAnswered('2', true);
+      answeredQuestion1 =
+          ApiService.getQuestionsAnswered(MUSIQ.masterUserId, true);
     });
   }
 
   void updateAnsweredQuestion2() {
     setState(() {
-      answeredQuestion2 = ApiService.getQuestionsAnswered('2', true);
+      answeredQuestion2 =
+          ApiService.getQuestionsAnswered(MUSIQ.masterUserId, true);
     });
   }
 
@@ -82,7 +88,11 @@ class _AnswerPageState extends State<AnswerPage> {
                   ),
                   Text(
                     '천천히 고민해봐요!',
-                    style: TextStyle(color: Colors.grey.shade500, fontSize: 18, fontFamily: 'AppleSDGothicNeo', fontWeight: FontWeight.w100),
+                    style: TextStyle(
+                        color: Colors.grey.shade500,
+                        fontSize: 18,
+                        fontFamily: 'AppleSDGothicNeo',
+                        fontWeight: FontWeight.w100),
                   ),
                 ],
               ),
@@ -136,105 +146,120 @@ class _AnswerPageState extends State<AnswerPage> {
                       const SizedBox(width: 30),
                       Text(
                         '이 질문들은 어때요?',
-                        style: TextStyle(color: Colors.grey.shade500, fontSize: 18, fontFamily: 'AppleSDGothicNeo', fontWeight: FontWeight.w100),
+                        style: TextStyle(
+                            color: Colors.grey.shade500,
+                            fontSize: 18,
+                            fontFamily: 'AppleSDGothicNeo',
+                            fontWeight: FontWeight.w100),
                       ),
                     ],
                   ),
                 ),
-                Center(
-                  child: Container(
-                    padding: const EdgeInsets.only(top: 30.0),
-                    child: Stack(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SearchScreen(
+                answeredQuestion1.question_id != -1
+                    ? Center(
+                        child: Container(
+                          padding: const EdgeInsets.only(top: 30.0),
+                          child: Stack(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SearchScreen(
+                                        question_id:
+                                            answeredQuestion1.question_id,
+                                        question:
+                                            answeredQuestion1.question_message,
+                                        initialColor:
+                                            answeredQuestion1.main_color,
+                                        emoji: answeredQuestion1.emoji,
+                                        isMain: true,
+                                        isSearching: false,
+                                        onQuestionChanged: onQuestionChanged,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: MainQuestionCard(
                                   question_id: answeredQuestion1.question_id,
                                   question: answeredQuestion1.question_message,
-                                  initialColor: answeredQuestion1.main_color,
                                   emoji: answeredQuestion1.emoji,
-                                  isMain: true,
+                                  color: answeredQuestion1.main_color,
+                                  isMain: false,
                                   isSearching: false,
-                                  onQuestionChanged: onQuestionChanged,
                                 ),
                               ),
-                            );
-                          },
-                          child: MainQuestionCard(
-                            question_id: answeredQuestion1.question_id,
-                            question: answeredQuestion1.question_message,
-                            emoji: answeredQuestion1.emoji,
-                            color: answeredQuestion1.main_color,
-                            isMain: false,
-                            isSearching: false,
+                              Positioned(
+                                top: 40,
+                                left: 300,
+                                child: IconButton(
+                                  icon:
+                                      const Icon(CupertinoIcons.refresh_thick),
+                                  onPressed: () {
+                                    updateAnsweredQuestion1();
+                                  },
+                                  color: Colors.black,
+                                  iconSize: 16,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Positioned(
-                          top: 40,
-                          left: 300,
-                          child: IconButton(
-                            icon: const Icon(CupertinoIcons.refresh_thick),
-                            onPressed: () {
-                              updateAnsweredQuestion1();
-                            },
-                            color: Colors.black,
-                            iconSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Center(
-                  child: Stack(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SearchScreen(
-                                question_id: answeredQuestion2.question_id,
-                                question: answeredQuestion2.question_message,
-                                initialColor: answeredQuestion2.main_color,
-                                emoji: answeredQuestion2.emoji,
-                                isMain: true,
-                                isSearching: false,
-                                onQuestionChanged: onQuestionChanged,
+                      )
+                    : Container(),
+                answeredQuestion2.question_id != -1
+                    ? Center(
+                        child: Stack(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SearchScreen(
+                                      question_id:
+                                          answeredQuestion2.question_id,
+                                      question:
+                                          answeredQuestion2.question_message,
+                                      initialColor:
+                                          answeredQuestion2.main_color,
+                                      emoji: answeredQuestion2.emoji,
+                                      isMain: true,
+                                      isSearching: false,
+                                      onQuestionChanged: onQuestionChanged,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.only(top: 170),
+                                child: MainQuestionCard(
+                                  question_id: answeredQuestion2.question_id,
+                                  question: answeredQuestion2.question_message,
+                                  emoji: answeredQuestion2.emoji,
+                                  color: answeredQuestion2.main_color,
+                                  isMain: false,
+                                  isSearching: false,
+                                ),
                               ),
                             ),
-                          );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.only(top: 170),
-                          child: MainQuestionCard(
-                            question_id: answeredQuestion2.question_id,
-                            question: answeredQuestion2.question_message,
-                            emoji: answeredQuestion2.emoji,
-                            color: answeredQuestion2.main_color,
-                            isMain: false,
-                            isSearching: false,
-                          ),
+                            Positioned(
+                              top: 210,
+                              left: 300,
+                              child: IconButton(
+                                icon: const Icon(CupertinoIcons.refresh_thick),
+                                onPressed: () {
+                                  updateAnsweredQuestion2();
+                                },
+                                color: Colors.black,
+                                iconSize: 16,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Positioned(
-                        top: 210,
-                        left: 300,
-                        child: IconButton(
-                          icon: const Icon(CupertinoIcons.refresh_thick),
-                          onPressed: () {
-                            updateAnsweredQuestion2();
-                          },
-                          color: Colors.black,
-                          iconSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                      )
+                    : Container(),
               ]),
             ],
           );
