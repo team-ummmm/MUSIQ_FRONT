@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:musiq_front/main.dart';
 import 'package:musiq_front/models/answer_dates_model.dart';
 import 'package:musiq_front/models/answered_music_model.dart';
+import 'package:musiq_front/screens/player_screen.dart';
 import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/daily_music_card.dart';
+import 'package:musiq_front/widgets/slide_down_route.dart';
 
 /// TODO: TempList를 DailyMusicList로 바꾸기
 /// DailyMusicList는 ColorMusicList로 바꾸기
 ///
-class DailyMusicList extends StatelessWidget {
+class DailyMusicList extends StatefulWidget {
   final AnswerDatesModel dailyMusic;
   const DailyMusicList({super.key, required this.dailyMusic});
 
   @override
+  State<DailyMusicList> createState() => _DailyMusicListState();
+}
+
+class _DailyMusicListState extends State<DailyMusicList> {
+  @override
   Widget build(BuildContext context) {
-    var todayColor = AppColor.colorList[dailyMusic.dayColor];
-    var month = dailyMusic.answerDate.substring(5, 7);
-    var day = dailyMusic.answerDate.substring(8, 10);
-    var answers = dailyMusic.answers;
+    var todayColor = AppColor.colorList[widget.dailyMusic.dayColor];
+    var month = widget.dailyMusic.answerDate.substring(5, 7);
+    var day = widget.dailyMusic.answerDate.substring(8, 10);
+    var answers = widget.dailyMusic.answers;
 
     return Container(
       height: 180,
@@ -70,12 +78,28 @@ class DailyMusicList extends StatelessWidget {
                       children: [
                         ...answers.map((e) {
                           return Padding(
-                            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                            child: DailyMusicCard(
-                              cover: e.music.cover_url,
-                              title: e.music.music_name,
-                              artist: e.music.artist_name,
-                              color: '1',
+                            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            child: GestureDetector(
+                              onTap: () {
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => PlayerScreen(
+                                //       answerId: e.answerId,
+                                //     ),
+                                //   ),
+                                // );
+                                Navigator.of(context).push(SlideDownRoute(
+                                    page: PlayerScreen(
+                                  answerId: e.answerId,
+                                )));
+                              },
+                              child: DailyMusicCard(
+                                cover: e.music.cover_url,
+                                title: e.music.music_name,
+                                artist: e.music.artist_name,
+                                color: '1',
+                              ),
                             ),
                           );
                         }).toList(),

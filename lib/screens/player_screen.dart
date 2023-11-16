@@ -1,24 +1,28 @@
 // 답변ID 던지면
 // 질문, 캡션유무, 뮤직객체(아티스트, 곡제목, 색깔, 커버URL, 노래URL) 받아옴
+// TODO: 키 추가
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:musiq_front/main.dart';
+import 'package:musiq_front/pages/root_page.dart';
 import 'package:musiq_front/services/api_service.dart';
 import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/caption_dialog.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:musiq_front/models/player_model.dart';
+import 'package:musiq_front/widgets/slide_down_route.dart';
 
 class PlayerScreen extends StatefulWidget {
-  final String question;
-  const PlayerScreen({required this.question, super.key});
+  final int answerId;
+  const PlayerScreen({required this.answerId, super.key});
 
   @override
   State<PlayerScreen> createState() => _PlayerScreenState();
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
-  int answerId = 2;
+  int answerId = 0;
   String question = "";
   late Future<String> caption;
   bool showCaption = false;
@@ -32,7 +36,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
   @override
   void initState() {
     super.initState();
-    question = widget.question;
+    answerId = widget.answerId;
 
     audioPlayer.onPlayerStateChanged.listen((state) {
       if (state == PlayerState.playing) {
@@ -95,8 +99,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
                         icon: const Icon(CupertinoIcons.chevron_down),
                         color: Colors.white,
                         iconSize: 40,
-                        // TODO: 화면 pop
-                        onPressed: () {},
+                        // TODO
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.all(10.0),
@@ -107,7 +113,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
                               width: MediaQuery.of(context).size.width * 0.8,
                               child: Text(
                                 snapshot.data!.questionMessage,
-                                style: const TextStyle(color: Colors.white, fontSize: 28, decoration: TextDecoration.none, fontWeight: FontWeight.w500, fontFamily: 'AppleSDGothicNeo'),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 28,
+                                    decoration: TextDecoration.none,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'AppleSDGothicNeo'),
                               ),
                             ),
                             IconButton(
@@ -118,7 +129,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                     context: context,
                                     // barrierColor: Colors.grey.withOpacity(0.8),
                                     builder: (BuildContext context) {
-                                      return CaptionDialog(updateCaption: updateCaption);
+                                      return CaptionDialog(
+                                          updateCaption: updateCaption);
                                     });
                               },
                             ),
@@ -128,7 +140,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            showCaption ? showCaption = false : showCaption = true;
+                            showCaption
+                                ? showCaption = false
+                                : showCaption = true;
                           });
                         },
                         child: Stack(
@@ -139,20 +153,19 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child:
-                                        // TODO: 커버 이미지로 변경
-                                        Opacity(
-                                            opacity: showCaption ? 0.5 : 1,
-                                            child: SizedBox(
-                                              width: 200,
-                                              height: 200,
-                                              child: Image.network(
-                                                snapshot.data!.music.coverUrl,
-                                                headers: const {
-                                                  "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
-                                                },
-                                              ),
-                                            )),
+                                    child: Opacity(
+                                        opacity: showCaption ? 0.5 : 1,
+                                        child: SizedBox(
+                                          width: 200,
+                                          height: 200,
+                                          child: Image.network(
+                                            snapshot.data!.music.coverUrl,
+                                            headers: const {
+                                              "User-Agent":
+                                                  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+                                            },
+                                          ),
+                                        )),
                                   ),
                                 ],
                               ),
@@ -168,7 +181,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                             child: Center(
                                               child: Text(
                                                 '남기고 싶은 말을 적어주세요!',
-                                                style: TextStyle(fontSize: 25, color: Colors.white),
+                                                style: TextStyle(
+                                                    fontSize: 25,
+                                                    color: Colors.white),
                                               ),
                                             ),
                                           );
@@ -178,7 +193,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                             child: Center(
                                               child: Text(
                                                 snapshot.data!,
-                                                style: const TextStyle(fontSize: 25, color: Colors.white),
+                                                style: const TextStyle(
+                                                    fontSize: 25,
+                                                    color: Colors.white),
                                               ),
                                             ),
                                           );
@@ -193,10 +210,18 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       ),
                       Column(children: [
                         Text(
-                          snapshot.data!.music.musicName,
-                          style: const TextStyle(color: Colors.white, fontSize: 12, decoration: TextDecoration.none),
+                          snapshot.data!.music.artistName,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              decoration: TextDecoration.none),
                         ),
-                        Text(snapshot.data!.music.artistName, style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold, decoration: TextDecoration.none)),
+                        Text(snapshot.data!.music.musicName,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.none)),
                       ]),
                       Column(
                         children: [
@@ -204,7 +229,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             value: currentPosition.inSeconds.toDouble(),
                             onChanged: (value) {
                               setState(() {
-                                audioPlayer.seek(Duration(seconds: value.toInt()));
+                                audioPlayer
+                                    .seek(Duration(seconds: value.toInt()));
                               });
                             },
                             min: 0,
@@ -216,7 +242,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [Text(formatDuration(currentPosition)), Text(formatDuration(currentDuration))],
+                              children: [
+                                Text(formatDuration(currentPosition)),
+                                Text(formatDuration(currentDuration))
+                              ],
                             ),
                           )
                         ],
@@ -248,14 +277,17 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             child: isPlaying
                                 ? IconButton(
                                     icon: const Icon(CupertinoIcons.pause_fill),
-                                    color: AppColor.colorList[snapshot.data!.music.musicColor],
+                                    color: AppColor.colorList[
+                                        snapshot.data!.music.musicColor],
                                     iconSize: 50,
                                     onPressed: () {
                                       _pauseAudio();
                                     })
                                 : IconButton(
-                                    icon: const Icon(CupertinoIcons.play_arrow_solid),
-                                    color: AppColor.colorList[snapshot.data!.music.musicColor],
+                                    icon: const Icon(
+                                        CupertinoIcons.play_arrow_solid),
+                                    color: AppColor.colorList[
+                                        snapshot.data!.music.musicColor],
                                     iconSize: 50,
                                     onPressed: () {
                                       _playAudio(snapshot.data!.music.musicUrl);
@@ -269,7 +301,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                               borderRadius: BorderRadius.circular(50),
                               color: Colors.black.withOpacity(0.1),
                             ),
-                            child: IconButton(icon: const Icon(CupertinoIcons.forward_fill), onPressed: () {}),
+                            child: IconButton(
+                                icon: const Icon(CupertinoIcons.forward_fill),
+                                onPressed: () {}),
                           )
                         ],
                       ),
@@ -282,7 +316,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
               } else if (snapshot.hasError) {
                 print("ERROR!");
               }
-              return const Text('xival');
+              return const Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Center(child: CircularProgressIndicator()),
+              );
             }));
   }
 

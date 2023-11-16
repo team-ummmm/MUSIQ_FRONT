@@ -17,6 +17,7 @@ void main() {
 class MUSIQ extends StatelessWidget {
   const MUSIQ({super.key});
   static final masterUserId = '2';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

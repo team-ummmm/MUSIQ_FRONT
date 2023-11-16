@@ -16,6 +16,8 @@ class RootPage extends StatefulWidget {
 class _MyRootPageState extends State<RootPage> {
   int _selectedIndex = 0;
 
+  bool showAppBar = true;
+
   /// bottom navigation tab 하나당 고유 키 필요
   late final GlobalKey<QuestionsPageState> questionsPageKey = GlobalKey();
   late final GlobalKey<CalendarPageState> calendarPageKey = GlobalKey();
@@ -44,9 +46,15 @@ class _MyRootPageState extends State<RootPage> {
       QuestionsPage(key: questionsPageKey),
       CalendarPage(key: calendarPageKey),
       const PlayerScreen(
-        question: 'hi',
+        answerId: 2,
       ),
     ];
+  }
+
+  void toggleAppBar(bool show) {
+    setState(() {
+      showAppBar = show;
+    });
   }
 
   @override
@@ -61,47 +69,46 @@ class _MyRootPageState extends State<RootPage> {
         top: false,
         bottom: false,
         child: Scaffold(
-          appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(40.0),
-              child: AppBar(
-                backgroundColor: AppColor.backgroudColor,
-              )),
-          body: _pages != null
-              ? IndexedStack(
-                  index: _selectedIndex,
-                  children: _pages!.map((page) {
-                    int index = _pages!.indexOf(page);
-                    return Navigator(
-                      key: _navigatorKeyList[index],
-                      onGenerateRoute: (_) {
-                        return MaterialPageRoute(builder: (context) => page);
-                      },
-                    );
-                  }).toList(),
-                )
-              : const Center(child: CircularProgressIndicator()),
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.grey.shade300,
-            selectedItemColor: AppColor.color1,
-            unselectedItemColor: Colors.blueGrey.shade400,
-            currentIndex: _selectedIndex,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            onTap: (index) {
-              setState(() {
-                if (index == 1) {
-                  print('hello');
-                  questionsPageKey.currentState?.updateQuestions();
-                } else if (index == 2) {
-                  calendarPageKey.currentState?.updateCalendar();
-                }
-                _selectedIndex = index;
-              });
-            },
-            items: bottomItems,
-          ),
-        ),
+            appBar: PreferredSize(
+                preferredSize: const Size.fromHeight(40.0),
+                child: AppBar(
+                  backgroundColor: AppColor.backgroudColor,
+                )),
+            body: _pages != null
+                ? IndexedStack(
+                    index: _selectedIndex,
+                    children: _pages!.map((page) {
+                      int index = _pages!.indexOf(page);
+                      return Navigator(
+                        key: _navigatorKeyList[index],
+                        onGenerateRoute: (_) {
+                          return MaterialPageRoute(builder: (context) => page);
+                        },
+                      );
+                    }).toList(),
+                  )
+                : const Center(child: CircularProgressIndicator()),
+            bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.grey.shade300,
+              selectedItemColor: AppColor.color1,
+              unselectedItemColor: Colors.blueGrey.shade400,
+              currentIndex: _selectedIndex,
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              onTap: (index) {
+                setState(() {
+                  if (index == 1) {
+                    print('hello');
+                    questionsPageKey.currentState?.updateQuestions();
+                  } else if (index == 2) {
+                    calendarPageKey.currentState?.updateCalendar();
+                  }
+                  _selectedIndex = index;
+                });
+              },
+              items: bottomItems,
+            )),
       ),
     );
   }
