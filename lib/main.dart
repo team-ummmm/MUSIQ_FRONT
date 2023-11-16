@@ -16,7 +16,7 @@ void main() {
 
 class MUSIQ extends StatelessWidget {
   const MUSIQ({super.key});
-  static final masterUserId = '2';
+  static const masterUserId = '3';
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,12 +28,7 @@ class MUSIQ extends StatelessWidget {
         useMaterial3: true,
       ),
       scrollBehavior: const MaterialScrollBehavior().copyWith(
-        dragDevices: {
-          PointerDeviceKind.mouse,
-          PointerDeviceKind.touch,
-          PointerDeviceKind.stylus,
-          PointerDeviceKind.unknown
-        },
+        dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch, PointerDeviceKind.stylus, PointerDeviceKind.unknown},
       ),
       // TODO: 링크 타고 온 경우 라우트 추가
       home: const RootPage(),
