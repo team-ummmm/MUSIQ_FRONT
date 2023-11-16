@@ -1,13 +1,12 @@
 class MusicModel {
-  final int id;
-  final String title, artist, cover, color, caption, music;
+  final int musicColor;
+  final String musicId, musicName, artistName, coverUrl, musicUrl;
 
   MusicModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        title = json['title'],
-        artist = json['artist'],
-        cover = json['cover'],
-        color = json['color'],
-        caption = json['caption'],
-        music = json['music'];
+      : musicId = json['music_id'],
+        musicColor = json['music_color'],
+        musicName = json['music_name'],
+        artistName = json['artist_name'],
+        coverUrl = json['cover_url'],
+        musicUrl = json['music_url'] ?? '';
 }

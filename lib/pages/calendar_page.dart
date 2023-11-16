@@ -2,8 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
-    show CalendarCarousel;
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart' show CalendarCarousel;
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:intl/intl.dart';
@@ -23,7 +22,7 @@ class CalendarPage extends StatefulWidget {
 class CalendarPageState extends State<CalendarPage> {
   DateTime _currentDate = DateTime.now();
   // bool dateChanged = false;
-  EventList<Event> _markdeDateMap = EventList<Event>(events: {});
+  final EventList<Event> _markdeDateMap = EventList<Event>(events: {});
   int consecutive_dates = 0;
 
   @override
@@ -59,8 +58,7 @@ class CalendarPageState extends State<CalendarPage> {
 
   // 선택된 날짜 및 해당 음악들 리턴 함수
   Widget _showDailyMusicList(DateTime selectedDate) {
-    Future<List<DailyMusicModel>> dailyMusics =
-        ApiService.getDailyMusics('2', selectedDate.toString().split(' ')[0]);
+    Future<List<DailyMusicModel>> dailyMusics = ApiService.getDailyMusics('2', selectedDate.toString().split(' ')[0]);
 
     return FutureBuilder(
         future: dailyMusics,
@@ -74,11 +72,8 @@ class CalendarPageState extends State<CalendarPage> {
                     children: [
                       const SizedBox(width: 30),
                       Text(
-                        DateFormat('yyy년 MM월 d일')
-                            .format(selectedDate)
-                            .toString(),
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
+                        DateFormat('yyy년 MM월 d일').format(selectedDate).toString(),
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ],
                   ),
@@ -109,14 +104,8 @@ class CalendarPageState extends State<CalendarPage> {
     var data = await ApiService.getDailyColor('2');
     _markdeDateMap.clear();
     for (var dailyColor in data) {
-      _markdeDateMap.add(
-          DateTime(dailyColor.formattedDate()[0], dailyColor.formattedDate()[1],
-              dailyColor.formattedDate()[2]),
-          Event(
-              date: DateTime(2023, 10, 20),
-              title: '',
-              icon: (_colorWidget(dailyColor.formattedDate()[2].toString(),
-                  dailyColor.color))));
+      _markdeDateMap.add(DateTime(dailyColor.formattedDate()[0], dailyColor.formattedDate()[1], dailyColor.formattedDate()[2]),
+          Event(date: DateTime(2023, 10, 20), title: '', icon: (_colorWidget(dailyColor.formattedDate()[2].toString(), dailyColor.color))));
     }
   }
 
@@ -136,19 +125,14 @@ class CalendarPageState extends State<CalendarPage> {
                     ),
                     Text(
                       "돌아보아요",
-                      style: TextStyle(
-                          fontFamily: 'AppleSDGothicNeo',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 35),
+                      style: TextStyle(fontFamily: 'AppleSDGothicNeo', fontWeight: FontWeight.w500, fontSize: 35),
                     ),
                   ],
                 ),
                 Row(
                   children: [
                     Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Colors.grey.shade400.withOpacity(0.8)),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.grey.shade400.withOpacity(0.8)),
                       width: 120,
                       height: 50,
                       child: Center(
@@ -170,9 +154,7 @@ class CalendarPageState extends State<CalendarPage> {
             child: Column(
               children: [
                 Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.grey.shade400.withOpacity(0.8)),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.grey.shade400.withOpacity(0.8)),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: SizedBox(
@@ -207,14 +189,10 @@ class CalendarPageState extends State<CalendarPage> {
                         weekFormat: false,
                         height: 400.0,
                         todayButtonColor: Colors.grey.shade400.withOpacity(0.8),
-                        todayTextStyle: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
+                        todayTextStyle: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
                         selectedDateTime: _currentDate,
                         selectedDayButtonColor: Colors.grey.shade500,
-                        selectedDayTextStyle: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                        selectedDayTextStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                         // selectedDayBorderColor: Colors.red,
                         // markedDateCustomTextStyle: const TextStyle(
                         //     color: Colors.white, fontWeight: FontWeight.bold),
@@ -226,35 +204,20 @@ class CalendarPageState extends State<CalendarPage> {
                         },
                         showIconBehindDayText: true,
                         // daysHaveCircularBorder: true,
-                        // onCalendarChanged: (DateTime date) {
-                        //   setState(() {
-                        //     _currentDate = date;
-                        //   });
-                        // },
+                        onCalendarChanged: (DateTime date) {
+                          setState(() {
+                            _currentDate = date;
+                          });
+                        },
                         staticSixWeekFormat: true,
-                        headerText: DateFormat('yyy년 MM월')
-                            .format(_currentDate)
-                            .toString(),
-                        headerTextStyle: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold),
+                        headerText: DateFormat('yyy년 MM월').format(_currentDate).toString(),
+                        headerTextStyle: const TextStyle(color: Colors.black, fontSize: 23, fontWeight: FontWeight.bold),
                         leftButtonIcon: const Icon(CupertinoIcons.left_chevron),
-                        rightButtonIcon:
-                            const Icon(CupertinoIcons.right_chevron),
+                        rightButtonIcon: const Icon(CupertinoIcons.right_chevron),
                         customWeekDayBuilder: (weekday, weekdayName) {
-                          final koreanDaysOfWeek = [
-                            '일',
-                            '월',
-                            '화',
-                            '수',
-                            '목',
-                            '금',
-                            '토'
-                          ];
+                          final koreanDaysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
                           return Container(
-                            margin:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            margin: const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Text(
                               koreanDaysOfWeek[weekday],
                               style: const TextStyle(
