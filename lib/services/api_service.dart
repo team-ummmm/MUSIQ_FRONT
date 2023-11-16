@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:musiq_front/models/answer_list_model.dart';
+import 'package:musiq_front/models/answer_model.dart';
+import 'package:musiq_front/models/answered_music_model.dart';
 import 'package:musiq_front/models/daily_color_model.dart';
 import 'package:musiq_front/models/daily_music_model.dart';
 import 'package:musiq_front/models/question_model.dart';
@@ -79,6 +82,24 @@ class ApiService {
         questionInstances.add(QuestionModel.fromJson(question));
       }
       return questionInstances;
+    }
+    throw Error();
+  }
+
+  // 질문 답변들 불러오기
+  // debugging
+  // 답변들 곡 정보만 불러오기
+  static Future<AnswerListModel> getAnswerList(String questionId) async {
+    final url = Uri.parse(
+        "$baseUrl/$questionListAnswers?$requestQuestionId$questionId");
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      print("controller");
+      AnswerListModel answers = AnswerListModel.fromJson(data);
+      
+      return answers;
     }
     throw Error();
   }

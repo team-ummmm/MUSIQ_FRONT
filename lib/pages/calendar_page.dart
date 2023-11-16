@@ -226,11 +226,11 @@ class CalendarPageState extends State<CalendarPage> {
                         },
                         showIconBehindDayText: true,
                         // daysHaveCircularBorder: true,
-                        // onCalendarChanged: (DateTime date) {
-                        //   setState(() {
-                        //     _currentDate = date;
-                        //   });
-                        // },
+                        onCalendarChanged: (DateTime date) {
+                          setState(() {
+                            _currentDate = date;
+                          });
+                        },
                         staticSixWeekFormat: true,
                         headerText: DateFormat('yyy년 MM월')
                             .format(_currentDate)
