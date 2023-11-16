@@ -8,27 +8,48 @@
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:musiq_front/models/answer_dates_model.dart';
 import 'package:musiq_front/models/answer_list_model.dart';
 import 'package:musiq_front/models/answer_model.dart';
+import 'package:musiq_front/models/question_model.dart';
 import 'package:musiq_front/services/api_service.dart';
 import 'package:musiq_front/style.dart';
 
 import 'package:musiq_front/widgets/daily_music_list.dart';
 
 class QuestionScreen extends StatelessWidget {
-  final String questionTitle;
-
+  final QuestionModel question;
   // TODO: 노래들 불러오기
-  QuestionScreen({required this.questionTitle, super.key});
+  QuestionScreen({required this.question, super.key});
 
-  Future<AnswerListModel> answers = ApiService.getAnswerList('16');
+  late Future<AnswerListModel> answers =
+      ApiService.getAnswerList(question.question_id.toString());
+
+  // late Future<AnswerListModel> answers = ApiService.getAnswerList('35');
+
+  String getYear(String date) {
+    return date.substring(0, 4);
+  }
 
   @override
   Widget build(BuildContext context) {
+    print(question.question_id);
     return FutureBuilder(
         future: answers,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            var color_counts = snapshot.data!.colorCounts;
+            var answer_dates = snapshot.data!.answerDates;
+            Map<String, List<AnswerDatesModel>> years = {};
+
+            answer_dates.forEach((e) {
+              String year = getYear(e.answerDate); // 연도 추출
+              if (!years.containsKey(year)) {
+                years[year] = []; // 연도가 없다면 새 리스트 생성
+              }
+              years[year]!.add(e); // 해당 연도의 리스트에 객체 추가
+            });
+
             return Scaffold(
               appBar: PreferredSize(
                   preferredSize: const Size.fromHeight(35.0), child: AppBar()),
@@ -45,7 +66,7 @@ class QuestionScreen extends StatelessWidget {
                             SizedBox(
                               width: 310,
                               child: Text(
-                                questionTitle,
+                                question.question_message,
                                 style: const TextStyle(
                                   fontSize: 30,
                                   fontFamily: 'AppleSDGothicNeo',
@@ -82,67 +103,47 @@ class QuestionScreen extends StatelessWidget {
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         child: Row(
                           children: [
-                            Expanded(
-                              flex: 4,
-                              child: Container(
-                                color: AppColor.color1,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 4,
-                              child: Container(
-                                color: AppColor.color2,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: Container(
-                                color: AppColor.color3,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                color: AppColor.color4,
-                              ),
-                            ),
+                            ...color_counts
+                                .map((e) => Expanded(
+                                      flex: e.count,
+                                      child: Container(
+                                        color: AppColor.colorList[e.color_name],
+                                      ),
+                                    ))
+                                .toList(),
                           ],
                         ),
                       ),
                     ),
                     Expanded(
                       child: ListView(
-                        //TODO: Future Builder로 리빌딩
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.fromLTRB(15, 10, 10, 0),
-                            child: Text(
-                              '2023',
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontFamily: 'SF-Pro-Rounded',
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          DailyMusicList(todayColor: AppColor.colorList[0]),
-                          DailyMusicList(todayColor: AppColor.colorList[3]),
-                          DailyMusicList(todayColor: AppColor.colorList[2]),
-                          const SizedBox(height: 40),
-                          const Padding(
-                            padding: EdgeInsets.fromLTRB(15, 10, 10, 0),
-                            child: Text(
-                              '2022',
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontFamily: 'SF-Pro-Rounded',
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          DailyMusicList(todayColor: AppColor.colorList[0]),
-                          DailyMusicList(todayColor: AppColor.colorList[3]),
-                          DailyMusicList(todayColor: AppColor.colorList[2]),
+                          ...years.entries.map((entry) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min, // 여기에 추가
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(15, 10, 10, 0),
+                                  child: Text(
+                                    entry.key, // 연도
+                                    style: const TextStyle(
+                                      fontSize: 30,
+                                      fontFamily: 'SF-Pro-Rounded',
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                                ...entry.value.map((answerDateModel) {
+                                  return DailyMusicList(
+                                    dailyMusic: answerDateModel,
+                                  );
+                                }).toList(),
+                                const SizedBox(height: 40),
+                              ],
+                            );
+                          }).toList(),
                         ],
                       ),
                     ),

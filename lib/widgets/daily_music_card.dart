@@ -18,19 +18,25 @@ class DailyMusicCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.blue.withOpacity(0.2)),
-            width: 90,
+          SizedBox(
             height: 90,
+            width: 90,
+            child: Image.network(
+              cover,
+              headers: const {
+                "User-Agent":
+                    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+              },
+            ),
           ),
           Text(
-            title.length > 8 ? title.substring(0, 8) : title,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+            title,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
           ),
           Text(
-            artist.length > 15 ? artist.substring(0, 8) : artist,
+            artist,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(fontSize: 10, color: Colors.grey.shade700),
           ),
         ],

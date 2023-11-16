@@ -21,7 +21,8 @@ class QuestionsPage extends StatefulWidget {
 class QuestionsPageState extends State<QuestionsPage> {
   final String userId = '2';
 
-  Future<List<QuestionModel>> questions = ApiService.getQuestionsListQuestions('2');
+  Future<List<QuestionModel>> questions =
+      ApiService.getQuestionsListQuestions('2');
 
   updateQuestions() {
     setState(() {
@@ -56,7 +57,9 @@ class QuestionsPageState extends State<QuestionsPage> {
                 Expanded(
                   child: GridView.builder(
                     shrinkWrap: true,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       var question = snapshot.data![index];
@@ -66,7 +69,7 @@ class QuestionsPageState extends State<QuestionsPage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => QuestionScreen(
-                                questionTitle: question.question_message,
+                                question: snapshot.data![index],
                               ),
                             ),
                           );
