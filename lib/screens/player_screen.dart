@@ -139,20 +139,18 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child:
-                                        // TODO: 커버 이미지로 변경
-                                        Opacity(
-                                            opacity: showCaption ? 0.5 : 1,
-                                            child: SizedBox(
-                                              width: 200,
-                                              height: 200,
-                                              child: Image.network(
-                                                snapshot.data!.music.coverUrl,
-                                                headers: const {
-                                                  "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
-                                                },
-                                              ),
-                                            )),
+                                    child: Opacity(
+                                        opacity: showCaption ? 0.5 : 1,
+                                        child: SizedBox(
+                                          width: 200,
+                                          height: 200,
+                                          child: Image.network(
+                                            snapshot.data!.music.coverUrl,
+                                            headers: const {
+                                              "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+                                            },
+                                          ),
+                                        )),
                                   ),
                                 ],
                               ),
