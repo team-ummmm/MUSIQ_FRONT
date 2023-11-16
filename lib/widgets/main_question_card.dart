@@ -110,20 +110,20 @@ class _MainQuestionCardState extends State<MainQuestionCard> {
                 ),
               ),
             )),
-        isSearching
-            ? Positioned(top: 40, left: 298, child: Container())
-            : Positioned(
-                top: isMain ? 43 : 40,
-                left: 298,
-                child: IconButton(
-                  icon: const Icon(CupertinoIcons.refresh_thick),
-                  onPressed: () {
-                    // refreshCard();
-                  },
-                  color: Colors.black,
-                  iconSize: 16,
-                ),
-              )
+        // isSearching
+        //     ? Positioned(top: 40, left: 298, child: Container())
+        //     : Positioned(
+        //         top: isMain ? 43 : 40,
+        //         left: 298,
+        //         child: IconButton(
+        //           icon: const Icon(CupertinoIcons.refresh_thick),
+        //           onPressed: () {
+        //             // refreshCard();
+        //           },
+        //           color: Colors.black,
+        //           iconSize: 16,
+        //         ),
+        //       )
       ],
     );
   }
