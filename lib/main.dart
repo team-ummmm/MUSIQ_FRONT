@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:musiq_front/pages/login_page.dart';
 
 import 'package:musiq_front/pages/root_page.dart';
+import 'package:musiq_front/pages/spotify_login_page.dart';
 import 'package:musiq_front/style.dart';
 
 import 'package:musiq_front/pages/answer_page.dart';
@@ -34,11 +35,13 @@ class MUSIQ extends StatelessWidget {
       // TODO: 링크 타고 온 경우 라우트 추가
       // home: const RootPage(),
       // home: const PlayerScreen(),
-      home: const LoginPage(),
+      // home: const LoginPage(),
+      initialRoute: '/',
       routes: {
-        '/answer': (context) => const AnswerPage(),
-        // '/answer/search': (context) => const SearchScreen(),
-        // '/questions': (context) => QuestionsPage(),
+        '/': (context) => const LoginPage(),
+        '/rootPage': (context) => const RootPage(),
+        '/loginPage': (context) => const LoginPage(),
+        '/spotifyLoginPage': (context) => const SpotifyLoginPage(),
         '/calendar': (context) => const CalendarPage(),
       },
     );

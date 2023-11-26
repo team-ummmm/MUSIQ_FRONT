@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musiq_front/services/login_api_service.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -63,33 +64,39 @@ class LoginPage extends StatelessWidget {
             right: 0,
             top: 600,
             child: Center(
-                child: Container(
-              height: 50,
-              width: 320,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Colors.black),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 30,
-                    width: 30,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/spotify_logo.png'),
-                        fit: BoxFit.cover,
+                child: GestureDetector(
+              onTap: () async {
+                String spotifyLoginUri = await LoginApiService.getSpotifyLoginUrl();
+                Navigator.pushReplacementNamed(context, '/spotifyLoginPage', arguments: spotifyLoginUri);
+              },
+              child: Container(
+                height: 50,
+                width: 320,
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Colors.black),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 30,
+                      width: 30,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/spotify_logo.png'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  const Text(
-                    'Spotify로 시작하기',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'AppleSDGothicNeo',
-                      fontSize: 17,
-                    ),
-                  )
-                ],
+                    const SizedBox(width: 10),
+                    const Text(
+                      'Spotify로 시작하기',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'AppleSDGothicNeo',
+                        fontSize: 17,
+                      ),
+                    )
+                  ],
+                ),
               ),
             )),
           )

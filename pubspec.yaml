@@ -41,6 +41,9 @@ dependencies:
   flutter_native_splash: ^2.3.4
   provider: ^6.0.5
   audioplayers: ^5.2.0
+  webview_flutter: ^4.4.2
+  flutter_secure_storage: ^9.0.0
+  
 
 dev_dependencies:
   flutter_test:
