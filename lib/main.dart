@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:musiq_front/pages/login_page.dart';
 
 import 'package:musiq_front/pages/root_page.dart';
 import 'package:musiq_front/style.dart';
@@ -31,8 +32,9 @@ class MUSIQ extends StatelessWidget {
         dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch, PointerDeviceKind.stylus, PointerDeviceKind.unknown},
       ),
       // TODO: 링크 타고 온 경우 라우트 추가
-      home: const RootPage(),
+      // home: const RootPage(),
       // home: const PlayerScreen(),
+      home: const LoginPage(),
       routes: {
         '/answer': (context) => const AnswerPage(),
         // '/answer/search': (context) => const SearchScreen(),
