@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musiq_front/pages/spotify_login_page.dart';
 import 'package:musiq_front/services/login_api_service.dart';
 
 class LoginPage extends StatelessWidget {
@@ -67,7 +68,7 @@ class LoginPage extends StatelessWidget {
                 child: GestureDetector(
               onTap: () async {
                 String spotifyLoginUri = await LoginApiService.getSpotifyLoginUrl();
-                Navigator.pushReplacementNamed(context, '/spotifyLoginPage', arguments: spotifyLoginUri);
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SpotifyLoginPage(spotifyLoginUri: spotifyLoginUri)));
               },
               child: Container(
                 height: 50,

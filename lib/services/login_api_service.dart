@@ -32,7 +32,7 @@ class LoginApiService {
         await storage.delete(key: 'login');
       }
 
-      String userId = jsonDecode(response.body)['user_id'];
+      int userId = jsonDecode(response.body)['user_id'];
       print(userId);
       String token = jsonDecode(response.body)['token'];
       print(token);
