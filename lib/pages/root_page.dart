@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:musiq_front/pages/answer_page.dart';
 import 'package:musiq_front/pages/calendar_page.dart';
+import 'package:musiq_front/pages/color_page.dart';
 import 'package:musiq_front/pages/questions_page.dart';
+import 'package:musiq_front/pages/setting_page.dart';
 import 'package:musiq_front/screens/player_screen.dart';
 import 'package:musiq_front/style.dart';
 
@@ -27,10 +29,11 @@ class _MyRootPageState extends State<RootPage> {
     BottomNavigationBarItem(icon: Icon(CupertinoIcons.bubble_left_bubble_right_fill), label: 'Tab 1'),
     BottomNavigationBarItem(icon: Icon(CupertinoIcons.person_fill), label: 'Tab 2'),
     BottomNavigationBarItem(icon: Icon(CupertinoIcons.calendar), label: 'Tab 3'),
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.settings), label: 'Tab 4'),
+    BottomNavigationBarItem(icon: Icon(CupertinoIcons.paintbrush_fill), label: 'Tab 4'),
+    BottomNavigationBarItem(icon: Icon(CupertinoIcons.settings), label: 'Tab 5'),
   ];
 
-  final List<GlobalKey<NavigatorState>> _navigatorKeyList = List.generate(4, (index) => GlobalKey<NavigatorState>());
+  final List<GlobalKey<NavigatorState>> _navigatorKeyList = List.generate(5, (index) => GlobalKey<NavigatorState>());
   @override
   void initState() {
     super.initState();
@@ -39,9 +42,8 @@ class _MyRootPageState extends State<RootPage> {
       const AnswerPage(),
       QuestionsPage(key: questionsPageKey),
       CalendarPage(key: calendarPageKey),
-      const PlayerScreen(
-        answerId: 2,
-      ),
+      const ColorPage(),
+      const SettingPage(),
     ];
   }
 
