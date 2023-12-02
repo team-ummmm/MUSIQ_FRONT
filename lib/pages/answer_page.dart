@@ -17,25 +17,25 @@ class AnswerPage extends StatefulWidget {
 }
 
 class _AnswerPageState extends State<AnswerPage> {
-  Future<QuestionModel> mainQuestion = ApiService.getQuestionsMain(MUSIQ.masterUserId, false);
-  Future<QuestionModel> answeredQuestion1 = ApiService.getQuestionsAnswered(MUSIQ.masterUserId, false);
-  Future<QuestionModel> answeredQuestion2 = ApiService.getQuestionsAnswered(MUSIQ.masterUserId, false);
+  Future<QuestionModel> mainQuestion = ApiService.getQuestionsMain(false);
+  Future<QuestionModel> answeredQuestion1 = ApiService.getQuestionsAnswered(false);
+  Future<QuestionModel> answeredQuestion2 = ApiService.getQuestionsAnswered(false);
 
   void updateMainQuestion() {
     setState(() {
-      mainQuestion = ApiService.getQuestionsMain(MUSIQ.masterUserId, true);
+      mainQuestion = ApiService.getQuestionsMain(true);
     });
   }
 
   void updateAnsweredQuestion1() {
     setState(() {
-      answeredQuestion1 = ApiService.getQuestionsAnswered(MUSIQ.masterUserId, true);
+      answeredQuestion1 = ApiService.getQuestionsAnswered(true);
     });
   }
 
   void updateAnsweredQuestion2() {
     setState(() {
-      answeredQuestion2 = ApiService.getQuestionsAnswered(MUSIQ.masterUserId, true);
+      answeredQuestion2 = ApiService.getQuestionsAnswered(true);
     });
   }
 

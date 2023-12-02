@@ -59,8 +59,7 @@ class CalendarPageState extends State<CalendarPage> {
 
   // 선택된 날짜 및 해당 음악들 리턴 함수
   Widget _showDailyMusicList(DateTime selectedDate) {
-    Future<List<DailyMusicModel>> dailyMusics = ApiService.getDailyMusics(
-        MUSIQ.masterUserId, selectedDate.toString().split(' ')[0]);
+    Future<List<DailyMusicModel>> dailyMusics = ApiService.getDailyMusics(selectedDate.toString().split(' ')[0]);
 
     return FutureBuilder(
         future: dailyMusics,
@@ -95,7 +94,7 @@ class CalendarPageState extends State<CalendarPage> {
 
   // 스트릭 정보 불러오기
   Future<void> _fetchConsecutiveDates() async {
-    var dates = await ApiService.getConsecutiveDates(MUSIQ.masterUserId);
+    var dates = await ApiService.getConsecutiveDates();
     setState(() {
       consecutive_dates = dates;
     });
@@ -103,7 +102,7 @@ class CalendarPageState extends State<CalendarPage> {
 
   // 날짜별 색상 정보 불러오기 및 그리기
   Future<void> _fetchDailyColors() async {
-    var data = await ApiService.getDailyColor(MUSIQ.masterUserId);
+    var data = await ApiService.getDailyColor();
     _markdeDateMap.clear();
     for (var dailyColor in data) {
       _markdeDateMap.add(DateTime(dailyColor.formattedDate()[0], dailyColor.formattedDate()[1], dailyColor.formattedDate()[2]),

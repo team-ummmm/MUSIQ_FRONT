@@ -18,7 +18,7 @@ void main() {
 
 class MUSIQ extends StatelessWidget {
   const MUSIQ({super.key});
-  static const masterUserId = '4';
+  static const masterUserId = '3';
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -38,8 +38,7 @@ class MUSIQ extends StatelessWidget {
       // home: const LoginPage(),
       initialRoute: '/',
       routes: {
-        // '/': (context) => const LoginPage(),
-        '/': (context) => const RootPage(),
+        '/': (context) => const LoginPage(),
         '/rootPage': (context) => const RootPage(),
         '/loginPage': (context) => const LoginPage(),
         '/spotifyLoginPage': (context) => const SpotifyLoginPage(),
