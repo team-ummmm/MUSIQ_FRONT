@@ -17,12 +17,9 @@ class AnswerPage extends StatefulWidget {
 }
 
 class _AnswerPageState extends State<AnswerPage> {
-  Future<QuestionModel> mainQuestion =
-      ApiService.getQuestionsMain(MUSIQ.masterUserId, false);
-  Future<QuestionModel> answeredQuestion1 =
-      ApiService.getQuestionsAnswered(MUSIQ.masterUserId, false);
-  Future<QuestionModel> answeredQuestion2 =
-      ApiService.getQuestionsAnswered(MUSIQ.masterUserId, false);
+  Future<QuestionModel> mainQuestion = ApiService.getQuestionsMain(MUSIQ.masterUserId, false);
+  Future<QuestionModel> answeredQuestion1 = ApiService.getQuestionsAnswered(MUSIQ.masterUserId, false);
+  Future<QuestionModel> answeredQuestion2 = ApiService.getQuestionsAnswered(MUSIQ.masterUserId, false);
 
   void updateMainQuestion() {
     setState(() {
@@ -32,15 +29,13 @@ class _AnswerPageState extends State<AnswerPage> {
 
   void updateAnsweredQuestion1() {
     setState(() {
-      answeredQuestion1 =
-          ApiService.getQuestionsAnswered(MUSIQ.masterUserId, true);
+      answeredQuestion1 = ApiService.getQuestionsAnswered(MUSIQ.masterUserId, true);
     });
   }
 
   void updateAnsweredQuestion2() {
     setState(() {
-      answeredQuestion2 =
-          ApiService.getQuestionsAnswered(MUSIQ.masterUserId, true);
+      answeredQuestion2 = ApiService.getQuestionsAnswered(MUSIQ.masterUserId, true);
     });
   }
 
@@ -88,11 +83,7 @@ class _AnswerPageState extends State<AnswerPage> {
                   ),
                   Text(
                     '천천히 고민해봐요!',
-                    style: TextStyle(
-                        color: Colors.grey.shade500,
-                        fontSize: 18,
-                        fontFamily: 'AppleSDGothicNeo',
-                        fontWeight: FontWeight.w100),
+                    style: TextStyle(color: Colors.grey.shade500, fontSize: 18, fontFamily: 'AppleSDGothicNeo', fontWeight: FontWeight.w100),
                   ),
                 ],
               ),
@@ -146,11 +137,7 @@ class _AnswerPageState extends State<AnswerPage> {
                       const SizedBox(width: 30),
                       Text(
                         '이 질문들은 어때요?',
-                        style: TextStyle(
-                            color: Colors.grey.shade500,
-                            fontSize: 18,
-                            fontFamily: 'AppleSDGothicNeo',
-                            fontWeight: FontWeight.w100),
+                        style: TextStyle(color: Colors.grey.shade500, fontSize: 18, fontFamily: 'AppleSDGothicNeo', fontWeight: FontWeight.w100),
                       ),
                     ],
                   ),
@@ -167,12 +154,9 @@ class _AnswerPageState extends State<AnswerPage> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => SearchScreen(
-                                        question_id:
-                                            answeredQuestion1.question_id,
-                                        question:
-                                            answeredQuestion1.question_message,
-                                        initialColor:
-                                            answeredQuestion1.main_color,
+                                        question_id: answeredQuestion1.question_id,
+                                        question: answeredQuestion1.question_message,
+                                        initialColor: answeredQuestion1.main_color,
                                         emoji: answeredQuestion1.emoji,
                                         isMain: true,
                                         isSearching: false,
@@ -194,8 +178,7 @@ class _AnswerPageState extends State<AnswerPage> {
                                 top: 40,
                                 left: 300,
                                 child: IconButton(
-                                  icon:
-                                      const Icon(CupertinoIcons.refresh_thick),
+                                  icon: const Icon(CupertinoIcons.refresh_thick),
                                   onPressed: () {
                                     updateAnsweredQuestion1();
                                   },
@@ -208,7 +191,7 @@ class _AnswerPageState extends State<AnswerPage> {
                         ),
                       )
                     : Container(),
-                answeredQuestion2.question_id != -1
+                answeredQuestion2.question_id != -1 && answeredQuestion2.question_id != answeredQuestion1.question_id
                     ? Center(
                         child: Stack(
                           children: [
@@ -218,12 +201,9 @@ class _AnswerPageState extends State<AnswerPage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => SearchScreen(
-                                      question_id:
-                                          answeredQuestion2.question_id,
-                                      question:
-                                          answeredQuestion2.question_message,
-                                      initialColor:
-                                          answeredQuestion2.main_color,
+                                      question_id: answeredQuestion2.question_id,
+                                      question: answeredQuestion2.question_message,
+                                      initialColor: answeredQuestion2.main_color,
                                       emoji: answeredQuestion2.emoji,
                                       isMain: true,
                                       isSearching: false,
