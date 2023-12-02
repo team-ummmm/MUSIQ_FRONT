@@ -77,7 +77,11 @@ class _MainQuestionCardState extends State<MainQuestionCard> {
                   padding: const EdgeInsets.all(15.0),
                   child: Text(
                     question,
-                    style: TextStyle(fontSize: isMain ? 28 : 18, color: Colors.white, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: isMain ? 28 : 18,
+                      fontFamily: 'AppleSDGothicNeo',
+                      color: Colors.white,
+                    ),
                     textAlign: TextAlign.left,
                   ),
                 ),

@@ -4,7 +4,7 @@ import 'package:musiq_front/pages/answer_page.dart';
 import 'package:musiq_front/pages/calendar_page.dart';
 import 'package:musiq_front/pages/color_page.dart';
 import 'package:musiq_front/pages/questions_page.dart';
-import 'package:musiq_front/pages/setting_page.dart';
+import 'package:musiq_front/pages/story_page.dart';
 import 'package:musiq_front/screens/player_screen.dart';
 import 'package:musiq_front/style.dart';
 
@@ -26,11 +26,11 @@ class _MyRootPageState extends State<RootPage> {
   List<Widget>? _pages;
 
   final List<BottomNavigationBarItem> bottomItems = const [
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.bubble_left_bubble_right_fill), label: 'Tab 1'),
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.person_fill), label: 'Tab 2'),
+    BottomNavigationBarItem(icon: Icon(CupertinoIcons.bubble_left_bubble_right), label: 'Tab 1'),
+    BottomNavigationBarItem(icon: Icon(CupertinoIcons.person), label: 'Tab 2'),
     BottomNavigationBarItem(icon: Icon(CupertinoIcons.calendar), label: 'Tab 3'),
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.paintbrush_fill), label: 'Tab 4'),
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.settings), label: 'Tab 5'),
+    BottomNavigationBarItem(icon: Icon(CupertinoIcons.paintbrush), label: 'Tab 4'),
+    BottomNavigationBarItem(icon: Icon(CupertinoIcons.book), label: 'Tab 5'),
   ];
 
   final List<GlobalKey<NavigatorState>> _navigatorKeyList = List.generate(5, (index) => GlobalKey<NavigatorState>());
@@ -43,7 +43,7 @@ class _MyRootPageState extends State<RootPage> {
       QuestionsPage(key: questionsPageKey),
       CalendarPage(key: calendarPageKey),
       const ColorPage(),
-      const SettingPage(),
+      const StoryPage(),
     ];
   }
 

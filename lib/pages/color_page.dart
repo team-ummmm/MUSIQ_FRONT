@@ -46,7 +46,7 @@ class _ColorPageState extends State<ColorPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "다채로워요",
+                      "다채로워요!",
                       style: TextStyle(
                         fontFamily: 'AppleSDGothicNeo',
                         fontWeight: FontWeight.w500,
@@ -54,7 +54,7 @@ class _ColorPageState extends State<ColorPage> {
                       ),
                     ),
                     Text(
-                      '눌러서 확인해봐요!',
+                      '눌러서 확인해보아요!',
                       style: TextStyle(
                         color: Colors.grey.shade500,
                         fontSize: 18,
@@ -65,10 +65,12 @@ class _ColorPageState extends State<ColorPage> {
                   ],
                 ),
               ),
-              IconButton(
-                padding: const EdgeInsets.fromLTRB(0, 0, 20, 10),
-                onPressed: () {},
-                icon: Icon(CupertinoIcons.question_circle, color: Colors.grey.shade700),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 20, 0),
+                child: IconButton(
+                  onPressed: () {},
+                  icon: Icon(CupertinoIcons.question_circle, color: Colors.grey.shade700),
+                ),
               ),
             ],
           ),

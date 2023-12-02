@@ -40,7 +40,7 @@ class SmallQuestionCard extends StatelessWidget {
                     width: 150,
                     child: Text(
                       question,
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white),
+                      style: const TextStyle(fontFamily: 'AppleSDGothicNeo', fontSize: 14, color: Colors.white),
                       textAlign: TextAlign.left,
                     ),
                   ),

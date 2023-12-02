@@ -2,6 +2,7 @@
 
 // TODO: 답변한 질문들 리스트 받아서 띄우기 && 답변곡들 페이지로 연결
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:musiq_front/main.dart';
 import 'package:musiq_front/models/question_model.dart';
@@ -22,8 +23,7 @@ class QuestionsPage extends StatefulWidget {
 class QuestionsPageState extends State<QuestionsPage> {
   final String userId = '2';
 
-  Future<List<QuestionModel>> questions =
-      ApiService.getQuestionsListQuestions(MUSIQ.masterUserId);
+  Future<List<QuestionModel>> questions = ApiService.getQuestionsListQuestions(MUSIQ.masterUserId);
 
   updateQuestions() {
     setState(() {
@@ -39,17 +39,39 @@ class QuestionsPageState extends State<QuestionsPage> {
           if (snapshot.hasData) {
             return Column(
               children: [
-                const Row(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
-                      width: 30,
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "대답했어요!",
+                            style: TextStyle(
+                              fontFamily: 'AppleSDGothicNeo',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 35,
+                            ),
+                          ),
+                          Text(
+                            '내 답변을 돌아보아요',
+                            style: TextStyle(
+                              color: Colors.grey.shade500,
+                              fontSize: 18,
+                              fontFamily: 'AppleSDGothicNeo',
+                              fontWeight: FontWeight.w100,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    Text(
-                      "대답했어요",
-                      style: TextStyle(
-                        fontFamily: 'AppleSDGothicNeo',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 35,
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 20, 0),
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Icon(CupertinoIcons.question_circle, color: Colors.grey.shade700),
                       ),
                     ),
                   ],
@@ -58,9 +80,7 @@ class QuestionsPageState extends State<QuestionsPage> {
                 Expanded(
                   child: GridView.builder(
                     shrinkWrap: true,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       var question = snapshot.data![index];

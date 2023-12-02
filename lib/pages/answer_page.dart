@@ -17,6 +17,8 @@ class AnswerPage extends StatefulWidget {
 }
 
 class _AnswerPageState extends State<AnswerPage> {
+  int mainId = -1, answeredId1 = -1, answeredId2 = -1;
+
   Future<QuestionModel> mainQuestion = ApiService.getQuestionsMain(MUSIQ.masterUserId, false);
   Future<QuestionModel> answeredQuestion1 = ApiService.getQuestionsAnswered(MUSIQ.masterUserId, false);
   Future<QuestionModel> answeredQuestion2 = ApiService.getQuestionsAnswered(MUSIQ.masterUserId, false);
@@ -58,32 +60,51 @@ class _AnswerPageState extends State<AnswerPage> {
           var mainQuestion = snapshot.data![0];
           var answeredQuestion1 = snapshot.data![1];
           var answeredQuestion2 = snapshot.data![2];
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mainId != mainQuestion.question_id || answeredId1 != answeredQuestion1.question_id || answeredId2 != answeredQuestion2.question_id) {
+              setState(() {
+                mainId = mainQuestion.question_id;
+                answeredId1 = answeredQuestion1.question_id;
+                answeredId2 = answeredQuestion2.question_id;
+              });
+            }
+          });
 
           return Column(
             children: [
-              const Row(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    width: 30,
-                  ),
-                  Text(
-                    "대답할게요",
-                    style: TextStyle(
-                      fontFamily: 'AppleSDGothicNeo',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 35,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "대답할게요!",
+                          style: TextStyle(
+                            fontFamily: 'AppleSDGothicNeo',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 35,
+                          ),
+                        ),
+                        Text(
+                          '천천히 대답해볼까요?',
+                          style: TextStyle(
+                            color: Colors.grey.shade500,
+                            fontSize: 18,
+                            fontFamily: 'AppleSDGothicNeo',
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-              Row(
-                children: [
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  Text(
-                    '천천히 고민해봐요!',
-                    style: TextStyle(color: Colors.grey.shade500, fontSize: 18, fontFamily: 'AppleSDGothicNeo', fontWeight: FontWeight.w100),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 20, 0),
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(CupertinoIcons.question_circle, color: Colors.grey.shade700),
+                    ),
                   ),
                 ],
               ),
@@ -136,7 +157,7 @@ class _AnswerPageState extends State<AnswerPage> {
                     children: [
                       const SizedBox(width: 30),
                       Text(
-                        '이 질문들은 어때요?',
+                        '지금 생각은 어때요?',
                         style: TextStyle(color: Colors.grey.shade500, fontSize: 18, fontFamily: 'AppleSDGothicNeo', fontWeight: FontWeight.w100),
                       ),
                     ],

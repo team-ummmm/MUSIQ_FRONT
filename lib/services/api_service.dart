@@ -90,8 +90,7 @@ class ApiService {
   // debugging
   // 답변들 곡 정보만 불러오기
   static Future<AnswerListModel> getAnswerList(String questionId) async {
-    final url = Uri.parse(
-        "$baseUrl/$questionListAnswers?$requestQuestionId$questionId");
+    final url = Uri.parse("$baseUrl/$questionListAnswers?$requestQuestionId$questionId");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {

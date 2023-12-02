@@ -59,8 +59,7 @@ class CalendarPageState extends State<CalendarPage> {
 
   // 선택된 날짜 및 해당 음악들 리턴 함수
   Widget _showDailyMusicList(DateTime selectedDate) {
-    Future<List<DailyMusicModel>> dailyMusics = ApiService.getDailyMusics(
-        MUSIQ.masterUserId, selectedDate.toString().split(' ')[0]);
+    Future<List<DailyMusicModel>> dailyMusics = ApiService.getDailyMusics(MUSIQ.masterUserId, selectedDate.toString().split(' ')[0]);
 
     return FutureBuilder(
         future: dailyMusics,
@@ -115,48 +114,67 @@ class CalendarPageState extends State<CalendarPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Column(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Row(
-                  children: [
-                    SizedBox(
-                      width: 30,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "돌아보아요!",
+                    style: TextStyle(
+                      fontFamily: 'AppleSDGothicNeo',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 35,
                     ),
-                    Text(
-                      "돌아보아요",
-                      style: TextStyle(fontFamily: 'AppleSDGothicNeo', fontWeight: FontWeight.w500, fontSize: 35),
+                  ),
+                  Text(
+                    '그날의 기억을 되짚어보아요',
+                    style: TextStyle(
+                      color: Colors.grey.shade500,
+                      fontSize: 18,
+                      fontFamily: 'AppleSDGothicNeo',
+                      fontWeight: FontWeight.w100,
                     ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.grey.shade400.withOpacity(0.8)),
-                      width: 120,
-                      height: 50,
-                      child: Center(
-                          child: Text(
-                        "🎨X$consecutive_dates",
-                        style: const TextStyle(fontSize: 25),
-                      )),
-                    ),
-                    const SizedBox(width: 30),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 20),
+            // Padding(
+            //   padding: const EdgeInsets.fromLTRB(0, 0, 10, 10),
+            //   child: IconButton(
+            //     onPressed: () {},
+            //     icon: Icon(CupertinoIcons.question_circle, color: Colors.grey.shade700),
+            //   ),
+            // ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+              child: Container(
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.grey.shade300.withOpacity(0.8)),
+                width: 120,
+                height: 50,
+                child: Center(
+                  child: Text(
+                    "🎨 X $consecutive_dates",
+                    style: const TextStyle(
+                      fontFamily: 'AppleSDGothicNeo',
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
+        const SizedBox(height: 20),
         Expanded(
           child: SingleChildScrollView(
             child: Column(
               children: [
                 Container(
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.grey.shade400.withOpacity(0.8)),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.grey.shade300.withOpacity(0.8)),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: SizedBox(
@@ -168,9 +186,9 @@ class CalendarPageState extends State<CalendarPage> {
                           // dateChanged = true;
                         },
                         weekendTextStyle: const TextStyle(
-                          color: Colors.white,
+                          color: Colors.black54,
                         ),
-                        daysTextStyle: const TextStyle(color: Colors.white),
+                        daysTextStyle: const TextStyle(color: Colors.black54),
                         thisMonthDayBorderColor: Colors.grey,
                         customDayBuilder: (
                           /// you can provide your own build function to make custom day containers
@@ -204,6 +222,7 @@ class CalendarPageState extends State<CalendarPage> {
                         markedDateIconBuilder: (event) {
                           return event.icon;
                         },
+                        markedDateCustomTextStyle: const TextStyle(color: Colors.white),
                         showIconBehindDayText: true,
                         // daysHaveCircularBorder: true,
                         onCalendarChanged: (DateTime date) {
