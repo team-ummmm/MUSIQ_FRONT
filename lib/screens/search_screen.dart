@@ -92,9 +92,9 @@ class _SearchScreenState extends State<SearchScreen> {
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 List<Future<QuestionModel>> nextQuestions = [
-                  ApiService.getQuestionsMain(MUSIQ.masterUserId, false),
-                  ApiService.getQuestionsAnswered(MUSIQ.masterUserId, false),
-                  ApiService.getQuestionsAnswered(MUSIQ.masterUserId, false),
+                  ApiService.getQuestionsMain(false),
+                  ApiService.getQuestionsAnswered(false),
+                  ApiService.getQuestionsAnswered(false),
                 ];
 
                 widget.onQuestionChanged(nextQuestions);

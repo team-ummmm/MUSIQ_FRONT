@@ -23,11 +23,12 @@ class QuestionsPage extends StatefulWidget {
 class QuestionsPageState extends State<QuestionsPage> {
   final String userId = '2';
 
-  Future<List<QuestionModel>> questions = ApiService.getQuestionsListQuestions(MUSIQ.masterUserId);
+  Future<List<QuestionModel>> questions =
+      ApiService.getQuestionsListQuestions();
 
   updateQuestions() {
     setState(() {
-      questions = ApiService.getQuestionsListQuestions(MUSIQ.masterUserId);
+      questions = ApiService.getQuestionsListQuestions();
     });
   }
 

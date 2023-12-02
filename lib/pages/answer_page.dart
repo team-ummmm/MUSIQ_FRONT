@@ -25,19 +25,19 @@ class _AnswerPageState extends State<AnswerPage> {
 
   void updateMainQuestion() {
     setState(() {
-      mainQuestion = ApiService.getQuestionsMain(MUSIQ.masterUserId, true);
+      mainQuestion = ApiService.getQuestionsMain(true);
     });
   }
 
   void updateAnsweredQuestion1() {
     setState(() {
-      answeredQuestion1 = ApiService.getQuestionsAnswered(MUSIQ.masterUserId, true);
+      answeredQuestion1 = ApiService.getQuestionsAnswered(true);
     });
   }
 
   void updateAnsweredQuestion2() {
     setState(() {
-      answeredQuestion2 = ApiService.getQuestionsAnswered(MUSIQ.masterUserId, true);
+      answeredQuestion2 = ApiService.getQuestionsAnswered(true);
     });
   }
 
