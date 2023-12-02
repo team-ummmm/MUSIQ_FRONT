@@ -14,8 +14,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // TODO: ERROR 수신한 경우 팝업 혹은 다른 방식으로 알리기
 class ApiService {
-  static const String baseUrl =
-      'http://musiq-api.ap-northeast-2.elasticbeanstalk.com';
+  static const String baseUrl = 'http://musiq-api.ap-northeast-2.elasticbeanstalk.com';
   static const String search = 'search';
   static const String questionListQuestions = 'question-list/questions';
   static const String questionListAnswers = 'question-list/answers';
@@ -48,13 +47,12 @@ class ApiService {
   /// Tab 1; questionMain 1개. 한 번 호출
   /// 200: 대답 안 한 질문 하나 받기.
   /// 400: 에러
-  static Future<QuestionModel> getQuestionsMain(bool refresh) async {
+  static Future<QuestionModel> getQuestionsMain(int questionId, bool refresh) async {
     int userId = await getUserId();
 
     print('userId: $userId');
     QuestionModel question;
-    final url = Uri.parse(
-        "$baseUrl/$questionMain?$requestUserId$userId&$requestRefresh$refresh");
+    final url = Uri.parse("$baseUrl/$questionMain?$requestUserId$userId&$requestRefresh$refresh&this_question_id=$questionId");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -68,12 +66,11 @@ class ApiService {
   /// Tab 1; questionAnswered 1개씩 두 번 호출하기
   /// 200: 대답 한 질문 하나 받기.
   /// 400: 에러
-  static Future<QuestionModel> getQuestionsAnswered(bool refresh) async {
+  static Future<QuestionModel> getQuestionsAnswered(int thisQuestionId, int otherQuestionId, bool refresh) async {
     int userId = await getUserId();
 
     QuestionModel question;
-    final url = Uri.parse(
-        "$baseUrl/$questionAnswered?$requestUserId$userId&$requestRefresh$refresh");
+    final url = Uri.parse("$baseUrl/$questionAnswered?$requestUserId$userId&$requestRefresh$refresh&this_question_id=$thisQuestionId&other_question_id=$otherQuestionId");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -91,8 +88,7 @@ class ApiService {
     int userId = await getUserId();
 
     List<QuestionModel> questionInstances = [];
-    final url =
-        Uri.parse("$baseUrl/$questionListQuestions?$requestUserId$userId");
+    final url = Uri.parse("$baseUrl/$questionListQuestions?$requestUserId$userId");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -126,8 +122,7 @@ class ApiService {
   /// search_screen; 검색 결과 곡들 받기.
   /// 200: 검색된 곡들 리스트로 바로 옴.
   /// 400: 에러
-  static Future<List<SearchMusicModel>> getSearchMusics(
-      String searchText) async {
+  static Future<List<SearchMusicModel>> getSearchMusics(String searchText) async {
     List<SearchMusicModel> searchMusicInstances = [];
     final url = Uri.parse("$baseUrl/$search?$requestSearchText$searchText");
     final response = await http.get(url);
@@ -145,8 +140,7 @@ class ApiService {
 
   // Search_Screen; 곡을 추가하면, 질문 대표 색을 받음.
   static Future<int> postSearchMusic(int questionId, String musicId) async {
-    final url = Uri.parse(
-        "$baseUrl/$search?$requestQuestionId$questionId&$requestMusicId$musicId");
+    final url = Uri.parse("$baseUrl/$search?$requestQuestionId$questionId&$requestMusicId$musicId");
     final response = await http.post(url);
 
     if (response.statusCode == 200) {
@@ -194,13 +188,11 @@ class ApiService {
   }
 
   // 날짜별 답변 음악 받아오기
-  static Future<List<DailyMusicModel>> getDailyMusics(
-      String selectedDate) async {
+  static Future<List<DailyMusicModel>> getDailyMusics(String selectedDate) async {
     int userId = await getUserId();
 
     List<DailyMusicModel> dailyMusicInstances = [];
-    final url = Uri.parse(
-        "$baseUrl/$calendarDate?$requestDate$selectedDate&$requestUserId$userId");
+    final url = Uri.parse("$baseUrl/$calendarDate?$requestDate$selectedDate&$requestUserId$userId");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -215,8 +207,7 @@ class ApiService {
 
   // player_screen; 캡션 불러오기
   static Future<String> getCaption(int answerId) async {
-    final url =
-        Uri.parse("$baseUrl/$playSongCaption?$requestAnswerId$answerId");
+    final url = Uri.parse("$baseUrl/$playSongCaption?$requestAnswerId$answerId");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -229,8 +220,7 @@ class ApiService {
 
   // player_screen; 캡션 추가하기
   static void postCaption(String captionText, int answerId) async {
-    final url = Uri.parse(
-        "$baseUrl/$playSongCaption?$requestCaptionText$captionText&$requestAnswerId$answerId");
+    final url = Uri.parse("$baseUrl/$playSongCaption?$requestCaptionText$captionText&$requestAnswerId$answerId");
     final response = await http.post(url);
 
     if (response.statusCode == 200) {

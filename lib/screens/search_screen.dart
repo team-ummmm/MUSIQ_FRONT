@@ -16,17 +16,24 @@ class SearchScreen extends StatefulWidget {
   final int initialColor;
   final bool isMain;
   final bool isSearching;
+  final int mainId;
+  final int answeredId1;
+  final int answeredId2;
   final Function(List<Future<QuestionModel>>) onQuestionChanged;
 
-  const SearchScreen(
-      {super.key,
-      required this.question_id,
-      required this.emoji,
-      required this.question,
-      required this.initialColor,
-      required this.isMain,
-      required this.isSearching,
-      required this.onQuestionChanged});
+  const SearchScreen({
+    super.key,
+    required this.question_id,
+    required this.emoji,
+    required this.question,
+    required this.initialColor,
+    required this.isMain,
+    required this.isSearching,
+    required this.onQuestionChanged,
+    required this.mainId,
+    required this.answeredId1,
+    required this.answeredId2,
+  });
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -92,9 +99,9 @@ class _SearchScreenState extends State<SearchScreen> {
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 List<Future<QuestionModel>> nextQuestions = [
-                  ApiService.getQuestionsMain(false),
-                  ApiService.getQuestionsAnswered(false),
-                  ApiService.getQuestionsAnswered(false),
+                  ApiService.getQuestionsMain(widget.mainId, false),
+                  ApiService.getQuestionsAnswered(widget.answeredId1, widget.answeredId2, false),
+                  ApiService.getQuestionsAnswered(widget.answeredId2, widget.answeredId1, false),
                 ];
 
                 widget.onQuestionChanged(nextQuestions);
@@ -122,9 +129,7 @@ class _SearchScreenState extends State<SearchScreen> {
               // 중단의 텍스트 필드
               width: 350,
               height: 50,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.grey.shade300),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.grey.shade300),
               child: TextField(
                 controller: textEditingController,
                 onChanged: _onSearchChanged,
@@ -167,8 +172,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               onColorChanged: onColorChanged,
                             );
                           },
-                          separatorBuilder: (BuildContext context, int index) =>
-                              const Divider(
+                          separatorBuilder: (BuildContext context, int index) => const Divider(
                             color: Colors.white,
                           ),
                         ),
@@ -183,8 +187,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             alignment: Alignment.bottomLeft,
                             child: Text(
                               '검색 결과',
-                              style: TextStyle(
-                                  fontSize: 13, color: Colors.grey.shade700),
+                              style: TextStyle(fontSize: 13, color: Colors.grey.shade700),
                             ),
                           ),
                         ),

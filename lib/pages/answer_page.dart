@@ -19,25 +19,33 @@ class AnswerPage extends StatefulWidget {
 class _AnswerPageState extends State<AnswerPage> {
   int mainId = -1, answeredId1 = -1, answeredId2 = -1;
 
-  Future<QuestionModel> mainQuestion = ApiService.getQuestionsMain(MUSIQ.masterUserId, false);
-  Future<QuestionModel> answeredQuestion1 = ApiService.getQuestionsAnswered(MUSIQ.masterUserId, false);
-  Future<QuestionModel> answeredQuestion2 = ApiService.getQuestionsAnswered(MUSIQ.masterUserId, false);
+  late Future<QuestionModel> mainQuestion;
+  late Future<QuestionModel> answeredQuestion1;
+  late Future<QuestionModel> answeredQuestion2;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    mainQuestion = ApiService.getQuestionsMain(mainId, false);
+    answeredQuestion1 = ApiService.getQuestionsAnswered(answeredId1, answeredId2, false);
+    answeredQuestion2 = ApiService.getQuestionsAnswered(answeredId2, answeredId1, false);
+  }
 
   void updateMainQuestion() {
     setState(() {
-      mainQuestion = ApiService.getQuestionsMain(true);
+      mainQuestion = ApiService.getQuestionsMain(mainId, true);
     });
   }
 
   void updateAnsweredQuestion1() {
     setState(() {
-      answeredQuestion1 = ApiService.getQuestionsAnswered(true);
+      answeredQuestion1 = ApiService.getQuestionsAnswered(answeredId1, answeredId2, true);
     });
   }
 
   void updateAnsweredQuestion2() {
     setState(() {
-      answeredQuestion2 = ApiService.getQuestionsAnswered(true);
+      answeredQuestion2 = ApiService.getQuestionsAnswered(answeredId2, answeredId1, true);
     });
   }
 
@@ -123,6 +131,9 @@ class _AnswerPageState extends State<AnswerPage> {
                             isMain: true,
                             isSearching: false,
                             onQuestionChanged: onQuestionChanged,
+                            mainId: mainId,
+                            answeredId1: answeredId1,
+                            answeredId2: answeredId2,
                           ),
                         ),
                       );
@@ -182,6 +193,9 @@ class _AnswerPageState extends State<AnswerPage> {
                                         isMain: true,
                                         isSearching: false,
                                         onQuestionChanged: onQuestionChanged,
+                                        mainId: mainId,
+                                        answeredId1: answeredId1,
+                                        answeredId2: answeredId2,
                                       ),
                                     ),
                                   );
@@ -229,6 +243,9 @@ class _AnswerPageState extends State<AnswerPage> {
                                       isMain: true,
                                       isSearching: false,
                                       onQuestionChanged: onQuestionChanged,
+                                      mainId: mainId,
+                                      answeredId1: answeredId1,
+                                      answeredId2: answeredId2,
                                     ),
                                   ),
                                 );
