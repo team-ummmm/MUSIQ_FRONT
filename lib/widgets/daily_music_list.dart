@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musiq_front/di/providers/player_provider.dart';
 import 'package:musiq_front/main.dart';
 import 'package:musiq_front/models/answer_dates_model.dart';
 import 'package:musiq_front/models/answered_music_model.dart';
@@ -6,6 +7,7 @@ import 'package:musiq_front/screens/player_screen.dart';
 import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/daily_music_card.dart';
 import 'package:musiq_front/widgets/slide_down_route.dart';
+import 'package:provider/provider.dart';
 
 /// TODO: TempList를 DailyMusicList로 바꾸기
 /// DailyMusicList는 ColorMusicList로 바꾸기
@@ -89,10 +91,16 @@ class _DailyMusicListState extends State<DailyMusicList> {
                                 //     ),
                                 //   ),
                                 // );
-                                Navigator.of(context).push(SlideDownRoute(
-                                    page: PlayerScreen(
-                                  answerId: e.answerId,
-                                )));
+                                // Navigator.of(context).push(SlideDownRoute(
+                                //     page: PlayerScreen(
+                                //   answerId: e.answerId,
+                                // )));
+                                context
+                                    .read<PlayerProvider>()
+                                    .updateCurrentAnswerId(e.answerId);
+                                context
+                                    .read<PlayerProvider>()
+                                    .toggleScreen(true);
                               },
                               child: DailyMusicCard(
                                 cover: e.music.cover_url,

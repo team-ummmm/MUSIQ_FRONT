@@ -7,6 +7,8 @@ import 'package:musiq_front/pages/questions_page.dart';
 import 'package:musiq_front/pages/story_page.dart';
 import 'package:musiq_front/screens/player_screen.dart';
 import 'package:musiq_front/style.dart';
+import 'package:provider/provider.dart';
+import 'package:musiq_front/di/providers/player_provider.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
@@ -26,14 +28,18 @@ class _MyRootPageState extends State<RootPage> {
   List<Widget>? _pages;
 
   final List<BottomNavigationBarItem> bottomItems = const [
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.bubble_left_bubble_right), label: 'Tab 1'),
+    BottomNavigationBarItem(
+        icon: Icon(CupertinoIcons.bubble_left_bubble_right), label: 'Tab 1'),
     BottomNavigationBarItem(icon: Icon(CupertinoIcons.person), label: 'Tab 2'),
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.calendar), label: 'Tab 3'),
-    BottomNavigationBarItem(icon: Icon(CupertinoIcons.paintbrush), label: 'Tab 4'),
+    BottomNavigationBarItem(
+        icon: Icon(CupertinoIcons.calendar), label: 'Tab 3'),
+    BottomNavigationBarItem(
+        icon: Icon(CupertinoIcons.paintbrush), label: 'Tab 4'),
     BottomNavigationBarItem(icon: Icon(CupertinoIcons.book), label: 'Tab 5'),
   ];
 
-  final List<GlobalKey<NavigatorState>> _navigatorKeyList = List.generate(5, (index) => GlobalKey<NavigatorState>());
+  final List<GlobalKey<NavigatorState>> _navigatorKeyList =
+      List.generate(5, (index) => GlobalKey<NavigatorState>());
   @override
   void initState() {
     super.initState();
@@ -55,9 +61,17 @@ class _MyRootPageState extends State<RootPage> {
 
   @override
   Widget build(BuildContext context) {
+    var playerProvider = Provider.of<PlayerProvider>(context);
+
+    if (playerProvider.displayPlayerScreen) {
+      Future.microtask(() => Navigator.of(context).pushNamed('/player'));
+    }
+
     return WillPopScope(
       onWillPop: () async {
-        return !(await _navigatorKeyList[_selectedIndex].currentState!.maybePop());
+        return !(await _navigatorKeyList[_selectedIndex]
+            .currentState!
+            .maybePop());
       },
       child: SafeArea(
         top: false,

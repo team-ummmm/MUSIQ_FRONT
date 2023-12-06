@@ -14,6 +14,8 @@ import 'package:musiq_front/models/answer_model.dart';
 import 'package:musiq_front/models/question_model.dart';
 import 'package:musiq_front/services/api_service.dart';
 import 'package:musiq_front/style.dart';
+import 'package:provider/provider.dart';
+import 'package:musiq_front/di/providers/player_provider.dart';
 
 import 'package:musiq_front/widgets/daily_music_list.dart';
 

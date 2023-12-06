@@ -11,9 +11,15 @@ import 'package:musiq_front/screens/search_screen.dart';
 import 'package:musiq_front/pages/questions_page.dart';
 import 'package:musiq_front/screens/question_screen.dart';
 import 'package:musiq_front/pages/calendar_page.dart';
+import 'package:provider/provider.dart';
+import 'di/providers/player_provider.dart';
+import 'screens/player_screen.dart';
 
 void main() {
-  runApp(const MUSIQ());
+  runApp(ChangeNotifierProvider(
+    create: (context) => PlayerProvider(),
+    child: const MUSIQ(),
+  ));
 }
 
 class MUSIQ extends StatelessWidget {
@@ -21,6 +27,7 @@ class MUSIQ extends StatelessWidget {
   static const masterUserId = '3';
   @override
   Widget build(BuildContext context) {
+    PlayerScreen playerScreen = PlayerScreen(key: UniqueKey());
     return MaterialApp(
       title: 'MUSIQ',
       theme: ThemeData(
@@ -30,12 +37,18 @@ class MUSIQ extends StatelessWidget {
         useMaterial3: true,
       ),
       scrollBehavior: const MaterialScrollBehavior().copyWith(
-        dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch, PointerDeviceKind.stylus, PointerDeviceKind.unknown},
+        dragDevices: {
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.touch,
+          PointerDeviceKind.stylus,
+          PointerDeviceKind.unknown
+        },
       ),
       // TODO: 링크 타고 온 경우 라우트 추가
       // home: const RootPage(),
       // home: const PlayerScreen(),
       // home: const LoginPage(),
+
       initialRoute: '/',
       routes: {
         '/': (context) => const LoginPage(),
@@ -43,6 +56,7 @@ class MUSIQ extends StatelessWidget {
         '/loginPage': (context) => const LoginPage(),
         '/spotifyLoginPage': (context) => const SpotifyLoginPage(),
         '/calendar': (context) => const CalendarPage(),
+        '/player': (context) => playerScreen,
       },
     );
   }

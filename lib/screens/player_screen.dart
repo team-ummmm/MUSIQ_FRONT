@@ -4,6 +4,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:musiq_front/di/providers/player_provider.dart';
 import 'package:musiq_front/main.dart';
 import 'package:musiq_front/pages/root_page.dart';
 import 'package:musiq_front/services/api_service.dart';
@@ -12,17 +13,17 @@ import 'package:musiq_front/widgets/caption_dialog.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:musiq_front/models/player_model.dart';
 import 'package:musiq_front/widgets/slide_down_route.dart';
+import 'package:provider/provider.dart';
 
 class PlayerScreen extends StatefulWidget {
-  final int answerId;
-  const PlayerScreen({required this.answerId, super.key});
+  const PlayerScreen({super.key});
 
   @override
   State<PlayerScreen> createState() => _PlayerScreenState();
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
-  int answerId = 0;
+  late int answerId;
   String question = "";
   late Future<String> caption;
   bool showCaption = false;
@@ -36,7 +37,6 @@ class _PlayerScreenState extends State<PlayerScreen> {
   @override
   void initState() {
     super.initState();
-    answerId = widget.answerId;
 
     audioPlayer.onPlayerStateChanged.listen((state) {
       if (state == PlayerState.playing) {
@@ -81,8 +81,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    answerId = context.watch<PlayerProvider>().currentAnswerId;
     caption = ApiService.getCaption(answerId);
     music = ApiService.getMusic(answerId);
+    Provider.of<PlayerProvider>(context, listen: false);
     return Material(
         child: FutureBuilder(
             future: music,
@@ -101,6 +103,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                         iconSize: 40,
                         // TODO
                         onPressed: () {
+                          context.read<PlayerProvider>().toggleScreen(false);
                           Navigator.pop(context);
                         },
                       ),
