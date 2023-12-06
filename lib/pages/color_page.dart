@@ -32,6 +32,79 @@ class _ColorPageState extends State<ColorPage> {
     ColorCardModel(colorNumber: 7, colorName: 'Yellow', colorCode: '#FDCB5C', colorDescription: '햇빛, 기쁨, 따뜻함을 상징해요. 친근감과 자신감을 제공해요. 하지만 약간의 불안감도 내포하고 있어요.'),
     ColorCardModel(colorNumber: 8, colorName: 'Vivid Red', colorCode: '#F13E69', colorDescription: '열정, 강렬함, 호전적인 느낌을 나타내요. 사랑, 자신감, 열정, 화 등 긍정적이고 부정적인 면 모두를 상징해요.'),
   ];
+
+  void showColorPageTooltip() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          child: Container(
+            width: 350,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              color: Colors.white.withOpacity(0.5),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                  blurRadius: 20,
+                  spreadRadius: 5,
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  Text(
+                    '다채로워요!',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontFamily: 'AppleSDGothicNeo',
+                      color: AppColor.colorList[3],
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  const Text(
+                    '💡 화면의 색상 카드를 눌러 색상이 지닌 의미를 살펴보아요 :)',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+                  ),
+                  const SizedBox(height: 15),
+                  const Text(
+                    "💡 Spotify가 제공하는 데이터와 색채심리학을 바탕으로 색상을 구성해보았어요!",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+                  ),
+                  const SizedBox(height: 15),
+                  const Text(
+                    "💡 하단에는 색상을 한눈에 볼 수 있는 귀여운 큐브가 있어요 :)",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+                  ),
+                  const SizedBox(height: 35),
+                  Center(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(AppColor.colorList[3])),
+                        child: const Text(
+                          "YES !",
+                          style: TextStyle(fontFamily: 'AppleSDGothicNeo', color: Colors.white),
+                        )),
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -54,7 +127,7 @@ class _ColorPageState extends State<ColorPage> {
                       ),
                     ),
                     Text(
-                      '눌러서 확인해보아요!',
+                      '무슨 의미를 지닐까요?',
                       style: TextStyle(
                         color: Colors.grey.shade500,
                         fontSize: 18,
@@ -68,7 +141,9 @@ class _ColorPageState extends State<ColorPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 20, 0),
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showColorPageTooltip();
+                  },
                   icon: Icon(CupertinoIcons.question_circle, color: Colors.grey.shade700),
                 ),
               ),
