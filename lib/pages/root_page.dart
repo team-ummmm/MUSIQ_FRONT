@@ -9,6 +9,7 @@ import 'package:musiq_front/screens/player_screen.dart';
 import 'package:musiq_front/style.dart';
 import 'package:provider/provider.dart';
 import 'package:musiq_front/di/providers/player_provider.dart';
+import 'package:musiq_front/widgets/slide_down_route.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
@@ -51,6 +52,15 @@ class _MyRootPageState extends State<RootPage> {
       const ColorPage(),
       const StoryPage(),
     ];
+    final playerProvider = Provider.of<PlayerProvider>(context, listen: false);
+    playerProvider.addListener(_onPlayerStateChanged);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    final playerProvider = Provider.of<PlayerProvider>(context, listen: false);
+    playerProvider.removeListener(_onPlayerStateChanged);
   }
 
   void toggleAppBar(bool show) {
@@ -59,14 +69,19 @@ class _MyRootPageState extends State<RootPage> {
     });
   }
 
+  void _onPlayerStateChanged() {
+    final playerProvider = Provider.of<PlayerProvider>(context, listen: false);
+
+    // displayPlayerScreen 상태가 true일 때 PlayerScreen으로 네비게이트합니다.
+    if (playerProvider.displayPlayerScreen) {
+      Navigator.of(context).push(SlideDownRoute(page: PlayerScreen()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    var playerProvider = Provider.of<PlayerProvider>(context);
-
-    if (playerProvider.displayPlayerScreen) {
-      Future.microtask(() => Navigator.of(context).pushNamed('/player'));
-    }
-
+    context.read<PlayerProvider>().setPlayer();
+    print('building root page!');
     return WillPopScope(
       onWillPop: () async {
         return !(await _navigatorKeyList[_selectedIndex]
@@ -117,6 +132,15 @@ class _MyRootPageState extends State<RootPage> {
             },
             items: bottomItems,
           ),
+          floatingActionButton: context.watch<PlayerProvider>().isPlaying
+              ? IconButton(
+                  iconSize: 40,
+                  onPressed: () {
+                    context.read<PlayerProvider>().toggleScreen(true);
+                  },
+                  icon: const Icon(CupertinoIcons.play_circle_fill))
+              : Container(),
+          // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         ),
       ),
     );

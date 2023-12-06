@@ -27,9 +27,9 @@ class MUSIQ extends StatelessWidget {
   static const masterUserId = '3';
   @override
   Widget build(BuildContext context) {
-    PlayerScreen playerScreen = PlayerScreen(key: UniqueKey());
     return MaterialApp(
       title: 'MUSIQ',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         appBarTheme: const AppBarTheme(color: AppColor.backgroudColor),
         scaffoldBackgroundColor: AppColor.backgroudColor,
@@ -56,7 +56,6 @@ class MUSIQ extends StatelessWidget {
         '/loginPage': (context) => const LoginPage(),
         '/spotifyLoginPage': (context) => const SpotifyLoginPage(),
         '/calendar': (context) => const CalendarPage(),
-        '/player': (context) => playerScreen,
       },
     );
   }

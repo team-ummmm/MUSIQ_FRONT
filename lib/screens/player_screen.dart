@@ -2,6 +2,8 @@
 // 질문, 캡션유무, 뮤직객체(아티스트, 곡제목, 색깔, 커버URL, 노래URL) 받아옴
 // TODO: 키 추가
 
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:musiq_front/di/providers/player_provider.dart';
@@ -27,44 +29,59 @@ class _PlayerScreenState extends State<PlayerScreen> {
   String question = "";
   late Future<String> caption;
   bool showCaption = false;
-  final AudioPlayer audioPlayer = AudioPlayer();
   bool isPlaying = false;
   bool hasPlayed = false;
   Duration currentPosition = Duration.zero;
   Duration currentDuration = Duration.zero;
   late Future<PlayerModel> music;
+  late AudioPlayer audioPlayer;
+
+  Timer? _timer;
+  int _counter = 0;
 
   @override
   void initState() {
     super.initState();
+    _startTimer();
+  }
 
-    audioPlayer.onPlayerStateChanged.listen((state) {
-      if (state == PlayerState.playing) {
-        setState(() => isPlaying = true);
-      } else {
-        setState(() => isPlaying = false);
-      }
-    });
-    audioPlayer.onDurationChanged.listen((duration) {
-      setState(() => currentDuration = duration);
-    });
-    audioPlayer.onPositionChanged.listen((position) {
-      setState(() => currentPosition = position);
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+      setState(() {
+        _counter++;
+      });
     });
   }
 
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
   void _playAudio(String url) async {
-    if (!hasPlayed) {
-      await audioPlayer.play(UrlSource(url));
-    } else {
-      await audioPlayer.seek(currentPosition);
-      await audioPlayer.resume();
+    try {
+      audioPlayer = context.read<PlayerProvider>().audioPlayer;
+      if (!hasPlayed) {
+        await audioPlayer.play(UrlSource(url));
+      } else {
+        await audioPlayer.seek(currentPosition);
+        await audioPlayer.resume();
+      }
+    } catch (e) {
+      print(e.toString());
     }
   }
 
   void _pauseAudio() async {
-    await audioPlayer.pause();
-    currentPosition = await audioPlayer.getCurrentPosition() ?? Duration.zero;
+    try {
+      audioPlayer = context.read<PlayerProvider>().audioPlayer;
+      await audioPlayer.pause();
+      // context.read<PlayerProvider>().pause();
+      currentPosition = await audioPlayer.getCurrentPosition() ?? Duration.zero;
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   String formatDuration(Duration duration) {
@@ -81,10 +98,14 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('building player screen');
     answerId = context.watch<PlayerProvider>().currentAnswerId;
+    isPlaying = context.watch<PlayerProvider>().isPlaying;
+    currentPosition = context.watch<PlayerProvider>().currentPosition;
+    currentDuration = context.watch<PlayerProvider>().currentDuration;
     caption = ApiService.getCaption(answerId);
     music = ApiService.getMusic(answerId);
-    Provider.of<PlayerProvider>(context, listen: false);
+    print(context.watch<PlayerProvider>().displayPlayerScreen);
     return Material(
         child: FutureBuilder(
             future: music,
@@ -235,6 +256,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                 audioPlayer
                                     .seek(Duration(seconds: value.toInt()));
                               });
+                              // context
+                              //     .read<PlayerProvider>()
+                              //     .seekDuration(value);
                             },
                             min: 0,
                             max: currentDuration.inSeconds.toDouble(),
@@ -284,6 +308,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                         snapshot.data!.music.musicColor],
                                     iconSize: 50,
                                     onPressed: () {
+                                      // context.read<PlayerProvider>().pause();
                                       _pauseAudio();
                                     })
                                 : IconButton(
@@ -293,6 +318,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                         snapshot.data!.music.musicColor],
                                     iconSize: 50,
                                     onPressed: () {
+                                      context.read<PlayerProvider>().setUrl(
+                                          snapshot.data!.music.musicUrl);
+                                      // context.read<PlayerProvider>().play();
                                       _playAudio(snapshot.data!.music.musicUrl);
                                     }),
                           ),
