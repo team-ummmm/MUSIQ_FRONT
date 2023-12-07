@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cube/flutter_cube.dart';
+import 'package:musiq_front/main.dart';
 import 'package:musiq_front/models/color_card_model.dart';
 import 'package:musiq_front/models/story_card_model.dart';
+import 'package:musiq_front/pages/login_page.dart';
 import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/color_card.dart';
 import 'package:musiq_front/widgets/cube_painter.dart';
@@ -191,28 +193,48 @@ class _StoryPageState extends State<StoryPage> {
                   ))
               .toList(),
           const SizedBox(height: 30),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     Padding(
-          //       padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-          //       child: Column(
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: [
-          //           Text(
-          //             '돌려서 확인해봐요!',
-          //             style: TextStyle(
-          //               color: Colors.grey.shade500,
-          //               fontSize: 18,
-          //               fontFamily: 'AppleSDGothicNeo',
-          //               fontWeight: FontWeight.w100,
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '다음에 또 와요!',
+                      style: TextStyle(
+                        color: Colors.grey.shade500,
+                        fontSize: 18,
+                        fontFamily: 'AppleSDGothicNeo',
+                        fontWeight: FontWeight.w100,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Center(
+            child: TextButton(
+              child: const Text(
+                '로그아웃',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 16,
+                ),
+              ),
+              onPressed: () {
+                // 로그아웃 시
+                navigatorKey.currentState!.pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                  (Route<dynamic> route) => false,
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 40),
         ],
       ),
     );
