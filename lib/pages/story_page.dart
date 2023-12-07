@@ -225,8 +225,10 @@ class _StoryPageState extends State<StoryPage> {
                   fontSize: 16,
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
                 // 로그아웃 시
+                await Future.delayed(const Duration(milliseconds: 500));
+
                 navigatorKey.currentState!.pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => const LoginPage()),
                   (Route<dynamic> route) => false,
