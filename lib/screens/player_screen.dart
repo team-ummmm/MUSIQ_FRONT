@@ -2,8 +2,11 @@
 // 질문, 캡션유무, 뮤직객체(아티스트, 곡제목, 색깔, 커버URL, 노래URL) 받아옴
 // TODO: 키 추가
 
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:musiq_front/di/providers/player_provider.dart';
 import 'package:musiq_front/main.dart';
 import 'package:musiq_front/pages/root_page.dart';
 import 'package:musiq_front/services/api_service.dart';
@@ -12,59 +15,73 @@ import 'package:musiq_front/widgets/caption_dialog.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:musiq_front/models/player_model.dart';
 import 'package:musiq_front/widgets/slide_down_route.dart';
+import 'package:provider/provider.dart';
 
 class PlayerScreen extends StatefulWidget {
-  final int answerId;
-  const PlayerScreen({required this.answerId, super.key});
+  const PlayerScreen({super.key});
 
   @override
   State<PlayerScreen> createState() => _PlayerScreenState();
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
-  int answerId = 0;
+  late int answerId;
   String question = "";
   late Future<String> caption;
   bool showCaption = false;
-  final AudioPlayer audioPlayer = AudioPlayer();
   bool isPlaying = false;
   bool hasPlayed = false;
   Duration currentPosition = Duration.zero;
   Duration currentDuration = Duration.zero;
   late Future<PlayerModel> music;
+  late AudioPlayer audioPlayer;
+
+  Timer? _timer;
+  int _counter = 0;
 
   @override
   void initState() {
     super.initState();
-    answerId = widget.answerId;
+    _startTimer();
+  }
 
-    audioPlayer.onPlayerStateChanged.listen((state) {
-      if (state == PlayerState.playing) {
-        setState(() => isPlaying = true);
-      } else {
-        setState(() => isPlaying = false);
-      }
-    });
-    audioPlayer.onDurationChanged.listen((duration) {
-      setState(() => currentDuration = duration);
-    });
-    audioPlayer.onPositionChanged.listen((position) {
-      setState(() => currentPosition = position);
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+      setState(() {
+        _counter++;
+      });
     });
   }
 
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
   void _playAudio(String url) async {
-    if (!hasPlayed) {
-      await audioPlayer.play(UrlSource(url));
-    } else {
-      await audioPlayer.seek(currentPosition);
-      await audioPlayer.resume();
+    try {
+      audioPlayer = context.read<PlayerProvider>().audioPlayer;
+      if (!hasPlayed) {
+        await audioPlayer.play(UrlSource(url));
+      } else {
+        await audioPlayer.seek(currentPosition);
+        await audioPlayer.resume();
+      }
+    } catch (e) {
+      print(e.toString());
     }
   }
 
   void _pauseAudio() async {
-    await audioPlayer.pause();
-    currentPosition = await audioPlayer.getCurrentPosition() ?? Duration.zero;
+    try {
+      audioPlayer = context.read<PlayerProvider>().audioPlayer;
+      await audioPlayer.pause();
+      // context.read<PlayerProvider>().pause();
+      currentPosition = await audioPlayer.getCurrentPosition() ?? Duration.zero;
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   String formatDuration(Duration duration) {
@@ -81,8 +98,14 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('building player screen');
+    answerId = context.watch<PlayerProvider>().currentAnswerId;
+    isPlaying = context.watch<PlayerProvider>().isPlaying;
+    currentPosition = context.watch<PlayerProvider>().currentPosition;
+    currentDuration = context.watch<PlayerProvider>().currentDuration;
     caption = ApiService.getCaption(answerId);
     music = ApiService.getMusic(answerId);
+    print(context.watch<PlayerProvider>().displayPlayerScreen);
     return Material(
         child: FutureBuilder(
             future: music,
@@ -101,6 +124,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                         iconSize: 40,
                         // TODO
                         onPressed: () {
+                          context.read<PlayerProvider>().toggleScreen(false);
                           Navigator.pop(context);
                         },
                       ),
@@ -232,6 +256,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                 audioPlayer
                                     .seek(Duration(seconds: value.toInt()));
                               });
+                              // context
+                              //     .read<PlayerProvider>()
+                              //     .seekDuration(value);
                             },
                             min: 0,
                             max: currentDuration.inSeconds.toDouble(),
@@ -264,7 +291,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             child: IconButton(
                                 icon: const Icon(CupertinoIcons.backward_fill),
                                 // TODO: 다음 곡 이전 곡 재생 구현 => question_screen에서 답변 리스트를 만들고 인덱스를 더하고 빼주는 함수를 인자로 player_screen을 생성하면 될 듯
-                                onPressed: () {}),
+                                onPressed: () {
+                                  context.read<PlayerProvider>().playPrev();
+                                }),
                           ),
                           Container(
                             margin: const EdgeInsets.all(8.0),
@@ -281,6 +310,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                         snapshot.data!.music.musicColor],
                                     iconSize: 50,
                                     onPressed: () {
+                                      // context.read<PlayerProvider>().pause();
                                       _pauseAudio();
                                     })
                                 : IconButton(
@@ -290,6 +320,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                         snapshot.data!.music.musicColor],
                                     iconSize: 50,
                                     onPressed: () {
+                                      context.read<PlayerProvider>().setUrl(
+                                          snapshot.data!.music.musicUrl);
+                                      // context.read<PlayerProvider>().play();
                                       _playAudio(snapshot.data!.music.musicUrl);
                                     }),
                           ),
@@ -303,7 +336,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             ),
                             child: IconButton(
                                 icon: const Icon(CupertinoIcons.forward_fill),
-                                onPressed: () {}),
+                                onPressed: () {
+                                  context.read<PlayerProvider>().playPrev();
+                                }),
                           )
                         ],
                       ),
