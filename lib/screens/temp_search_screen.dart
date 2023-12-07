@@ -9,43 +9,25 @@ import 'package:musiq_front/style.dart';
 import 'package:musiq_front/widgets/main_question_card.dart';
 import 'package:musiq_front/widgets/music_card.dart';
 
-class TemSearchScreen extends StatefulWidget {
-  final int question_id; // Question_id
-  final String emoji;
-  final String question;
-  final int initialColor;
-  final bool isMain;
-  final bool isSearching;
-  final int mainId;
-  final int answeredId1;
-  final int answeredId2;
-  final Function(List<Future<QuestionModel>>) onQuestionChanged;
+class TempSearchScreen extends StatefulWidget {
+  final QuestionModel questionModel;
 
-  const TemSearchScreen({
+  const TempSearchScreen({
     super.key,
-    required this.question_id,
-    required this.emoji,
-    required this.question,
-    required this.initialColor,
-    required this.isMain,
-    required this.isSearching,
-    required this.onQuestionChanged,
-    required this.mainId,
-    required this.answeredId1,
-    required this.answeredId2,
+    required this.questionModel,
   });
 
   @override
-  State<TemSearchScreen> createState() => _TemSearchScreenState();
+  State<TempSearchScreen> createState() => _TempSearchScreenState();
 }
 
-class _TemSearchScreenState extends State<TemSearchScreen> {
+class _TempSearchScreenState extends State<TempSearchScreen> {
   TextEditingController textEditingController = TextEditingController();
   // String searchText = '';
   Timer? _debounce;
   Future<List<SearchMusicModel>>? searchResults;
 
-  late int color = widget.initialColor;
+  late int color = widget.questionModel.main_color;
 
   _onSearchChanged(String searchText) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
@@ -98,7 +80,7 @@ class _TemSearchScreenState extends State<TemSearchScreen> {
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(context, true);
               },
             ),
             backgroundColor: AppColor.backgroudColor,
@@ -108,9 +90,9 @@ class _TemSearchScreenState extends State<TemSearchScreen> {
           children: [
             MainQuestionCard(
               key: ValueKey(color),
-              question_id: widget.question_id,
-              question: widget.question,
-              emoji: widget.emoji,
+              question_id: widget.questionModel.question_id,
+              question: widget.questionModel.question_message,
+              emoji: widget.questionModel.emoji,
               color: color,
               isMain: true,
               isSearching: true,
@@ -156,7 +138,7 @@ class _TemSearchScreenState extends State<TemSearchScreen> {
                             var music = snapshot.data![index];
                             return MusicCard(
                               key: ValueKey(color),
-                              question_id: widget.question_id,
+                              question_id: widget.questionModel.question_id,
                               music_id: music.music_id,
                               cover: music.cover_url,
                               title: music.music_name,

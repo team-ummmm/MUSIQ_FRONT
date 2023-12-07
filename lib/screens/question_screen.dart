@@ -14,25 +14,33 @@ import 'package:musiq_front/models/answer_model.dart';
 import 'package:musiq_front/models/question_model.dart';
 import 'package:musiq_front/services/api_service.dart';
 import 'package:musiq_front/style.dart';
-
+import 'temp_search_screen.dart';
 import 'package:musiq_front/widgets/daily_music_list.dart';
 
-class QuestionScreen extends StatelessWidget {
+class QuestionScreen extends StatefulWidget {
   final QuestionModel question;
   // TODO: 노래들 불러오기
-  QuestionScreen({required this.question, super.key});
+  const QuestionScreen({required this.question, super.key});
 
-  late Future<AnswerListModel> answers = ApiService.getAnswerList(question.question_id.toString());
+  @override
+  State<QuestionScreen> createState() => _QuestionScreenState();
+}
+
+class _QuestionScreenState extends State<QuestionScreen> {
+  late Future<AnswerListModel> answers = ApiService.getAnswerList(widget.question.question_id.toString());
 
   // late Future<AnswerListModel> answers = ApiService.getAnswerList('35');
-
   String getYear(String date) {
     return date.substring(0, 4);
   }
 
+  void _loadAnswers() {
+    answers = ApiService.getAnswerList(widget.question.question_id.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(question.question_id);
+    print(widget.question.question_id);
     return FutureBuilder(
         future: answers,
         builder: (context, snapshot) {
@@ -64,7 +72,7 @@ class QuestionScreen extends StatelessWidget {
                             SizedBox(
                               width: 310,
                               child: Text(
-                                question.question_message,
+                                widget.question.question_message,
                                 style: const TextStyle(
                                   fontSize: 30,
                                   fontFamily: 'AppleSDGothicNeo',
@@ -77,7 +85,19 @@ class QuestionScreen extends StatelessWidget {
                               left: 285,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(shape: const CircleBorder(), minimumSize: const Size(10, 10)),
-                                onPressed: () {},
+                                onPressed: () async {
+                                  final isChanged = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => TempSearchScreen(questionModel: widget.question),
+                                    ),
+                                  );
+                                  if (isChanged != null && isChanged) {
+                                    setState(() {
+                                      _loadAnswers(); // answers를 새로고침
+                                    });
+                                  }
+                                },
                                 child: Icon(
                                   CupertinoIcons.plus_circle,
                                   color: Colors.grey.shade900,
