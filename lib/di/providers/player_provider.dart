@@ -47,7 +47,27 @@ class PlayerProvider with ChangeNotifier {
     audioPlayer.onPositionChanged.listen((position) {
       currentPosition = position;
     });
+    audioPlayer.onPlayerComplete.listen((event) {
+      onCompletion();
+    });
     // notifyListeners();
+  }
+
+  void onCompletion() {
+    playNext();
+  }
+
+  void playNext() {
+    print(answerList is List);
+    int nextAnswerIdx = answerList.indexOf(currentAnswerId) + 1;
+    if (nextAnswerIdx >= answerList.length) nextAnswerIdx = 0;
+    updateCurrentAnswerId(answerList[nextAnswerIdx]);
+  }
+
+  void playPrev() {
+    int nextAnswerIdx = answerList.indexOf(currentAnswerId) - 1;
+    if (nextAnswerIdx < 0) nextAnswerIdx = answerList.length - 1;
+    updateCurrentAnswerId(answerList[nextAnswerIdx]);
   }
 
   void play() async {

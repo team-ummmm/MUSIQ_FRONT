@@ -140,7 +140,6 @@ class _MyRootPageState extends State<RootPage> {
                   },
                   icon: const Icon(CupertinoIcons.play_circle_fill))
               : Container(),
-          // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         ),
       ),
     );

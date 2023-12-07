@@ -291,7 +291,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             child: IconButton(
                                 icon: const Icon(CupertinoIcons.backward_fill),
                                 // TODO: 다음 곡 이전 곡 재생 구현 => question_screen에서 답변 리스트를 만들고 인덱스를 더하고 빼주는 함수를 인자로 player_screen을 생성하면 될 듯
-                                onPressed: () {}),
+                                onPressed: () {
+                                  context.read<PlayerProvider>().playPrev();
+                                }),
                           ),
                           Container(
                             margin: const EdgeInsets.all(8.0),
@@ -334,7 +336,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             ),
                             child: IconButton(
                                 icon: const Icon(CupertinoIcons.forward_fill),
-                                onPressed: () {}),
+                                onPressed: () {
+                                  context.read<PlayerProvider>().playPrev();
+                                }),
                           )
                         ],
                       ),
