@@ -23,6 +23,7 @@ class MUSIQ extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'MUSIQ',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         appBarTheme: const AppBarTheme(color: AppColor.backgroudColor),
         scaffoldBackgroundColor: AppColor.backgroudColor,
