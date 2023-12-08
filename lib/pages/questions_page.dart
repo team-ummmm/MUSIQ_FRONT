@@ -4,11 +4,13 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:musiq_front/di/providers/player_provider.dart';
 import 'package:musiq_front/main.dart';
 import 'package:musiq_front/models/question_model.dart';
 import 'package:musiq_front/screens/question_screen.dart';
 import 'package:musiq_front/services/api_service.dart';
 import 'package:musiq_front/widgets/small_question_card.dart';
+import 'package:provider/provider.dart';
 
 class QuestionsPage extends StatefulWidget {
   const QuestionsPage({required this.key}) : super(key: key);
@@ -72,7 +74,8 @@ class QuestionsPageState extends State<QuestionsPage> {
                       padding: const EdgeInsets.fromLTRB(0, 10, 20, 0),
                       child: IconButton(
                         onPressed: () {},
-                        icon: Icon(CupertinoIcons.question_circle, color: Colors.grey.shade700),
+                        icon: Icon(CupertinoIcons.question_circle,
+                            color: Colors.grey.shade700),
                       ),
                     ),
                   ],
@@ -81,12 +84,15 @@ class QuestionsPageState extends State<QuestionsPage> {
                 Expanded(
                   child: GridView.builder(
                     shrinkWrap: true,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       var question = snapshot.data![index];
                       return GestureDetector(
                         onTap: () {
+                          context.read<PlayerProvider>().resetAnswerList();
                           Navigator.push(
                             context,
                             MaterialPageRoute(

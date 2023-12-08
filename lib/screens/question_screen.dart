@@ -52,6 +52,14 @@ class QuestionScreen extends StatelessWidget {
               years[year]!.add(e); // 해당 연도의 리스트에 객체 추가
             });
 
+            // answer_dates.map((e) => e.answers).forEach((element) {
+            //   context
+            //       .read<PlayerProvider>()
+            //       .addAnswerList(element.map((e) => e.answerId).toList());
+            // });
+
+            // print(context.read<PlayerProvider>().answerList);
+
             return Scaffold(
               appBar: PreferredSize(
                   preferredSize: const Size.fromHeight(35.0), child: AppBar()),

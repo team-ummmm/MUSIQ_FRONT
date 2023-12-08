@@ -58,7 +58,7 @@ class PlayerProvider with ChangeNotifier {
   }
 
   void playNext() {
-    print(answerList is List);
+    print(answerList);
     int nextAnswerIdx = answerList.indexOf(currentAnswerId) + 1;
     if (nextAnswerIdx >= answerList.length) nextAnswerIdx = 0;
     updateCurrentAnswerId(answerList[nextAnswerIdx]);

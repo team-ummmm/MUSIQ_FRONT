@@ -98,14 +98,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('building player screen');
     answerId = context.watch<PlayerProvider>().currentAnswerId;
     isPlaying = context.watch<PlayerProvider>().isPlaying;
     currentPosition = context.watch<PlayerProvider>().currentPosition;
     currentDuration = context.watch<PlayerProvider>().currentDuration;
     caption = ApiService.getCaption(answerId);
     music = ApiService.getMusic(answerId);
-    print(context.watch<PlayerProvider>().displayPlayerScreen);
     return Material(
         child: FutureBuilder(
             future: music,
