@@ -12,6 +12,7 @@ import 'package:musiq_front/models/answer_dates_model.dart';
 import 'package:musiq_front/models/answer_list_model.dart';
 import 'package:musiq_front/models/answer_model.dart';
 import 'package:musiq_front/models/question_model.dart';
+import 'package:musiq_front/screens/temp_search_screen.dart';
 import 'package:musiq_front/services/api_service.dart';
 import 'package:musiq_front/style.dart';
 import 'package:provider/provider.dart';
@@ -19,38 +20,45 @@ import 'package:musiq_front/di/providers/player_provider.dart';
 
 import 'package:musiq_front/widgets/daily_music_list.dart';
 
-class QuestionScreen extends StatelessWidget {
+class QuestionScreen extends StatefulWidget {
   final QuestionModel question;
   // TODO: 노래들 불러오기
-  QuestionScreen({required this.question, super.key});
+  const QuestionScreen({required this.question, super.key});
 
-  late Future<AnswerListModel> answers =
-      ApiService.getAnswerList(question.question_id.toString());
+  @override
+  State<QuestionScreen> createState() => _QuestionScreenState();
+}
+
+class _QuestionScreenState extends State<QuestionScreen> {
+  late Future<AnswerListModel> answers = ApiService.getAnswerList(widget.question.question_id.toString());
 
   // late Future<AnswerListModel> answers = ApiService.getAnswerList('35');
-
   String getYear(String date) {
     return date.substring(0, 4);
   }
 
+  void _loadAnswers() {
+    answers = ApiService.getAnswerList(widget.question.question_id.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(question.question_id);
+    print(widget.question.question_id);
     return FutureBuilder(
         future: answers,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            var color_counts = snapshot.data!.colorCounts;
-            var answer_dates = snapshot.data!.answerDates;
+            var colorCounts = snapshot.data!.colorCounts;
+            var answerDates = snapshot.data!.answerDates;
             Map<String, List<AnswerDatesModel>> years = {};
 
-            answer_dates.forEach((e) {
+            for (var e in answerDates) {
               String year = getYear(e.answerDate); // 연도 추출
               if (!years.containsKey(year)) {
                 years[year] = []; // 연도가 없다면 새 리스트 생성
               }
               years[year]!.add(e); // 해당 연도의 리스트에 객체 추가
-            });
+            }
 
             // answer_dates.map((e) => e.answers).forEach((element) {
             //   context
@@ -61,8 +69,7 @@ class QuestionScreen extends StatelessWidget {
             // print(context.read<PlayerProvider>().answerList);
 
             return Scaffold(
-              appBar: PreferredSize(
-                  preferredSize: const Size.fromHeight(35.0), child: AppBar()),
+              appBar: PreferredSize(preferredSize: const Size.fromHeight(35.0), child: AppBar()),
               body: Center(
                 child: Column(
                   children: [
@@ -76,7 +83,7 @@ class QuestionScreen extends StatelessWidget {
                             SizedBox(
                               width: 310,
                               child: Text(
-                                question.question_message,
+                                widget.question.question_message,
                                 style: const TextStyle(
                                   fontSize: 30,
                                   fontFamily: 'AppleSDGothicNeo',
@@ -88,12 +95,22 @@ class QuestionScreen extends StatelessWidget {
                               top: 20,
                               left: 285,
                               child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    shape: const CircleBorder(),
-                                    minimumSize: const Size(10, 10)),
-                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(shape: const CircleBorder(), minimumSize: const Size(10, 10)),
+                                onPressed: () async {
+                                  final isChanged = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => TempSearchScreen(questionModel: widget.question),
+                                    ),
+                                  );
+                                  if (isChanged != null && isChanged) {
+                                    setState(() {
+                                      _loadAnswers(); // answers를 새로고침
+                                    });
+                                  }
+                                },
                                 child: Icon(
-                                  CupertinoIcons.play_circle,
+                                  CupertinoIcons.plus_circle,
                                   color: Colors.grey.shade900,
                                   size: 40,
                                 ),
@@ -108,12 +125,11 @@ class QuestionScreen extends StatelessWidget {
                       child: Container(
                         height: 15,
                         width: 300,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100)),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         child: Row(
                           children: [
-                            ...color_counts
+                            ...colorCounts
                                 .map((e) => Expanded(
                                       flex: e.count,
                                       child: Container(
@@ -134,8 +150,7 @@ class QuestionScreen extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min, // 여기에 추가
                               children: [
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(15, 10, 10, 0),
+                                  padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
                                   child: Text(
                                     entry.key, // 연도
                                     style: const TextStyle(

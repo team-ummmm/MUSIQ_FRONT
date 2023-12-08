@@ -22,9 +22,12 @@ void main() {
   ));
 }
 
+GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+
 class MUSIQ extends StatelessWidget {
   const MUSIQ({super.key});
   static const masterUserId = '3';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,6 +47,7 @@ class MUSIQ extends StatelessWidget {
           PointerDeviceKind.unknown
         },
       ),
+      navigatorKey: navigatorKey,
       // TODO: 링크 타고 온 경우 라우트 추가
       // home: const RootPage(),
       // home: const PlayerScreen(),

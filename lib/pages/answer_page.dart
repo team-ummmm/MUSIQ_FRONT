@@ -6,6 +6,7 @@ import 'package:musiq_front/main.dart';
 import 'package:musiq_front/models/question_model.dart';
 import 'package:musiq_front/screens/search_screen.dart';
 import 'package:musiq_front/services/api_service.dart';
+import 'package:musiq_front/style.dart';
 
 import 'package:musiq_front/widgets/main_question_card.dart';
 
@@ -55,6 +56,78 @@ class _AnswerPageState extends State<AnswerPage> {
       answeredQuestion1 = nextQuestions[1];
       answeredQuestion2 = nextQuestions[2];
     });
+  }
+
+  void showAnswerPageTooltip() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          child: Container(
+            width: 350,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              color: Colors.white.withOpacity(0.5),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                  blurRadius: 20,
+                  spreadRadius: 5,
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  Text(
+                    '대답할게요!',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontFamily: 'AppleSDGothicNeo',
+                      color: AppColor.colorList[8],
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  const Text(
+                    '💡 화면의 질문 카드를 눌러 음악으로 대답해주세요! 천천히 고민해도 돼요:)',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+                  ),
+                  const SizedBox(height: 15),
+                  const Text(
+                    "💡 저희 MUSIQ는 맞춤형 질문을 제공해요! 답변하면 같이 맞추어 갈게요:)",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+                  ),
+                  const SizedBox(height: 15),
+                  const Text(
+                    "💡 질문을 바꾸고 싶으면 '새로고침' 버튼을 살짝 눌러서 알려주세요!",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+                  ),
+                  const SizedBox(height: 35),
+                  Center(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(AppColor.colorList[8])),
+                        child: const Text(
+                          "YES !",
+                          style: TextStyle(fontFamily: 'AppleSDGothicNeo', color: Colors.white),
+                        )),
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -110,7 +183,9 @@ class _AnswerPageState extends State<AnswerPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 20, 0),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showAnswerPageTooltip();
+                      },
                       icon: Icon(CupertinoIcons.question_circle, color: Colors.grey.shade700),
                     ),
                   ),
@@ -217,7 +292,7 @@ class _AnswerPageState extends State<AnswerPage> {
                                   onPressed: () {
                                     updateAnsweredQuestion1();
                                   },
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   iconSize: 16,
                                 ),
                               ),
@@ -270,7 +345,7 @@ class _AnswerPageState extends State<AnswerPage> {
                                 onPressed: () {
                                   updateAnsweredQuestion2();
                                 },
-                                color: Colors.black,
+                                color: Colors.white,
                                 iconSize: 16,
                               ),
                             ),

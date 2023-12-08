@@ -17,8 +17,9 @@ class SpotifyLoginPage extends StatefulWidget {
 
 class _SpotifyLoginPageState extends State<SpotifyLoginPage> {
   bool isLoggingIn = false;
+  bool isLoggedIn = false;
   late final controller;
-
+  final _cookieManager = WebViewCookieManager();
   @override
   void initState() {
     // TODO: implement initState
@@ -33,9 +34,10 @@ class _SpotifyLoginPageState extends State<SpotifyLoginPage> {
             setState(() {
               isLoggingIn = false; // 웹 페이지 로딩 시작 시 로딩 인디케이터 비활성화
             });
-            print(isLoggingIn);
           },
-          onPageFinished: (String url) {},
+          onPageFinished: (String url) {
+            isLoggedIn = false;
+          },
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) async {
             if (request.url.startsWith(LoginApiService.redirectUri)) {
@@ -48,12 +50,11 @@ class _SpotifyLoginPageState extends State<SpotifyLoginPage> {
               });
               print('okay~~?');
               try {
-                bool isLoggedIn = await LoginApiService.postLogin(code);
+                isLoggedIn = await LoginApiService.postLogin(code);
                 if (isLoggedIn) {
                   print('ok!!');
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const RootPage(),
-                  ));
+                  _cookieManager.clearCookies(); // 로그아웃 시 쿠키 지우기
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const RootPage()));
                 } else {
                   // TODO: 에러 띄우기 추가
                   print('something wrong!');
@@ -72,25 +73,11 @@ class _SpotifyLoginPageState extends State<SpotifyLoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   appBar: PreferredSize(
-    //     preferredSize: const Size.fromHeight(40.0),
-    //     child: AppBar(
-    //       backgroundColor: AppColor.backgroudColor,
-    //     ),
-    //   ),
-    //   backgroundColor: AppColor.backgroudColor,
-    //   body: isLoggingIn
-    //       ? const Center(child: CircularProgressIndicator()) // 로딩 인디케이터만 표시
-    //       : WebViewWidget(
-    //           // 로딩 상태가 아닐 때만 웹뷰 표시
-    //           controller: controller,
-    //         ),
-    // );
     return Scaffold(
       backgroundColor: AppColor.backgroudColor,
       body: SafeArea(
         child: WebViewWidget(
+          key: UniqueKey(),
           controller: controller,
         ),
       ),
