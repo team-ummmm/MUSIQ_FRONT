@@ -98,14 +98,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('building player screen');
     answerId = context.watch<PlayerProvider>().currentAnswerId;
     isPlaying = context.watch<PlayerProvider>().isPlaying;
     currentPosition = context.watch<PlayerProvider>().currentPosition;
     currentDuration = context.watch<PlayerProvider>().currentDuration;
     caption = ApiService.getCaption(answerId);
     music = ApiService.getMusic(answerId);
-    print(context.watch<PlayerProvider>().displayPlayerScreen);
     return Material(
         child: FutureBuilder(
             future: music,
@@ -137,12 +135,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                               width: MediaQuery.of(context).size.width * 0.8,
                               child: Text(
                                 snapshot.data!.questionMessage,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 28,
-                                    decoration: TextDecoration.none,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'AppleSDGothicNeo'),
+                                style: const TextStyle(color: Colors.white, fontSize: 28, decoration: TextDecoration.none, fontWeight: FontWeight.w500, fontFamily: 'AppleSDGothicNeo'),
                               ),
                             ),
                             IconButton(
@@ -153,8 +146,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                     context: context,
                                     // barrierColor: Colors.grey.withOpacity(0.8),
                                     builder: (BuildContext context) {
-                                      return CaptionDialog(
-                                          updateCaption: updateCaption);
+                                      return CaptionDialog(updateCaption: updateCaption);
                                     });
                               },
                             ),
@@ -164,9 +156,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            showCaption
-                                ? showCaption = false
-                                : showCaption = true;
+                            showCaption ? showCaption = false : showCaption = true;
                           });
                         },
                         child: Stack(
@@ -185,8 +175,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                           child: Image.network(
                                             snapshot.data!.music.coverUrl,
                                             headers: const {
-                                              "User-Agent":
-                                                  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+                                              "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
                                             },
                                           ),
                                         )),
@@ -205,9 +194,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                             child: Center(
                                               child: Text(
                                                 '남기고 싶은 말을 적어주세요!',
-                                                style: TextStyle(
-                                                    fontSize: 25,
-                                                    color: Colors.white),
+                                                style: TextStyle(fontSize: 25, color: Colors.white),
                                               ),
                                             ),
                                           );
@@ -217,9 +204,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                                             child: Center(
                                               child: Text(
                                                 snapshot.data!,
-                                                style: const TextStyle(
-                                                    fontSize: 25,
-                                                    color: Colors.white),
+                                                style: const TextStyle(fontSize: 25, color: Colors.white),
                                               ),
                                             ),
                                           );
@@ -235,17 +220,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       Column(children: [
                         Text(
                           snapshot.data!.music.artistName,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              decoration: TextDecoration.none),
+                          style: const TextStyle(color: Colors.white, fontSize: 12, decoration: TextDecoration.none),
                         ),
-                        Text(snapshot.data!.music.musicName,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.none)),
+                        Text(snapshot.data!.music.musicName, style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold, decoration: TextDecoration.none)),
                       ]),
                       Column(
                         children: [
@@ -253,8 +230,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             value: currentPosition.inSeconds.toDouble(),
                             onChanged: (value) {
                               setState(() {
-                                audioPlayer
-                                    .seek(Duration(seconds: value.toInt()));
+                                audioPlayer.seek(Duration(seconds: value.toInt()));
                               });
                               // context
                               //     .read<PlayerProvider>()
@@ -269,10 +245,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(formatDuration(currentPosition)),
-                                Text(formatDuration(currentDuration))
-                              ],
+                              children: [Text(formatDuration(currentPosition)), Text(formatDuration(currentDuration))],
                             ),
                           )
                         ],
@@ -306,22 +279,18 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             child: isPlaying
                                 ? IconButton(
                                     icon: const Icon(CupertinoIcons.pause_fill),
-                                    color: AppColor.colorList[
-                                        snapshot.data!.music.musicColor],
+                                    color: AppColor.colorList[snapshot.data!.music.musicColor],
                                     iconSize: 50,
                                     onPressed: () {
                                       // context.read<PlayerProvider>().pause();
                                       _pauseAudio();
                                     })
                                 : IconButton(
-                                    icon: const Icon(
-                                        CupertinoIcons.play_arrow_solid),
-                                    color: AppColor.colorList[
-                                        snapshot.data!.music.musicColor],
+                                    icon: const Icon(CupertinoIcons.play_arrow_solid),
+                                    color: AppColor.colorList[snapshot.data!.music.musicColor],
                                     iconSize: 50,
                                     onPressed: () {
-                                      context.read<PlayerProvider>().setUrl(
-                                          snapshot.data!.music.musicUrl);
+                                      context.read<PlayerProvider>().setUrl(snapshot.data!.music.musicUrl);
                                       // context.read<PlayerProvider>().play();
                                       _playAudio(snapshot.data!.music.musicUrl);
                                     }),
