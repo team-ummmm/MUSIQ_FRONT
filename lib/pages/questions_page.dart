@@ -26,7 +26,8 @@ class QuestionsPage extends StatefulWidget {
 class QuestionsPageState extends State<QuestionsPage> {
   final String userId = '2';
 
-  Future<List<QuestionModel>> questions = ApiService.getQuestionsListQuestions();
+  Future<List<QuestionModel>> questions =
+      ApiService.getQuestionsListQuestions();
 
   updateQuestions() {
     setState(() {
@@ -39,7 +40,8 @@ class QuestionsPageState extends State<QuestionsPage> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           child: Container(
             width: 350,
             decoration: BoxDecoration(
@@ -72,17 +74,26 @@ class QuestionsPageState extends State<QuestionsPage> {
                   const SizedBox(height: 40),
                   const Text(
                     '💡 화면의 질문 카드들을 눌러 내 기록을 살펴보아요!',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87),
                   ),
                   const SizedBox(height: 15),
                   const Text(
                     "💡 이전에 했던 답변을 보며 기억을 꺼내보아요. 음악을 틀고 캡션을 확인하며 추억에 잠겨보아요 :)",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87),
                   ),
                   const SizedBox(height: 15),
                   const Text(
                     "💡 음악을 색으로 나타내었어요. 질문, 음악, 색 함께 돌아보아요!",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87),
                   ),
                   const SizedBox(height: 35),
                   Center(
@@ -90,10 +101,14 @@ class QuestionsPageState extends State<QuestionsPage> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(AppColor.colorList[2])),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll(
+                                AppColor.colorList[2])),
                         child: const Text(
                           "YES !",
-                          style: TextStyle(fontFamily: 'AppleSDGothicNeo', color: Colors.white),
+                          style: TextStyle(
+                              fontFamily: 'AppleSDGothicNeo',
+                              color: Colors.white),
                         )),
                   ),
                   const SizedBox(height: 10),
@@ -112,50 +127,52 @@ class QuestionsPageState extends State<QuestionsPage> {
         future: questions,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "대답했어요!",
-                            style: TextStyle(
-                              fontFamily: 'AppleSDGothicNeo',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 35,
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "대답했어요!",
+                              style: TextStyle(
+                                fontFamily: 'AppleSDGothicNeo',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 35,
+                              ),
                             ),
-                          ),
-                          Text(
-                            '내 답변을 돌아보아요',
-                            style: TextStyle(
-                              color: Colors.grey.shade500,
-                              fontSize: 18,
-                              fontFamily: 'AppleSDGothicNeo',
-                              fontWeight: FontWeight.w100,
+                            Text(
+                              '내 답변을 돌아보아요',
+                              style: TextStyle(
+                                color: Colors.grey.shade500,
+                                fontSize: 18,
+                                fontFamily: 'AppleSDGothicNeo',
+                                fontWeight: FontWeight.w100,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 20, 0),
-                      child: IconButton(
-                        onPressed: () {
-                          showQuestionsPageTooltip();
-                        },
-                        icon: Icon(CupertinoIcons.question_circle, color: Colors.grey.shade700),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 20, 0),
+                        child: IconButton(
+                          onPressed: () {
+                            showQuestionsPageTooltip();
+                          },
+                          icon: Icon(CupertinoIcons.question_circle,
+                              color: Colors.grey.shade700),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Expanded(
-                  child: GridView.builder(
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -185,9 +202,9 @@ class QuestionsPageState extends State<QuestionsPage> {
                         ),
                       );
                     },
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             );
           }
           return const Center(child: CircularProgressIndicator());
